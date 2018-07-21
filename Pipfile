@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pycryptodomex = "*"
+appdirs = "*"
+pyopenal = "*"
+pyinstaller = "*"
+wxpython = "*"
+"PyObjC" = {version = "*", os_name = "== 'posix'"}
+"appscript" = {version = "*", os_name = "== 'posix'"}
+"pywin32" = {version = "*", os_name = "== 'nt'"}
+winpaths = {version = "*", os_name = "== 'nt'"}
+pygame = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.6"
+
+[pipenv]
+allow_prereleases = true
