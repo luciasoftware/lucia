@@ -36,8 +36,6 @@ def preload():
 	s.first_time_configuration()
 	s.get_male_voice().speak("Loading. Please wait!")
 	ress.load_resources("resources.dat", "test123")
-	test.load(ress.get("music.wav"))
-	#test.set_volume(20)
 
 def main():
 	mainmenu = Menu()
