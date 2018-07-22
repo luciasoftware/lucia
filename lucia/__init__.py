@@ -12,7 +12,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
-import sys, os, pygame, gettext
+import sys, os, pygame, gettext, appdirs
 
 from openal import *
 
@@ -21,8 +21,7 @@ from .audio.soundpool import *
 from .audio.sound import *
 
 from .resourcemanager import *
-
-import appdirs, os
+from .taskmanager import *
 
 def init(appdev, appname, language="en"):
 	globals.data_dir = appdirs.user_data_dir(appname, appdev, roaming=True)
