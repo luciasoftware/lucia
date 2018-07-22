@@ -49,26 +49,29 @@ def move(coords, deg=0.0, zdeg=0.0):
 	r.z=z+sin(radians(zdeg))
 	return r
 
+
 def getdir(facing):
- if facing>=_north and facing<_northeast:
+ if facing<=_north and facing>_northeast:
   return _north
- if facing>=_northeast and facing<_east:
+ if facing<=_northeast and facing>_east:
   return _northeast
- if facing>=_east and facing<_southeast:
+ if facing == 0 or facing > 315:
   return _east
- if facing>=_southeast and facing<_south:
+ if facing<=_southeast and facing>_south:
   return _southeast
- if facing >= _south and facing <_southwest:
+ if facing <= _south and facing >_southwest:
   return _south
- if facing >= _southwest and facing < _west:
+ if facing <= _southwest and facing > _west:
   return _southwest
- if facing >= _west and facing<_northwest:
+ if facing <= _west and facing>_northwest:
   return _west
+ if facing <= _northwest and facing > _north:
+  return _northwest
  return -1 
 
 def snapleft(direction, inc=45):
  d = direction+inc
- if d>360:
+ if d>=360:
   d-=360
  return d
 
@@ -80,7 +83,7 @@ def snapright(direction, inc=45):
 
 def turnleft(deg, inc=5):
  deg+=inc
- if deg>360:
+ if deg>=360:
   deg-=360
  return deg
 
@@ -90,16 +93,40 @@ def turnright(deg, inc=5):
   deg+=360
  return deg
 
-def dir_to_string(direction):
- r=str(int(direction))
- r=r.replace(str(_northwest), "northwest")
- r=r.replace(str(_west), "west")
- r=r.replace(str(_southwest), "southwest")
- r=r.replace(str(_south), "south")
- r=r.replace(str(_southeast), "southeast")
- r=r.replace(str(_east), "east")
- r=r.replace(str(_northeast), "northeast")
- r=r.replace(str(_north), "north")
+def dir_to_string(facing):
+ r=str()
+ if facing > 0 and facing < 45:
+  r="east north east"
+ if facing > 315:
+  r="east south east"
+ if facing > 45 and facing < 90:
+  r="north north east"
+ if facing > 90 and facing < 135:
+  r="north north west"
+ if facing > 135 and facing < 180:
+  r="west north west"
+ if facing > 180 and facing < 225:
+  r="west south west"
+ if facing > 225 and facing < 270:
+  r="south south west"
+ if facing > 270 and facing < 315:
+  r="south south east"
+ if facing == 0:
+  r="east"
+ if facing == 45:
+  r="north east"
+ if facing == 90:
+  r="north"
+ if facing == 135:
+  r="north west"
+ if facing == 180: 
+  r="west"
+ if facing == 225:
+  r="south west"
+ if facing == 270:
+  r="south"
+ if facing == 315:
+  r="south east"
  return r
 
 
@@ -144,13 +171,13 @@ def calculate_x_y_angle(x1, y1, x2, y2):
  return fdeg
 
 def calculate_x_y_string(deg):
- if deg == 0 or deg == 360:
-  return 'streight in front'
+ if deg == 0:
+  return "streight off to the right"
  elif deg>0 and deg<10:
-  return 'Verry slightly to the Right'
+  return "mostly off to the right and a little bit in front"
  elif deg>9 and deg<20:
-  return 'Slightly off to the right'
- elif deg>19 and deg<40:
+  return "mostly off to the right and slightly in front"
+ elif deg>19 and deg<46:
   return 'A little ways off to the right'
  elif deg>39 and deg<90:
   return 'A fair distance off to the right'
