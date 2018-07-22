@@ -71,7 +71,7 @@ def getdir(facing):
 
 def snapleft(direction, inc=45):
  d = direction+inc
- if d>=360:
+ if d>360:
   d-=360
  return d
 
@@ -83,7 +83,7 @@ def snapright(direction, inc=45):
 
 def turnleft(deg, inc=5):
  deg+=inc
- if deg>=360:
+ if deg>360:
   deg-=360
  return deg
 
