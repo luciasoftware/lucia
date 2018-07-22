@@ -13,9 +13,8 @@
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
 from openal import *
-from math import pi, cos, sin, radians, copysign, sqrt
+from math import pi, cos, sin, radians
 import io
-from ..utils.rotation import move
 
 class SoundPool():
 	def __init__(self, rolloff_factor = 0.5, max_distance=10):
@@ -108,9 +107,11 @@ class SoundPool():
 	def update_listener_2d(self, x, y):
 		self.listener.move_to((x,0,-y))
 
-	def update_listener_3d(self, x, y, z, direction=0):
+	def update_listener_3d(self, x, y, z, direction=0, zdirection=0):
 		if direction > 360:
 			direction = direction - 360
 		self.listener.set_position((x,z,-y))
-		v=move((0, 0, 0), direction)
-		self.listener.set_orientation((v.x, v.z, -v.y, 0, 1, 0))
+		ox=0+cos(radians(direction))
+		oy=0+sin(radians(direction))
+		oz=0+sin(radians(zdirection))
+		self.listener.set_orientation((ox, oz, -oy, 0, 1, 0))
