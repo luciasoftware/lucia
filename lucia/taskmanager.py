@@ -20,8 +20,9 @@ class Task(threading.Thread):
 		self.running = False
 
 	def run(self):
-		running = True
+		self.running = True
 		self.result = self.func()
+		self.running = False
 
 	def is_running(self):
 		return self.running
@@ -36,7 +37,7 @@ class TaskManager():
 	def create_task(self, name, func):
 		t = Task(func)
 		self.tasks[name] = t
-		t.run()
+		t.start()
 
 	def get_task(self, name):
 		return self.tasks[name]
