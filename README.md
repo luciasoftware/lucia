@@ -1,5 +1,6 @@
 # lucia
 An audio game engine written in python
+
 ### Goals:
 The goal of lucia is to change the audio game creation method from the now old and no longer maintained bgt, to python.
 Lucia should not act as a starting game, but as a base, that a high quality game can be build upon.
@@ -13,6 +14,10 @@ In addition lucia should be cross platform, At Least on windows and mac.
 * lucia/audio - Audio handling.
 
 ### Todo
+* Add a logger util.
+* Unify keyboard and joystick handling.
+* Create an instance object like bgts (to check for already running instances of the game).
+* Improve the input (interface/input.py (add number support, uppercase support and some special characters).
 * Add checksum checks to the resource manager.
 * Proper distance handling with rolloff and silence after a certain distance, should be no more than 70.
 * A documentation of the toolset available and how it may be used, with some examples.
