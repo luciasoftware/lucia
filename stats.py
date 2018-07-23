@@ -32,7 +32,6 @@ def get_size(num):
 	taken and modified from:
 		http://code.activestate.com/recipes/578019
 	"""
-	size=int(os.stat(filename).st_size)
 	symbols = ('KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')
 	prefix = {}
 	for i, s in enumerate(symbols):
@@ -57,6 +56,7 @@ for i in r:
 	if not header_text in text:
 		no_header.append(i)
 print("total lines: "+str(total_lines))
+print("total size: "+str(get_size(total_size)))
 print("files without license header: "+str(len(no_header)))
 if len(no_header)>0:
 	print(", ".join(no_header))
