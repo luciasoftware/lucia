@@ -17,42 +17,42 @@ from configparser import *
 class Configuration:
 	def __init__(self):
 		self.config=ConfigParser()
-	
-	def readInt(self, section, key):
+
+	def read_int(self, section, key):
 		return self.config[section].getint(key)
-	
-	def readString(self, section, key):
+
+	def read_string(self, section, key):
 		return str(self.config[section][key])
-	
-	def readFloat(self, section, key):
+
+	def read_float(self, section, key):
 		return self.config[section].getfloat(key)
-	
-	def readBool(self, section, key):
+
+	def read_boolean(self, section, key):
 		return self.config[section].getboolean(key)
-	
+
 	def exists(self, section):
 		return self.config.has_section(section)
-	
+
 	def exists(self, section, key):
 		return key in self.config[section]
-	
-	def writeInt(self, section, key, value):
+
+	def write_int(self, section, key, value):
 		self.config[section][key]=int(value)
-	
-	def writeString(self, section, key, value):
+
+	def write_string(self, section, key, value):
 		self.config[section][key]=str(value)
-	
-	def writeFloat(self, section, key, value):
+
+	def write_float(self, section, key, value):
 		self.config[section][key]=float(value)
-	
-	def writeBool(self, section, key, value):
+
+	def write_boolean(self, section, key, value):
 		self.config[section][key]=bool(value)
-	
-def loadFile(self, filename):
+
+def load_file(self, filename):
 		with open(filename, "r") as f:
 			self.read_string(f.read(), "<string>")
-	
-	def saveFile(self, filename):
+
+	def save_file(self, filename):
 		with open(filename, "w") as f:
 			self.config.write(f)
-	
+
