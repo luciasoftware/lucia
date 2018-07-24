@@ -12,7 +12,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
-class Logger:
+class Logger(object):
 	def __init__(self):
 		self.entries=[]
 	
@@ -23,13 +23,10 @@ class Logger:
 	def add_entry(self, the_entry):
 		self.entries.append(the_entry)
 	
-	def write(self, filename, should_reset):
-		f=open(filename, "w")
-		if len(self.entries) > 0:
-			for i in self.entries:
-				f.write(i+"\r\n")
-		else:
-			f.write("")
-		f.close()
-		if should_reset:
-			self.entries=[]
+	def write(self, filename, should_reset=False):
+		with open(filename, "a") as f:
+			if len(self.entries) > 0:
+				for i in self.entries:
+					f.write(i+"\n")
+			if should_reset:
+			self.reset()
