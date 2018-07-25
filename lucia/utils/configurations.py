@@ -52,7 +52,7 @@ def load_file(self, filename):
 		with open(filename, "r") as f:
 			self.read_string(f.read(), "<string>")
 
-	def save_file(self, filename):
+def save_file(self, filename):
 		with open(filename, "w") as f:
 			self.config.write(f)
 
