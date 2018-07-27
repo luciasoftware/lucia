@@ -160,35 +160,64 @@ def calculate_x_y_angle(x1, y1, x2, y2):
  fdeg = round(fdeg, 1)
  return fdeg
 
+def calculate_x_y_angle(x1, y1, x2, y2):
+ x = x2-x1
+ y=y2-y1
+ if x == 0:
+  x+=0.0000001
+ if y == 0:
+  y+=0.0000001
+ rad = atan(y/x)
+ arc_tan = rad/pi*180
+ fdeg = 0
+ if x>0:
+  fdeg=90-arc_tan
+ elif x<0:
+  fdeg = 270-arc_tan
+ if x == 0:
+  if y>0:
+   fdeg = 0
+  elif y<0:
+   fdeg=180
+ fdeg=0
+ fdeg-=deg
+ if fdeg<0:
+  fdeg+=360
+ fdeg = round(fdeg, 1)
+ return fdeg
+
 def calculate_x_y_string(deg):
  if deg == 0:
   return "streight off to the right"
  elif deg>0 and deg<10:
   return "mostly off to the right and a little bit in front"
- elif deg>9 and deg<20:
+ elif deg>9 and deg<30:
   return "mostly off to the right and slightly in front"
- elif deg>19 and deg<46:
-  return 'A little ways off to the right'
- elif deg>39 and deg<90:
-  return 'A fair distance off to the right'
+ elif deg>30 and deg<60:
+  return "in front and off to the right"
+ elif deg>59 and deg<80:
+  return "in front and slightly off to the right"
+ elif deg >79 and deg < 85:
+  return "in front and very slightly off to the right"
+ elif deg>84 and deg< 90:
+  return "straight in front and a little bit off to the right"
  elif deg == 90:
-  return 'streight off to the right'
- elif deg>90 and deg<120:
-  return 'slightly behind and far off to the right'
- elif deg>119 and deg<150:
-  return 'behind and a little ways off to the right'
+  return "straight in front"
+ elif deg>90 and deg<96:
+  return "straight in front and a little bit off to the left"
+ elif deg>96 and deg<101:
+  return "in front and very slightly off to the left"
+ elif deg > 100 and deg < 120:
+  return "in front and slightly off to the left"
+ elif deg>120 and deg<150:
+  return "in front and off to the left"
  elif deg>149 and deg<170:
-  return 'behind and slightly to the right'
+  return "mostly off to the left and slightly in front"
  elif deg>169 and deg<180:
-  return 'behind and verry slightly to the right'
+  return "mostly off to the left and a little bit in front"
  elif deg == 180:
-  return 'streight behind'
- elif deg>180 and deg<190:
-  return 'behind and verry slightly to the left'
- elif deg>189 and deg<200:
-  return 'behind and slightly to the left'
- elif deg>199 and deg<220:
-  return 'behind and a little ways off to the lef'
+  return "straight off to the left"
+ 
  elif deg>219 and deg<240:
   return 'behind and a fair distance off to the left'
  elif deg>239 and deg<270:
