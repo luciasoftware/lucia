@@ -14,7 +14,6 @@ In addition lucia should be cross platform, At Least on windows and mac.
 * lucia/audio - Audio handling.
 
 ### Todo
-* Add a logger util.
 * Unify keyboard and joystick handling.
 * Create an instance object like bgts (to check for already running instances of the game).
 * Improve the input (interface/input.py (add number support, uppercase support and some special characters).
