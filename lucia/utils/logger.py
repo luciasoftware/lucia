@@ -29,4 +29,4 @@ class Logger(object):
 				for i in self.entries:
 					f.write(i+"\n")
 			if should_reset:
-			self.reset()
+				self.reset()
