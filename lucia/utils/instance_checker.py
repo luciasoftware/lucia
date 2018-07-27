@@ -46,5 +46,5 @@ class InstanceChecker:
 	def is_running(self):
 		return self.running
 	
-def __bool__(self):
+	def __bool__(self):
 		return self.running
