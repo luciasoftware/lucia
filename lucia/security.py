@@ -19,8 +19,10 @@ iv = "0000000000000000"
 # Compression preset (default 6, between 1-9).
 compression_level = 6
 
-import hashlib, lzma
+import lzma
 from Cryptodome.Cipher import AES
+from Cryptodome.Hash import SHA1
+from Cryptodome.Hash import SHA256
 
 # Internal functions.
 def encrypt_data(key, data):
@@ -32,7 +34,7 @@ def encrypt_data(key, data):
 		data = data.encode("utf-8")
 	except AttributeError:
 		pass
-	encryptor = AES.new(hashlib.sha256(key).digest(), AES.MODE_CFB, iv.encode("utf-8"))
+	encryptor = AES.new(SHA256.new(key).digest(), AES.MODE_CFB, iv.encode("utf-8"))
 	return encryptor.encrypt(data)
 
 
@@ -41,7 +43,7 @@ def decrypt_data(key, data):
 			key = key.encode("utf-8")
 	except AttributeError:
 		pass
-	decryptor = AES.new(hashlib.sha256(key).digest(), AES.MODE_CFB, iv.encode("utf-8"))
+	decryptor = AES.new(SHA256.new(key).digest(), AES.MODE_CFB, iv.encode("utf-8"))
 	decryptedData = decryptor.decrypt(data)
 	return decryptedData
 
