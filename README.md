@@ -15,7 +15,6 @@ In addition lucia should be cross platform, At Least on windows and mac.
 
 ### Todo
 * Unify keyboard and joystick handling.
-* Create an instance object like bgts (to check for already running instances of the game).
 * Improve the input (interface/input.py (add number support, uppercase support and some special characters).
 * Add checksum checks to the resource manager.
 * Proper distance handling with rolloff and silence after a certain distance, should be no more than 70.
