@@ -44,6 +44,13 @@ class SoundPool():
 			source.play()
 		self.all_paused = False
 
+	def cleanup(self):
+		"""This function can be called in a loop to check for unused sources and destroy them, to free the memory and prevent the sound system from encountering the AL_OUT_OF_MEMORY error"""
+		for a in self.sources:
+			if a.get_state()==AL_STOPPED:
+				a.destroy()
+				self.sources.remove(a)
+
 	def play_stationary(self, soundfile, looping = False):
 		if isinstance(soundfile, str):
 			source = oalOpen(soundfile)
@@ -52,6 +59,7 @@ class SoundPool():
 			b = Buffer(f)
 			source = Source(b)
 		source.set_looping(looping)
+		source.set_source_relative(True)
 		source.play()
 		self.sources.append(source)
 		return source
