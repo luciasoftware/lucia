@@ -50,7 +50,7 @@ class Sound():
 	def play(self):
 		if self.initialized == False:
 			return
-		if self.isPlaying():
+		if self.is_playing():
 			return
 		self.source.play()
 		self.running = True
@@ -61,7 +61,7 @@ class Sound():
 			pygame.event.poll()
 
 	def stop(self):
-		if self.isPlaying():
+		if self.is_playing():
 			self.source.stop()
 			self.running = False
 
