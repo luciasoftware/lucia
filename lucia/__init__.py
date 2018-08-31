@@ -41,3 +41,18 @@ def init(appdev, appname, language="en"):
 
 def quit():
 	oalQuit()
+
+def key_pressed(key):
+	while True:
+		event = pygame.event.poll()
+		if event.type == pygame.KEYDOWN:
+			return event.key == key
+		else:
+			pass
+
+def key_down(k):
+	keys=pygame.key.get_pressed()
+	if keys[k]:
+		return True
+	else:
+		return False
