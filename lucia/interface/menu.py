@@ -12,7 +12,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
-from ..audio.sound import *
+from ..audio.soundpool import *
 import time, pygame
 
 class Menu():
@@ -20,15 +20,11 @@ class Menu():
 		self.running = False
 		self.items = {}
 		self.shouldInterrupt = True
-		self.enterSound = Sound()
-		self.enterSound.load(enter_sound)
-		self.scrollSound = Sound()
-		self.scrollSound.load(scroll_sound)
-		self.openSound = Sound()
-		self.openSound.load(open_sound)
-		self.borderSound = Sound()
-		self.borderSound.load(border_sound)
-		self.spaceCallback = None
+		self.pool = SoundPool()
+		self.enter_sound = enter_sound
+		self.scroll_sound = scroll_sound
+		self.open_sound = open_sound
+		self.border_sound = border_sound
 
 	def add_speech_method(self, method, shouldInterrupt=True):
 		self.speechMethod = method
@@ -43,7 +39,8 @@ class Menu():
 	def run(self, intro="", interrupt=True):
 		self.count = 0
 		self.running = True
-		self.openSound.play()
+		if self.open_sound != "":
+			self.pool.play_stationary(self.open_sound)
 		if intro != "":
 			self.speechMethod.speak(intro, interrupt)
 		while self.running:
@@ -51,23 +48,30 @@ class Menu():
 			for event in pygame.event.get():
 				if event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
+						if self.enter_sound != "":
+							self.pool.play_stationary(self.enter_sound)
 						return "-1"
 					if event.key == pygame.K_DOWN:
 						if self.count < len(self.items)-1:
 							self.count = self.count+1
-							self.scrollSound.play()
+							if self.scroll_sound != "":
+								self.pool.play_stationary(self.scroll_sound)
 						else:
-							self.borderSound.play()
+							if self.border_sound != "":
+								self.pool.play_stationary(self.border_sound)
 						self.speechMethod.speak(list(self.items)[self.count], self.shouldInterrupt)
 					if event.key == pygame.K_UP:
 						if self.count > 0:
 							self.count = self.count-1
-							self.scrollSound.play()
+							if self.scroll_sound != "":
+								self.pool.play_stationary(self.scroll_sound)
 						else:
-							self.borderSound.play()
+							if self.border_sound != "":
+								self.pool.play_stationary(self.border_sound)
 						self.speechMethod.speak(list(self.items)[self.count], self.shouldInterrupt)
 					if event.key == pygame.K_RETURN:
-						self.openSound.play()
+						if self.enter_sound != "":
+							self.pool.play_stationary(self.enter_sound)
 						self.running = False
 		return self.items[list(self.items)[self.count]]
 

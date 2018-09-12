@@ -19,6 +19,7 @@ from .menu import Menu
 from .. import globals
 from ..steel.ScreenReader import ScreenReader
 
+# This is a wrapper around lucia/speechcontroller.py, that provides a male and a female voice along with screen reader output.
 class SpeechSystem():
 	def __init__(self, password):
 		self.male = SpeechController()
