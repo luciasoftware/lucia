@@ -45,8 +45,9 @@ class SpeechController():
 				from .steel.eSpeak import eSpeak
 				self.engine = eSpeak()
 
-	def speak(self, text, interrupt=False, wait=False):
-		display_text(str(text))
+	def speak(self, text, interrupt=False, wait=False, display=False):
+		if display:
+			display_text(str(text))
 		self.engine.speak(str(text), interrupt)
 
 	def stop(self):
@@ -58,49 +59,57 @@ class SpeechController():
 		else:
 			return self.engine.available_voices()
 
-	def set_rate(self, rate):
+	@property
+	def rate(self, rate):
 		if platform.system() == "Windows":
 			self.engine.set_rate(int(rate))
 		else:
 			self.engine.set("rate", int(rate))
 
-	def get_rate(self):
+	@rate.setter
+	def rate(self):
 		if platform.system() == "Windows":
 			self.engine.get_rate()
 		else:
 			self.engine.get("rate")
 
-	def set_volume(self, volume):
+	@property
+	def volume(self, volume):
 		if platform.system() == "Windows":
 			self.engine.set_volume(volume)
 		else:
 			self.engine.set("volume", volume)
 
-	def get_volume(self):
+	@volume.setter
+	def volume(self):
 		if platform.system() == "Windows":
 			self.engine.get_volume()
 		else:
 			self.engine.get("volume")
 
-	def set_voice(self, voice):
+	@property
+	def voice(self, voice):
 		if platform.system() == "Windows":
 			self.engine.set_voice(voice)
 		else:
 			self.engine.set("voice", voice)
 
-	def get_voice(self):
+	@voice.setter
+	def voice(self):
 		if platform.system() == "Windows":
 			self.engine.get_voice()
 		else:
 			self.engine.get("voice")
 
-	def set_pitch(self, pitch):
+	@property
+	def pitch(self, pitch):
 		if platform.system() == "Windows":
 			self.engine.set_pitch(pitch)
 		else:
 			self.engine.set("pitch", int(pitch))
 
-	def get_pitch(self):
+	@pitch.setter
+	def pitch(self):
 		if platform.system() == "Windows":
 			self.engine.get_pitch()
 		else:
