@@ -23,3 +23,6 @@ class Timer():
 
 	def restart(self):
 		self.inittime=int(round(time.time() * 1000))
+
+	def force(self, amount):
+		self.inittime=(amount-((int(round(time.time()))*1000)-self.inittime))
