@@ -60,57 +60,57 @@ class SpeechController():
 			return self.engine.available_voices()
 
 	@property
-	def rate(self, rate):
-		if platform.system() == "Windows":
-			self.engine.set_rate(int(rate))
-		else:
-			self.engine.set("rate", int(rate))
-
-	@rate.setter
 	def rate(self):
 		if platform.system() == "Windows":
 			self.engine.get_rate()
 		else:
 			self.engine.get("rate")
 
-	@property
-	def volume(self, volume):
+	@rate.setter
+	def rate(self, rate):
 		if platform.system() == "Windows":
-			self.engine.set_volume(volume)
+			self.engine.set_rate(int(rate))
 		else:
-			self.engine.set("volume", volume)
+			self.engine.set("rate", int(rate))
 
-	@volume.setter
+	@property
 	def volume(self):
 		if platform.system() == "Windows":
 			self.engine.get_volume()
 		else:
 			self.engine.get("volume")
 
-	@property
-	def voice(self, voice):
+	@volume.setter
+	def volume(self, volume):
 		if platform.system() == "Windows":
-			self.engine.set_voice(voice)
+			self.engine.set_volume(volume)
 		else:
-			self.engine.set("voice", voice)
+			self.engine.set("volume", volume)
 
-	@voice.setter
+	@property
 	def voice(self):
 		if platform.system() == "Windows":
 			self.engine.get_voice()
 		else:
 			self.engine.get("voice")
 
-	@property
-	def pitch(self, pitch):
+	@voice.setter
+	def voice(self, voice):
 		if platform.system() == "Windows":
-			self.engine.set_pitch(pitch)
+			self.engine.set_voice(voice)
 		else:
-			self.engine.set("pitch", int(pitch))
+			self.engine.set("voice", voice)
 
-	@pitch.setter
+	@property
 	def pitch(self):
 		if platform.system() == "Windows":
 			self.engine.get_pitch()
 		else:
 			self.engine.get("pitch")
+
+	@pitch.setter
+	def pitch(self, pitch):
+		if platform.system() == "Windows":
+			self.engine.set_pitch(pitch)
+		else:
+			self.engine.set("pitch", int(pitch))
