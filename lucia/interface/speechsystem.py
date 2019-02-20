@@ -26,10 +26,11 @@ class SpeechSystem():
 		self.female = SpeechController()
 		self.sr = ScreenReader()
 		self.password = password
+		self.default_rate=-1
 		if platform.system() == "Windows":
 			self.default_rate = 0
 		else:
-				self.default_rate = 250
+			self.default_rate = 250
 
 	def first_time_configuration(self):
 		if os.path.isfile(os.path.join(globals.data_dir, "voicedata.dat")) == False:
@@ -40,10 +41,10 @@ class SpeechSystem():
 			voiceData.load_resources(os.path.join(globals.data_dir, "voicedata.dat"), self.password)
 			self.male = SpeechController()
 			self.male.set_voice(voiceData.get("male.voice").decode())
-			self.male.set_rate(int(voiceData.get("male.rate").decode()))
+			self.male.rate(int(voiceData.get("male.rate").decode()))
 			self.female = SpeechController()
 			self.female.set_voice(voiceData.get("female.voice").decode())
-			self.female.set_rate(int(voiceData.get("female.rate").decode()))
+			self.female.rate(int(voiceData.get("female.rate").decode()))
 
 	def setup(self):
 		self.sr.speak("Setup voices for the game")
@@ -52,12 +53,12 @@ class SpeechSystem():
 		mv = self.voiceSelector(self.male, "Select the male voice you want to use.")
 		self.male.set_voice(mv)
 		mr = self.rateSelector(self.male, "Select the rate for the male voice. Press the spacebar to hear a test sentence with the selected voice and rate.")
-		self.male.set_rate(mr)
+		self.male.rate(mr)
 		# female
 		fv = self.voiceSelector(self.female, "Select the female voice you want to use.")
 		self.female.set_voice(fv)
 		fr = self.rateSelector(self.female, "Select the rate for the female voice. Press the spacebar to hear a test sentence with the selected voice and rate.")
-		self.female.set_rate(fr)
+		self.female.rate(fr)
 		# save.
 		voiceData = ResourceManager()
 		voiceData.set("male.voice", mv.encode())
@@ -79,7 +80,8 @@ class SpeechSystem():
 	# internal functions.
 	def voiceSelector(self, engine, intro):
 		self.sr.speak(intro)
-		engine.set_rate(self.default_rate)
+		if engine!=None and self.default_rate!=None:
+			engine.rate(self.default_rate)
 		import platform
 		items = []
 		for voice in engine.get_available_voices():
@@ -96,17 +98,17 @@ class SpeechSystem():
 						if count < len(items)-1:
 							count = count+1
 						if platform.system().lower() == "darwin":
-							engine.set_voice("com.apple.speech.synthesis.voice."+list(items)[count])
+							engine.voice("com.apple.speech.synthesis.voice."+list(items)[count])
 						else:
-							engine.set_voice(list(items)[count])
+							engine.voice(list(items)[count])
 						engine.speak(list(items)[count], True)
 					if event.key == pygame.K_UP:
 						if count > 0:
 							count = count-1
 						if platform.system().lower() == "darwin":
-							engine.set_voice("com.apple.speech.synthesis.voice."+list(items)[count])
+							engine.voice("com.apple.speech.synthesis.voice."+list(items)[count])
 						else:
-							engine.set_voice(list(items)[count])
+							engine.voice(list(items)[count])
 						engine.speak(list(items)[count], True)
 					if event.key == pygame.K_RETURN:
 						running = False
