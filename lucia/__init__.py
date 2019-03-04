@@ -1,58 +1,48 @@
-# Copyright (C) 2018  LuciaSoftware and it's contributors.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as published by
-# the Free Software Foundation, version 3 of the License.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Lesser General Public License for more details.
-#
-# You should have received a copy of the GNU Lesser General Public License
-# along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
+"""The main Lucia module"""
 
-import sys, os, pygame, gettext, appdirs
+import os
+os.environ["PYAL_DLL_PATH"] = os.path.dirname(__file__)
 
-from openal import *
+import sys
+import pyglet
+from pyglet.window import key
 
-import lucia.globals as globals
-from .audio.soundpool import *
-from .audio.sound import *
+from . import audio, interface, utils
 
-from .resourcemanager import *
-from .taskmanager import *
 
-def init(appdev, appname, language="en"):
-	globals.data_dir = appdirs.user_data_dir(appname, appdev, roaming=True)
-	globals.temp_dir = os.path.join(appdirs.user_data_dir(appname, appdev, roaming=True), "/temp/")
-	globals.screen = pygame.display.set_caption(appname)
-	if os.path.isdir(globals.data_dir) == False:
-		os.makedirs(globals.data_dir)
-	if os.path.isdir(globals.temp_dir) == False:
-		os.makedirs(globals.temp_dir)
-	globals.screen = pygame.display.set_mode((0,0), pygame.RESIZABLE)
-	pygame.mouse.set_visible(0)
-	pygame.init()
-	oalInit()
-	oalSetStreamBufferCount(400)
-	#translator = gettext.translation(appname, localedir='locale')
-	#translator.install()
+window = None
+keyboard_handler = None
 
-def quit():
-	oalQuit()
+def initialize():
+	"""Initialize the underlying engines"""
 
-def key_pressed(key):
-	while True:
-		event = pygame.event.poll()
-		if event.type == pygame.KEYDOWN:
-			return event.key == key
-		else:
-			pass
+def show_window(**kwargs):
+	"""Shows the main game window on the screen
+	
+	title : str
+		Set the window title
+	width : int
+		Set the underlying window width.
+	height : int
+		Set the underlying window height.
+	full_screen : book
+		Boolean to set full screen mode (True for full screen, False for windowed)
+	"""
+	global window, keyboard_handler
+	window = pyglet.window.Window(**kwargs)
+	keyboard_handler = key.KeyStateHandler()
+	window.push_handlers(keyboard_handler)
+	return window
 
-def key_down(k):
-	keys=pygame.key.get_pressed()
-	if keys[k]:
-		return True
-	else:
-		return False
+def make_keyboard_exclusive():
+	"""Makes all keys (including windows, tab+alt and so on) go to the application instead of the os"""
+	global window
+	window.set_exclusive_keyboard()
+
+def is_key_down(key_code):
+	"""Check if a key is held down
+	
+	key : pyglet.window.key
+		A pyglet.window.key code like key.SPACE, or key.A
+	"""
+	return True if key in keyboard_handler else False

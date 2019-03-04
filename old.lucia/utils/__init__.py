@@ -12,4 +12,10 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
-from .soundpool import *
+from .configurations import *
+from .number_to_words import *
+from .ui import *
+from .rotation import *
+from .timer import *
+from .updater import *
+from .instance_checker import *

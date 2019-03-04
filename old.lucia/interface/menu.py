@@ -1,4 +1,3 @@
-"""Note: this file isn't ported to the new lucia (with pyglet and so on)"""
 # Copyright (C) 2018  LuciaSoftware and it's contributors.
 #
 # This program is free software: you can redistribute it and/or modify

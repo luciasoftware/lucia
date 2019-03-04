@@ -9,9 +9,9 @@ In addition lucia should be cross platform, At Least on windows and mac.
 
 ### Folder explenations:
 * Lucia - the main lucia engine.
-* lucia/utils - things coded into the engine, but not necessarily required in any game.
-* lucia/interface - higher implementation of existing features in the lucia engine.
 * lucia/audio - Audio handling.
+* lucia/interface - things that pop onto the screen (like menus, edit fields and dialogs).
+* lucia/utils - things coded into the engine, but not necessarily required in any game.
 
 ### Todo
 * Unify keyboard and joystick handling.

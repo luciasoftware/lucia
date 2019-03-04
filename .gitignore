@@ -1,5 +1,6 @@
 # pipenv stuff.
 Pipfile.lock
+pipfile
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

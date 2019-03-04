@@ -12,4 +12,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
-from .soundpool import *
+import time
+
+class Timer():
+	def __init__(self):
+		self.inittime=int(round(time.time() * 1000))
+
+	def elapsed(self):
+		return int(round(time.time() * 1000))-self.inittime
+
+	def restart(self):
+		self.inittime=int(round(time.time() * 1000))
+
+	def force(self, amount):
+		self.inittime=(amount-((int(round(time.time()))*1000)-self.inittime))
