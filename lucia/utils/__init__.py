@@ -15,4 +15,3 @@
 from .number_to_words import *
 from .rotation import *
 from .timer import *
-from .instance_checker import *

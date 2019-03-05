@@ -2,47 +2,60 @@
 
 import os
 os.environ["PYAL_DLL_PATH"] = os.path.dirname(__file__)
+os.environ["PYSDL2_DLL_PATH"] = os.path.dirname(__file__)
 
 import sys
-import pyglet
-from pyglet.window import key
+import sdl2
+import sdl2.ext
 
+# import subpackages..
 from . import audio, interface, utils
+
+# import submodules
+from .output import *
+from .resourcemanager import *
 
 
 window = None
-keyboard_handler = None
+running = False
+current_key_pressed = 0
+current_key_released = 0
+keys_held = []
 
 def initialize():
 	"""Initialize the underlying engines"""
+	global running
+	sdl2.ext.init()
+	running = True
 
-def show_window(**kwargs):
-	"""Shows the main game window on the screen
-	
-	title : str
-		Set the window title
-	width : int
-		Set the underlying window width.
-	height : int
-		Set the underlying window height.
-	full_screen : book
-		Boolean to set full screen mode (True for full screen, False for windowed)
-	"""
-	global window, keyboard_handler
-	window = pyglet.window.Window(**kwargs)
-	keyboard_handler = key.KeyStateHandler()
-	window.push_handlers(keyboard_handler)
+def show_window(title="LuciaGame", size=(700,600), **kwargs):
+	"""Shows the main game window on the screen"""
+	global window
+	window = sdl2.ext.Window(title, size, *kwargs)
+	window.show()
 	return window
 
-def make_keyboard_exclusive():
-	"""Makes all keys (including windows, tab+alt and so on) go to the application instead of the os"""
-	global window
-	window.set_exclusive_keyboard()
+def process_events():
+	"""This processes events for the window
+	This should be called in any loop, to insure that the window and application stays responsive"""
+	global current_key_pressed, current_key_released, running, window
+	current_key_pressed = 0
+	current_key_released = 0
+	events = sdl2.ext.get_events()
+	for event in events:
+		if event.type == sdl2.SDL_QUIT:
+			running = False
+			# for now just exit, in future call registered quit listeners.
+			sys.exit(0)
+			break
+		if event.type == sdl2.SDL_KEYDOWN:
+			current_key_pressed = event.key.keysym.sym
+		if event.type == sdl2.SDL_KEYUP:
+			current_key_released = event.key.keysym.sym
+		window.refresh()
+	return sdl2.ext.get_events()
 
-def is_key_down(key_code):
-	"""Check if a key is held down
-	
-	key : pyglet.window.key
-		A pyglet.window.key code like key.SPACE, or key.A
-	"""
-	return True if key in keyboard_handler else False
+def key_pressed(key_code):
+	global current_key_pressed
+	return current_key_pressed == key_code
+

@@ -61,12 +61,8 @@ class SoundPool():
 			pass
 
 	def play_stationary(self, soundfile, looping =False):
-		if isinstance(soundfile, str):
-			data = load_wav_file(soundfile)
-		else:
-			data = load_wav_file(io.BytesIO(soundfile))
 		source = audio.SoundSource()
-		source.queue(data)
+		source.queue(self._get_audio_data(soundfile))
 		self.world.play(source)
 		self.world.update()
 		self.sources.append(source)
@@ -79,12 +75,8 @@ class SoundPool():
 		return self.play_3d(soundfile,x,y,0,looping,rolloff_factor)
 
 	def play_3d(self, soundfile, x, y, z, looping = False, pitch=1.0, volume=1.0, rolloff_factor=0.5):
-		if isinstance(soundfile, str):
-			data = load_wav_file(soundfile)
-		else:
-			data = load_wav_file(io.BytesIO(soundfile))
 		source = audio.SoundSource(1.0, pitch, (x,y,z))
-		source.queue(data)
+		source.queue(self._get_audio_data(soundfile))
 		source.looping = looping
 		self.world.play(source)
 		self.world.update()
@@ -106,3 +98,14 @@ class SoundPool():
 		oz=0+sin(radians(zdirection))
 		self.listener.orientation = (ox, oz, -oy, 0, 1, 0)
 		self.world.update()
+
+	def _get_audio_data(self, soundfile):
+		if isinstance(soundfile, str):
+			data = load_file(soundfile)
+		else:
+			try:
+				data = load_wav_file(io.BytesIO(soundfile))
+			except wave.Error:
+				data = load_ogg_file(io.BytesIO(soundfile))
+		return data
+

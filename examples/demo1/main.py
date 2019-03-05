@@ -17,10 +17,25 @@
 import sys
 sys.path.append(".")
 
+print("Importing lucia")
 import lucia
 
-print(dir(lucia))
-print(lucia.__path__)
+print("Initializing lucia")
 lucia.initialize()
+
+print("Showing the window")
 test = lucia.show_window()
-print(type(test))
+
+print("Making menu")
+menu = lucia.interface.Menu()
+menu.add_item_tts("Hello")
+menu.add_item_tts("world")
+menu.add_item_tts("this")
+menu.add_item_tts("is")
+menu.add_item_tts("a")
+menu.add_item_tts("test")
+result = menu.run("Please select something")
+print(str(result))
+
+while lucia.running:
+	lucia.process_events()
