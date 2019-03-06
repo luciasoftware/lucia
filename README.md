@@ -14,13 +14,11 @@ In addition lucia should be cross platform, At Least on windows and mac.
 * lucia/utils - things coded into the engine, but not necessarily required in any game.
 
 ### Todo
-* Unify keyboard and joystick handling.
-* Improve the input (interface/input.py (add number support, uppercase support and some special characters).
 * Add checksum checks to the resource manager.
 * Proper distance handling with rolloff and silence after a certain distance, should be no more than 70.
 * A documentation of the toolset available and how it may be used, with some examples.
-* Higher level wrapper around speech where you can just call speech.speak/.stop/whatever and it will do whatever you like, include an auto detection mode and in this autodetection function you should specify if you want screen reader detection to be included. This will make game voice output much easier to work with, while still allowing self-voicing games. Kinda how the menu does it.
 * More exceptions need to be thrown out to the user (for better error handling).
 
 # Bugs (issues can be attached)
 * Resource files doesn't load correctly on mac.
+* There exists a bug, that shws after installing lucia (ImportError, no module named pywintypes). For now, a fix is by reinstalling pywin32 (pip uinstall pywin32 and pip install pywin32).

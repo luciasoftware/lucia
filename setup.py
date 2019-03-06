@@ -18,7 +18,6 @@ author='Lucia Software',
 license='LGPL',
 packages=['lucia', 'lucia.audio', 'lucia.interface', 'lucia.utils'],
 install_requires=[
-'pywin32',
 'pysdl2',
 'pycryptodomex',
 'pysoundfile',
