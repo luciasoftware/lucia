@@ -50,8 +50,11 @@ def process_events():
 			break
 		if event.type == sdl2.SDL_KEYDOWN:
 			current_key_pressed = event.key.keysym.sym
+			keys_held.append(event.key.keysym.sym)
 		if event.type == sdl2.SDL_KEYUP:
 			current_key_released = event.key.keysym.sym
+			if event.key.keysym.sym in keys_held:
+				keys_held.remove(event.key.keysym.sym)
 		window.refresh()
 	return sdl2.ext.get_events()
 
@@ -59,3 +62,14 @@ def key_pressed(key_code):
 	global current_key_pressed
 	return current_key_pressed == key_code
 
+def key_released(key_code):
+	global current_key_released
+	return current_key_released == key_code
+
+def key_down(key_code):
+	global held_keys
+	return key_code in held_keys
+
+def key_up(key_code):
+	global held_keys
+	return key_code not in held_keys
