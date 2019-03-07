@@ -31,7 +31,7 @@ class vector:
 
 def move(coords, deg=0.0, zdeg=0.0):
 	x, y, z = coords
-	if deg > 360:
+	if deg > =360:
 		deg = deg - 360
 	r = vector()
 	r.x=x+cos(radians(deg))
@@ -61,7 +61,7 @@ def getdir(facing):
 
 def snapleft(direction, inc=45):
  d = direction+inc
- if d>360:
+ if d>=360:
   d-=360
  return d
 
@@ -73,7 +73,7 @@ def snapright(direction, inc=45):
 
 def turnleft(deg, inc=5):
  deg+=inc
- if deg>360:
+ if deg>=360:
   deg-=360
  return deg
 
