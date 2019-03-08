@@ -38,7 +38,7 @@ def load_wav_file_mem(data):
 
 
 # supported extensions
-_FILEEXTENSIONS = {".wav": load_wav_file}
+_FILEEXTENSIONS = {".wav": load_wav_file, ".ogg":load_ogg_file}
 
 
 def load_file(fname):
