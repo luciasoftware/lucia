@@ -31,7 +31,7 @@ class vector:
 
 def move(coords, deg=0.0, zdeg=0.0):
 	x, y, z = coords
-	if deg > =360:
+	if deg >= 360:
 		deg = deg - 360
 	r = vector()
 	r.x=x+cos(radians(deg))
