@@ -7,6 +7,7 @@ os.environ["PYSDL2_DLL_PATH"] = os.path.dirname(__file__)
 import sys
 import sdl2
 import sdl2.ext
+from sdl2.keycode import *
 
 # import subpackages..
 from . import audio, interface, utils
