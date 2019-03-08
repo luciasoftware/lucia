@@ -29,7 +29,7 @@ def initialize():
 	sdl2.ext.init()
 	running = True
 
-def show_window(title="LuciaGame", size=(700,600), **kwargs):
+def show_window(title="LuciaGame", size=(640,480), **kwargs):
 	"""Shows the main game window on the screen"""
 	global window
 	window = sdl2.ext.Window(title, size, *kwargs)
