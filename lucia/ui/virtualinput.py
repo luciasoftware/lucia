@@ -14,4 +14,21 @@ class VirtualInput():
 				if event.type == sdl2.SDL_KEYDOWN:
 					if event.key.keysym.sym in (sdl2.SDLK_DOWN, sdl2.SDLK_UP):
 						lucia.output.output(self.text)
-					# some way of detecting a-z A-Z and 0-9 here.
+						continue
+					if event.key.keysym.sym == sdl2.SDLK_BACKSPACE:
+						if len(self.text) == 0:
+							continue
+						last = self.text[-1]
+						self.text = self.text[:-1]
+						lucia.output.output(last + " deleted")
+					if event.key.keysym.sym == sdl2.SDLK_RETURN:
+						return self.text
+					if event.key.keysym.sym == sdl2.SDLK_SPACE:
+						self.text += " "
+						lucia.output.output("space")
+					try:
+						if chr(event.key.keysym.sym).isalnum():
+							self.text += chr(event.key.keysym.sym)
+							lucia.output.output(chr(event.key.keysym.sym))
+					except ValueError:
+						continue
