@@ -10,7 +10,7 @@ import sdl2.ext
 from sdl2.keycode import *
 
 # import subpackages..
-from . import audio, interface, utils
+from . import audio, ui, utils
 
 # import submodules
 from .output import *
@@ -57,7 +57,7 @@ def process_events():
 			if event.key.keysym.sym in keys_held:
 				keys_held.remove(event.key.keysym.sym)
 		window.refresh()
-	return sdl2.ext.get_events()
+	return events
 
 def key_pressed(key_code):
 	global current_key_pressed

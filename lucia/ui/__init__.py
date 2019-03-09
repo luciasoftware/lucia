@@ -13,3 +13,4 @@
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
 from .menu import *
+from .virtualinput import *

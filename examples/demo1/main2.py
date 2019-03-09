@@ -27,7 +27,7 @@ print("Showing the window")
 test = lucia.show_window()
 app.MainLoop()
 print("importing menu2")
-from lucia.interface import menu2
+from lucia.ui import menu2
 print("Making menu")
 menuitems=[menu2.menuitem("hello"), menu2.menuitem("world"), menu2.menuitem("this is a "), menu2.menuitem("test")]
 menu = menu2.Menu(items=menuitems, title="test menu")

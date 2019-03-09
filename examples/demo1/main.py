@@ -27,7 +27,7 @@ print("Showing the window")
 test = lucia.show_window()
 
 print("Making menu")
-menu = lucia.interface.Menu()
+menu = lucia.ui.Menu()
 menu.add_item_tts("Hello")
 menu.add_item_tts("world")
 menu.add_item_tts("this")
@@ -36,6 +36,9 @@ menu.add_item_tts("a")
 menu.add_item_tts("test")
 result = menu.run("Please select something")
 print(str(result))
+
+input = lucia.ui.VirtualInput("this is a test", False)
+input.run()
 
 while lucia.running:
 	lucia.process_events()
