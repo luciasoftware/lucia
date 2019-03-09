@@ -37,8 +37,9 @@ menu.add_item_tts("test")
 result = menu.run("Please select something")
 print(str(result))
 
-input = lucia.ui.VirtualInput("this is a test", False)
-input.run()
+input = lucia.ui.VirtualInput("this is a test", True)
+result = input.run()
+print(result)
 
 while lucia.running:
 	lucia.process_events()

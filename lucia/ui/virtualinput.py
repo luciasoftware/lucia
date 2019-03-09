@@ -20,15 +20,15 @@ class VirtualInput():
 							continue
 						last = self.text[-1]
 						self.text = self.text[:-1]
-						lucia.output.output(last + " deleted")
+						lucia.output.output(last + " deleted") if self.password == False else lucia.output.output("hidden deleted")
 					if event.key.keysym.sym == sdl2.SDLK_RETURN:
 						return self.text
 					if event.key.keysym.sym == sdl2.SDLK_SPACE:
 						self.text += " "
-						lucia.output.output("space")
+						lucia.output.output("space") if self.password == False else lucia.output.output("hidden")
 					try:
 						if chr(event.key.keysym.sym).isalnum():
 							self.text += chr(event.key.keysym.sym)
-							lucia.output.output(chr(event.key.keysym.sym))
+							lucia.output.output(chr(event.key.keysym.sym)) if self.password == False else lucia.output.output("hidden")
 					except ValueError:
 						continue
