@@ -16,7 +16,7 @@ long_description=readme(),
 url='http://github.com/LuciaSoftware/lucia',
 author='Lucia Software',
 license='LGPL',
-packages=['lucia', 'lucia.audio', 'lucia.interface', 'lucia.utils'],
+packages=['lucia', 'lucia.audio', 'lucia.ui', 'lucia.utils'],
 install_requires=[
 'pysdl2',
 'pycryptodomex',
