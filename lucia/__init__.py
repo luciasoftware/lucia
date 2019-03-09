@@ -29,6 +29,9 @@ def initialize():
 	sdl2.ext.init()
 	running = True
 
+def quit():
+	sdl2.ext.quit()
+
 def show_window(title="LuciaGame", size=(640,480), **kwargs):
 	"""Shows the main game window on the screen"""
 	global window
@@ -47,6 +50,7 @@ def process_events():
 		if event.type == sdl2.SDL_QUIT:
 			running = False
 			# for now just exit, in future call registered quit listeners.
+			quit()
 			sys.exit(0)
 			break
 		if event.type == sdl2.SDL_KEYDOWN:
