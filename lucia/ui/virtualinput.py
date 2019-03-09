@@ -1,5 +1,6 @@
 import sdl2
 import lucia
+import string
 
 class VirtualInput():
 	def __init__(self, message, password=False, callback=None):
@@ -9,6 +10,7 @@ class VirtualInput():
 		self.callback=callback
 		#set by the callback and used to break out of the input loop at any given time
 		self.input_break=False
+		self.allowed_characters=[i for i in string.printable if not i=="\r" or i=="\n"]
 
 	def run(self):
 		while True:
@@ -34,7 +36,7 @@ class VirtualInput():
 						self.text += " "
 						lucia.output.output("space") if self.password == False else lucia.output.output("hidden")
 					try:
-						if chr(event.key.keysym.sym).isalnum():
+						if chr(event.key.keysym.sym) in self.allowed_characters:
 							self.text += chr(event.key.keysym.sym)
 							lucia.output.output(chr(event.key.keysym.sym)) if self.password == False else lucia.output.output("hidden")
 					except ValueError:
