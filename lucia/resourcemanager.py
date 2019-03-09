@@ -14,8 +14,9 @@
 
 #constants
 #compression
-ZLIB=1
-LZMA=2
+ZLIB = 1
+LZMA = 2
+BZ2 = 3
 
 # These are the file types you want to exclude from the pack.
 excluded_file_types = (".py", ".pyc", ".log", ".dll", ".dat")
@@ -31,6 +32,7 @@ iv = "0000000000000000"
 
 import lzma
 import zlib
+import bz2
 from Cryptodome.Cipher import AES
 from Cryptodome.Hash import SHA1
 from Cryptodome.Hash import SHA256
@@ -63,9 +65,11 @@ def compress_data(data, algorithm=1, compression_level=6):
 	if type(data)!=bytes:
 		data=data.encode()
 	if algorithm==1:
-		return zlib.compress(data)
+		return zlib.compress(data, level=compression_level)
 	elif algorithm==2:
 		return lzma.compress(data, preset=compression_level)
+	elif algorithm == 3:
+		return bz2.compress(data, compresslevel=compression_level)
 	else:
 		raise unsupportedAlgorithm
 
@@ -76,6 +80,8 @@ def decompress_data(data, algorithm=1):
 		return zlib.decompress(data)
 	elif algorithm==2:
 		return lzma.decompress(data)
+	elif algorithm == 3:
+		return bz2.decompress(data)
 	else:
 		raise unsupportedAlgorithm
 
