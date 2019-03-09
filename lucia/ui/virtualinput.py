@@ -2,13 +2,20 @@ import sdl2
 import lucia
 
 class VirtualInput():
-	def __init__(self, message, password=False):
+	def __init__(self, message, password=False, callback=None):
 		self.text = ""
 		self.message = message
 		self.password = password
+		self.callback=callback
+		#set by the callback and used to break out of the input loop at any given time
+		self.input_break=False
 
 	def run(self):
 		while True:
+			if callable(self.callback):
+				self.callback(self)
+			if self.input_break:
+				break
 			events = lucia.process_events()
 			for event in events:
 				if event.type == sdl2.SDL_KEYDOWN:
