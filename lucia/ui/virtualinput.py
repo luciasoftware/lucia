@@ -27,7 +27,7 @@ class VirtualInput():
 			for event in events:
 				if event.type == sdl2.SDL_KEYDOWN:
 					if event.key.keysym.sym in (sdl2.SDLK_DOWN, sdl2.SDLK_UP):
-						lucia.output.output(self.text)
+						lucia.output.output(self.text) if self.password == False else lucia.output.output(f"{len(self.text)} hidden")
 						continue
 					if event.key.keysym.sym == sdl2.SDLK_BACKSPACE:
 						if len(self.text) == 0:
