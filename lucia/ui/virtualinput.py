@@ -2,15 +2,20 @@ import sdl2
 import lucia
 import string
 
+WHITELIST_ALL = [i for i in string.printable if not i=="\r" or i=="\n"]
+WHITELIST_LETTERS = [i for i in string.ascii_letters]
+WHITELIST_DIGITS = [i for i in string.digits]
+WHITELIST_HEXDIGITS = [i for i in string.hexdigits]
+
 class VirtualInput():
-	def __init__(self, message, password=False, callback=None):
+	def __init__(self, message, password=False, whitelist=WHITELIST_ALL, callback=None):
 		self.text = ""
 		self.message = message
 		self.password = password
 		self.callback=callback
 		#set by the callback and used to break out of the input loop at any given time
 		self.input_break=False
-		self.allowed_characters=[i for i in string.printable if not i=="\r" or i=="\n"]
+		self.allowed_characters=whitelist
 
 	def run(self):
 		while True:
