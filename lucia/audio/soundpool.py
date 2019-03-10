@@ -3,6 +3,12 @@ from math import pi, cos, sin, radians
 from .loaders import *
 import io
 
+class SoundNotPlayingError(ValueError):
+	pass
+
+class UnsupportedAudioFormatError(Error):
+	pass
+
 class SoundPool():
 	def __init__(self, rolloff_factor = 0.5, max_distance=10):
 		self.sources = []
@@ -58,7 +64,7 @@ class SoundPool():
 		try:
 			self.world.stop(source)
 		except:
-			pass
+			raise SoundNotPlayingError(f"Sound {source} is no longer playing.")
 
 	def play_stationary(self, soundfile, looping =False):
 		source = audio.SoundSource()
@@ -107,5 +113,7 @@ class SoundPool():
 				data = load_wav_file(io.BytesIO(soundfile))
 			except wave.Error:
 				data = load_ogg_file(io.BytesIO(soundfile))
+			except:
+				raise UnsupportedAudioFormatError()
 		return data
 
