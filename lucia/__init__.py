@@ -10,6 +10,7 @@ import sdl2.ext
 from sdl2.keycode import *
 
 # import subpackages..
+from openal import audio as oAudio # if not done this way, it will conflict will lucia.audio
 from . import audio, ui, utils
 
 # import submodules
@@ -18,6 +19,7 @@ from .resourcemanager import *
 
 
 window = None
+audio_world = None
 running = False
 current_key_pressed = 0
 current_key_released = 0
@@ -25,8 +27,10 @@ keys_held = []
 
 def initialize():
 	"""Initialize the underlying engines"""
-	global running
+	global audio_world, running
 	sdl2.ext.init()
+	audio_world = oAudio.SoundSink()
+	audio_world.activate()
 	running = True
 
 def quit():

@@ -1,3 +1,4 @@
+import lucia
 from openal import al, alc, audio
 from math import pi, cos, sin, radians
 from .loaders import *
@@ -6,7 +7,7 @@ import io
 class SoundNotPlayingError(ValueError):
 	pass
 
-class UnsupportedAudioFormatError(Error):
+class UnsupportedAudioFormatError(Exception):
 	pass
 
 class SoundPool():
@@ -14,15 +15,13 @@ class SoundPool():
 		self.sources = []
 		self.all_paused = False
 		self.default_rolloff_factor = rolloff_factor
-		self.world = audio.SoundSink()
+		self.world = lucia.audio_world
 		self.listener = self.world.listener
 		#get list of available htrf tables
 		self.hrtf_buffers = [alc.ALCint(),alc.ALCint*4,alc.ALCint()]
 		alc.alcGetIntegerv(self.world.device,alc.ALC_NUM_HRTF_SPECIFIERS_SOFT, 1,self.hrtf_buffers[0])
 		#attributes for device to set specified hrtf table
 		self.hrtf_select = self.hrtf_buffers[1](alc.ALC_HRTF_SOFT,alc.ALC_TRUE,alc.ALC_HRTF_ID_SOFT,1)
-		# activate
-		self.world.activate()
 
 	def set_hrtf(self,num):
 		if num == None:
@@ -68,7 +67,7 @@ class SoundPool():
 
 	def play_stationary(self, soundfile, looping =False):
 		source = audio.SoundSource()
-		source.queue(self._get_audio_data(soundfile))
+		source.queue(_get_audio_data(soundfile))
 		self.world.play(source)
 		self.world.update()
 		self.sources.append(source)
@@ -82,7 +81,7 @@ class SoundPool():
 
 	def play_3d(self, soundfile, x, y, z, looping = False, pitch=1.0, volume=1.0, rolloff_factor=0.5):
 		source = audio.SoundSource(1.0, pitch, (x,y,z))
-		source.queue(self._get_audio_data(soundfile))
+		source.queue(_get_audio_data(soundfile))
 		source.looping = looping
 		self.world.play(source)
 		self.world.update()
@@ -105,15 +104,15 @@ class SoundPool():
 		self.listener.orientation = (ox, oz, -oy, 0, 1, 0)
 		self.world.update()
 
-	def _get_audio_data(self, soundfile):
-		if isinstance(soundfile, str):
-			data = load_file(soundfile)
-		else:
-			try:
-				data = load_wav_file(io.BytesIO(soundfile))
-			except wave.Error:
-				data = load_ogg_file(io.BytesIO(soundfile))
-			except:
-				raise UnsupportedAudioFormatError()
-		return data
+def _get_audio_data(soundfile):
+	if isinstance(soundfile, str):
+		data = load_file(soundfile)
+	else:
+		try:
+			data = load_wav_file(io.BytesIO(soundfile))
+		except wave.Error:
+			data = load_ogg_file(io.BytesIO(soundfile))
+		except:
+			raise UnsupportedAudioFormatError()
+	return data
 
