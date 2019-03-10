@@ -42,7 +42,10 @@ class Menu():
 			if lucia.key_pressed(sdl2.SDLK_ESCAPE):
 				if self.enter_sound != "":
 					self.pool.play_stationary(self.enter_sound)
-					self.pool.stop(music)
+					try:
+						self.pool.stop(music)
+					except: # thrown if no music was specified.
+						pass
 				return "-1"
 			if lucia.key_pressed(sdl2.SDLK_DOWN):
 				if self.count < len(self.items)-1:
@@ -66,7 +69,10 @@ class Menu():
 				if self.enter_sound != "":
 					self.pool.play_stationary(self.enter_sound)
 				self.running = False
-				self.pool.stop(music)
+				try:
+					self.pool.stop(music)
+				except: # thrown if no music was selected
+					pass
 		return self.items[list(self.items)[self.count]]
 
 class YesNoMenu(Menu):

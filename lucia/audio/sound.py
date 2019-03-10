@@ -1,5 +1,4 @@
 import lucia
-from .soundpool import SoundNotPlayingError, _get_audio_data
 from openal import al, alc, audio
 
 class Sound():
@@ -14,7 +13,7 @@ class Sound():
 		def load(self, soundfile):
 			self.soundfile = soundfile
 		self.source = audio.SoundSource()
-		source.queue(_get_audio_data(soundfile))
+		source.queue(lucia.audio._get_audio_data(soundfile))
 		return source
 
 	def play(self):

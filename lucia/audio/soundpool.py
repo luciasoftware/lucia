@@ -4,12 +4,6 @@ from math import pi, cos, sin, radians
 from .loaders import *
 import io
 
-class SoundNotPlayingError(ValueError):
-	pass
-
-class UnsupportedAudioFormatError(Exception):
-	pass
-
 class SoundPool():
 	def __init__(self, rolloff_factor = 0.5, max_distance=10):
 		self.sources = []
@@ -63,11 +57,11 @@ class SoundPool():
 		try:
 			self.world.stop(source)
 		except:
-			raise SoundNotPlayingError(f"Sound {source} is no longer playing.")
+			raise lucia.audio.SoundNotPlayingError(f"Sound {source} is no longer playing.")
 
 	def play_stationary(self, soundfile, looping =False):
 		source = audio.SoundSource()
-		source.queue(_get_audio_data(soundfile))
+		source.queue(lucia.audio._get_audio_data(soundfile))
 		self.world.play(source)
 		self.world.update()
 		self.sources.append(source)
@@ -81,7 +75,7 @@ class SoundPool():
 
 	def play_3d(self, soundfile, x, y, z, looping = False, pitch=1.0, volume=1.0, rolloff_factor=0.5):
 		source = audio.SoundSource(1.0, pitch, (x,y,z))
-		source.queue(_get_audio_data(soundfile))
+		source.queue(lucia.audio._get_audio_data(soundfile))
 		source.looping = looping
 		self.world.play(source)
 		self.world.update()
@@ -103,16 +97,3 @@ class SoundPool():
 		oz=0+sin(radians(zdirection))
 		self.listener.orientation = (ox, oz, -oy, 0, 1, 0)
 		self.world.update()
-
-def _get_audio_data(soundfile):
-	if isinstance(soundfile, str):
-		data = load_file(soundfile)
-	else:
-		try:
-			data = load_wav_file(io.BytesIO(soundfile))
-		except wave.Error:
-			data = load_ogg_file(io.BytesIO(soundfile))
-		except:
-			raise UnsupportedAudioFormatError()
-	return data
-

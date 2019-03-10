@@ -13,3 +13,23 @@
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
 from .soundpool import *
+from .sound import *
+
+class SoundNotPlayingError(ValueError):
+	pass
+
+class UnsupportedAudioFormatError(Exception):
+	pass
+
+def _get_audio_data(soundfile):
+	if isinstance(soundfile, str):
+		data = load_file(soundfile)
+	else:
+		try:
+			data = load_wav_file(io.BytesIO(soundfile))
+		except wave.Error:
+			data = load_ogg_file(io.BytesIO(soundfile))
+		except:
+			raise UnsupportedAudioFormatError()
+	return data
+
