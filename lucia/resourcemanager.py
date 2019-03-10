@@ -110,6 +110,9 @@ class ResourceManager():
 
 	def get_resource(self, k):
 		result = self.data[k]
+		if self.data[key+".hash"] != SHA1.new(result).digest():
+			raise ValueError(f"checksum validation failed for item {k}.")
+			return None
 		return result
 
 	# short hand function
@@ -118,6 +121,7 @@ class ResourceManager():
 
 	def set_resource(self, k, v):
 		self.data[k] = v
+		self.data[k+".hash"] = SHA1.new(d).digest()
 
 	# short hand function
 	def set(self, k, v):
