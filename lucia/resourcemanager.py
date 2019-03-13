@@ -121,7 +121,7 @@ class ResourceManager():
 
 	def set_resource(self, k, v):
 		self.data[k] = v
-		self.data[k+".hash"] = SHA1.new(d).digest()
+		self.data[k+".hash"] = SHA1.new(v).digest()
 
 	# short hand function
 	def set(self, k, v):
