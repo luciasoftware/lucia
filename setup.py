@@ -34,5 +34,6 @@ install_requires=[
 'https://github.com/Accessiware/accessible_output2/tarball/master#egg=accessible_output2',
 ],
 include_package_data=True,
+package_data={'lucia': ['OpenAL32.dll', 'SDL2.dll']},
 zip_safe=False
 )
