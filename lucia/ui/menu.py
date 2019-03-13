@@ -31,7 +31,7 @@ class Menu():
 		self.running = True
 		if self.music:
 			music = self.pool.play_stationary(self.music, True)
-			music.__setattr__("gain", 0.5)
+			music.__setattr__("gain", 0.3)
 		if self.open_sound != "":
 			self.pool.play_stationary(self.open_sound)
 		if intro != "":
