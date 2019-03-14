@@ -21,12 +21,32 @@ class Menu():
 		self.running = False
 		self.items = {}
 		self.shouldInterrupt = True
-		self.pool = lucia.audio.SoundPool()
-		self.enter_sound = enter_sound
-		self.scroll_sound = scroll_sound
-		self.open_sound = open_sound
-		self.border_sound = border_sound
-		self.music = music
+		self.enter_sound = lucia.audio.Sound()
+		self.scroll_sound = lucia.audio.Sound()
+		self.open_sound = lucia.audio.Sound()
+		self.border_sound = lucia.audio.Sound()
+		self.music = lucia.audio.Sound()
+		# in this example we catch the exceptions to allow the end developer to provide no sounds without problems.
+		try:
+			self.enter_sound.load(enter_sound)
+		except ValueError:
+			pass
+		try:
+			self.scroll_sound .load(scroll_sound)
+		except ValueError:
+			pass
+		try:
+			self.open_sound.load(open_sound)
+		except ValueError:
+			pass
+		try:
+			self.border_sound.load(border_sound)
+		except ValueError:
+			pass
+		try:
+			self.music.load(music)
+		except ValueError:
+			pass
 		self.add_speech_method(lucia.output)
 
 	def add_speech_method(self, method, shouldInterrupt=True):
@@ -40,14 +60,13 @@ class Menu():
 			self.items[item] = internal_name
 
 	def run(self, intro="", interrupt=True):
-		music = ""
 		self.count = 0
 		self.running = True
 		if self.music:
-			music = self.pool.play_stationary(self.music, True)
-			music.__setattr__("gain", 0.3)
+			self.music.play()
+			self.music.set_gain(0.3)
 		if self.open_sound != "":
-			self.pool.play_stationary(self.open_sound)
+			self.open_sound.play()
 		if intro != "":
 			self.speechMethod.speak(intro, interrupt)
 		while self.running and lucia.running:
@@ -55,9 +74,9 @@ class Menu():
 			time.sleep(0.005)
 			if lucia.key_pressed(sdl2.SDLK_ESCAPE):
 				if self.enter_sound != "":
-					self.pool.play_stationary(self.enter_sound)
+					self.enter_sound.play()
 					try:
-						self.pool.stop(music)
+						self.music.stop()
 					except: # thrown if no music was specified.
 						pass
 				return "-1"
@@ -65,32 +84,32 @@ class Menu():
 				if self.count < len(self.items)-1:
 					self.count = self.count+1
 					if self.scroll_sound != "":
-						self.pool.play_stationary(self.scroll_sound)
+						self.scroll_sound.play()
 				else:
 					if self.border_sound != "":
-						self.pool.play_stationary(self.border_sound)
+						self.border_sound.play()
 				self.speechMethod.speak(list(self.items)[self.count], self.shouldInterrupt)
 			if lucia.key_pressed(sdl2.SDLK_UP):
 				if self.count > 0:
 					self.count = self.count-1
 					if self.scroll_sound != "":
-						self.pool.play_stationary(self.scroll_sound)
+						self.scroll_sound.play()
 				else:
 					if self.border_sound != "":
-						self.pool.play_stationary(self.border_sound)
+						self.border_sound.play()
 				self.speechMethod.speak(list(self.items)[self.count], self.shouldInterrupt)
 			if lucia.key_pressed(sdl2.SDLK_RETURN):
 				if self.enter_sound != "":
-					self.pool.play_stationary(self.enter_sound)
+					self.enter_sound.play()
 				self.running = False
 				try:
-					self.pool.stop(music)
+					self.music.stop()
 				except: # thrown if no music was selected
 					pass
 		return self.items[list(self.items)[self.count]]
 
 class YesNoMenu(Menu):
-	def __init__(scroll_sound="", enter_sound="", open_sound="", border_sound=""):
-		Menu.__init__(scroll_sound, enter_sound, open_sound, border_sound)
+	def __init__(*args):
+		Menu.__init__(args)
 		self.add_item_tts("Yes", "yes")
 		self.add_item_tts("No", "No")

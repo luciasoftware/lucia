@@ -16,22 +16,23 @@ import lucia
 from openal import al, alc, audio
 
 class Sound():
-	def _init__(self, soundfile=""):
+	def __init__(self, soundfile=""):
 		self.soundfile = soundfile
-		self.loaded = False
 		self.world = lucia.audio_world
-		self.source = None
-		if self.soundfile != "":
-			self.source = self.load(self.soundfile)
-
-		def load(self, soundfile):
-			self.soundfile = soundfile
 		self.source = audio.SoundSource()
-		source.queue(lucia.audio._get_audio_data(soundfile))
-		return source
+		if self.soundfile == "":
+			return
+		self.source = self.load(self.soundfile)
+
+	def load(self, soundfile):
+		if soundfile == "":
+			raise ValueError("No audio data provided")
+		self.soundfile = soundfile
+		self.source.queue(lucia.audio._get_audio_data(self.soundfile))
+		return self.source
 
 	def play(self):
-		self.world.play(source)
+		self.world.play(self.source)
 		self.world.update()
 
 	def stop(self):
@@ -41,13 +42,25 @@ class Sound():
 			raise SoundNotPlayingError(f"Sound {source} is no longer playing.")
 
 	def get_gain(self):
-		return self.source.__getattr__(al.AL_GAIN)
+		try:
+			return self.source.__getattr__(al.AL_GAIN)
+		except:
+			pass
 
 	def set_gain(self, value):
-		self.source.__setattr__(al.AL_GAIN, value)
+		try:
+			self.source.__setattr__(al.AL_GAIN, value)
+		except:
+			pass
 
 	def get_pitch(self):
-		return self.source.__getattr__(al.AL_PITCH)
+		try:
+			return self.source.__getattr__(al.AL_PITCH)
+		except:
+			pass
 
 	def set_pitch(self, value):
-		self.source.__setattr__(al.AL_PITCH, value)
+		try:
+			self.source.__setattr__(al.AL_PITCH, value)
+		except:
+			pass
