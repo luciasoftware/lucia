@@ -64,7 +64,6 @@ class Menu():
 		self.running = True
 		if self.music:
 			self.music.play()
-			self.music.set_gain(0.3)
 		if self.open_sound != "":
 			self.open_sound.play()
 		if intro != "":
