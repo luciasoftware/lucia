@@ -22,8 +22,8 @@ WHITELIST_DIGITS = [i for i in string.digits]
 WHITELIST_HEXDIGITS = [i for i in string.hexdigits]
 
 class VirtualInput():
-	def __init__(self, message, password=False, whitelist=WHITELIST_ALL, callback=None):
-		self.text = ""
+	def __init__(self, message, password=False, whitelist=WHITELIST_ALL, value="", callback=None):
+		self.text = value
 		self.message = message
 		self.password = password
 		self.callback=callback
