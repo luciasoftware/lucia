@@ -12,7 +12,11 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
-"""The main Lucia module"""
+"""The main Lucia module
+
+The functions here are responsible for initializing and quitting lucia, showing the game window, handle global events and so on.
+In addition, this part of lucia also contains must keyboard functions.
+"""
 
 import os
 os.environ["PYAL_DLL_PATH"] = os.path.dirname(__file__)
@@ -40,6 +44,7 @@ current_key_released = 0
 keys_held = []
 
 def initialize():
+	"""Initialize lucia and the underlying graphic, audio, interface engines"""
 	"""Initialize the underlying engines"""
 	global audio_world, running
 	sdl2.ext.init()
@@ -48,10 +53,11 @@ def initialize():
 	running = True
 
 def quit():
+	"""Shutdown lucia and close underlying engines freeing up system resources"""
 	sdl2.ext.quit()
 
 def show_window(title="LuciaGame", size=(640,480), **kwargs):
-	"""Shows the main game window on the screen"""
+	"""Shows the main game window on the screen, this is most likely called at the start of a game"""
 	global window
 	window = sdl2.ext.Window(title, size, *kwargs)
 	window.show()
@@ -83,17 +89,37 @@ def process_events():
 	return events
 
 def key_pressed(key_code):
+	"""Checks if a key was pressed down this frame (single key press)
+	* key_code: a lucia.SDLK key code
+	
+	returns: True if the specified key kode was pressed, False otherwise.
+	"""
 	global current_key_pressed
 	return current_key_pressed == key_code
 
 def key_released(key_code):
+	"""Checks if a key was released down this frame (single key release)
+	* key_code: a lucia.SDLK key code
+	
+	returns: True if the specified key kode was released, False otherwise.
+	"""
 	global current_key_released
 	return current_key_released == key_code
 
 def key_down(key_code):
+	"""Checks if a key is beeing held down.
+	* key_code: a lucia.SDLK key code
+	
+	returns: True if the specified key kode is beeing held down, False otherwise.
+	"""
 	global held_keys
 	return key_code in held_keys
 
 def key_up(key_code):
+	"""Check if a key isn't beeing held down (ie if it's not pressed and held)
+	key_code : An lucia.SDLK key code
+	
+	returns: True if key is not held down, False otherwise
+	"""
 	global held_keys
 	return key_code not in held_keys
