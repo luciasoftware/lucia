@@ -40,27 +40,3 @@ class Sound():
 			self.world.stop(self.source)
 		except:
 			raise SoundNotPlayingError(f"Sound {source} is no longer playing.")
-
-	def get_gain(self):
-		try:
-			return self.source.__getattr__(al.AL_GAIN)
-		except:
-			pass
-
-	def set_gain(self, value):
-		try:
-			self.source.__setattr__(al.AL_GAIN, value)
-		except:
-			pass
-
-	def get_pitch(self):
-		try:
-			return self.source.__getattr__(al.AL_PITCH)
-		except:
-			pass
-
-	def set_pitch(self, value):
-		try:
-			self.source.__setattr__(al.AL_PITCH, value)
-		except:
-			pass

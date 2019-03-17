@@ -60,7 +60,7 @@ def show_window(title="LuciaGame", size=(640,480), **kwargs):
 def process_events():
 	"""This processes events for the window
 	This should be called in any loop, to insure that the window and application stays responsive"""
-	global current_key_pressed, current_key_released, running, window
+	global current_key_pressed, current_key_released, running, window, audio_world
 	current_key_pressed = 0
 	current_key_released = 0
 	events = sdl2.ext.get_events()
@@ -79,6 +79,7 @@ def process_events():
 			if event.key.keysym.sym in keys_held:
 				keys_held.remove(event.key.keysym.sym)
 		window.refresh()
+		audio_world.update()
 	return events
 
 def key_pressed(key_code):
