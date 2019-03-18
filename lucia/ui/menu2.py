@@ -35,7 +35,7 @@ class menuitem:
 		self.on_focus=on_focus #Make sure this is a function. This event is called whenever the focus is on this menu item
 		self.event=event #This is usually an integer. See the events section of this file. Set this to any of the events in the events section.
 class Menu:
-	def __init__(self, items, clicksound="", edgesound="", wrapsound="", entersound="", opensound="", itempos=0, title="menu", fpscap=120, on_index_change=None):
+	def __init__(self, items, clicksound="", edgesound="", wrapsound="", entersound="", opensound="", itempos=0, title="menu", fpscap=120, on_index_change=None, callback_function=None):
 		self.clicksound=clicksound
 		self.edgesound=edgesound
 		self.wrapsound=wrapsound
@@ -46,6 +46,7 @@ class Menu:
 		self.title=title
 		self.fpscap=fpscap
 		self.on_index_change=on_index_change #make sure this is a function. It is called whenever the index of a menu is changed. The index change happens whenever user cycles between menu items.
+		self.callback=callback_function #This should be a function. This function is called within the menu loop
 		self.pool=SoundPool()
 	
 	def run(self):
@@ -59,6 +60,8 @@ class Menu:
 			time.sleep(0.005)
 			try:
 				lucia.process_events()
+				if callable(self.callback):
+					self.callback()
 				if lucia.key_pressed(lucia.SDLK_RETURN):
 					if self.items[self.itempos].can_return:
 						if self.entersound != "": source=self.pool.play_stationary(self.entersound)
@@ -74,10 +77,10 @@ class Menu:
 					if self.itempos > 0:
 						self.itempos-=1
 						if self.clicksound != "": clicksound=self.pool.play_stationary(self.clicksound)
-						if self.items[self.itempos].on_focus!=None:
-							self.items[self.itempos].on_focus()
-						if self.on_index_change!=None:
+						if callable(self.on_index_change):
 							self.on_index_change()
+						if callable(self.items[self.itempos].on_focus):
+							self.items[self.itempos].on_focus()
 						if self.items[self.itempos].has_value==False and self.items[self.itempos].can_be_toggled==False:
 							output.speak(self.items[self.itempos].name)
 						elif self.items[self.itempos].has_value and self.items[self.itempos].can_be_toggled==False:
