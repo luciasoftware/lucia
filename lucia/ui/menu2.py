@@ -80,7 +80,7 @@ class Menu:
 						if callable(self.on_index_change):
 							self.on_index_change()
 						if callable(self.items[self.itempos].on_focus):
-							self.items[self.itempos].on_focus()
+							self.items[self.itempos].on_focus(self)
 						if self.items[self.itempos].has_value==False and self.items[self.itempos].can_be_toggled==False:
 							output.speak(self.items[self.itempos].name)
 						elif self.items[self.itempos].has_value and self.items[self.itempos].can_be_toggled==False:
