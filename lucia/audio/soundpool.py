@@ -82,19 +82,21 @@ class SoundPool():
 		return source
 
 	def play_1d(self, soundfile, x, looping = False, rolloff_factor = -1):
-		return play_3d(soundfile,x,0,0,looping,rolloff_factor)
+		return self.play_3d(soundfile,x,0,0,looping,rolloff_factor)
 
 	def play_2d(self, soundfile, x, y, looping = False, rolloff_factor = -1):
 		return self.play_3d(soundfile,x,y,0,looping,rolloff_factor)
 
 	def play_3d(self, soundfile, x, y, z, looping = False, pitch=1.0, volume=1.0, rolloff_factor=0.5):
-		source = audio.SoundSource(1.0, pitch, (x,y,z))
+		source = audio.SoundSource(1.0, pitch, (x,z,-y))
 		source.queue(lucia.audio._get_audio_data(soundfile))
 		source.looping = looping
 		self.world.play(source)
 		self.world.update()
 		self.sources.append(source)
 		return source
+	def update_sound_position(self, source, x, y, z):
+		source.position=(x, z, -y)
 
 	def update_listener_1d(self, x):
 		self.update_listener_3d(x,0,0)
@@ -102,10 +104,10 @@ class SoundPool():
 	def update_listener_2d(self, x, y):
 		self.update_listener_3d(x,y,0)
 
-	def update_listener_3d(self, x, y, z, direction=0, zdirection=0):
+	def update_listener_3d(self, x, y, z, direction=90, zdirection=0):
 		if direction > 360:
 			direction = direction - 360
-		self.listener.position = (x,y,-z)
+		self.listener.position = (x,z,-y)
 		ox=0+cos(radians(direction))
 		oy=0+sin(radians(direction))
 		oz=0+sin(radians(zdirection))
