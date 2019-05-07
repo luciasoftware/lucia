@@ -63,7 +63,6 @@ def initialize(audiobackend=AudioBackend.OPENAL):
 		raise AudioBackendException("BASS backend not implemented yet.")
 	if audiobackend == AudioBackend.FMOD:
 		raise AudioBackendException("FMOD backend not implemented yet.")
-	print(audio_backend)
 	running = True
 
 def quit():
