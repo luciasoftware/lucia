@@ -1,4 +1,4 @@
-"""Base class for the soundpool. All audio backends sound pool classes will inheriate from this class"""
+"""Base class for the soundpool. All audio backends sound pool classes will inherit from this class"""
 
 from abc import ABC, abstractmethod
 
