@@ -18,7 +18,7 @@ from openal import al, alc, audio
 class Sound(lucia.audio.Sound):
 	def __init__(self, soundfile=""):
 		self.soundfile = soundfile
-		self.world = lucia.audio_world
+		self.world = lucia.audio_backend.audio_world
 		self.source = audio.SoundSource()
 		if self.soundfile == "":
 			return
@@ -40,3 +40,18 @@ class Sound(lucia.audio.Sound):
 			self.world.stop(self.source)
 		except:
 			raise SoundNotPlayingError(f"Sound {source} is no longer playing.")
+
+	def pause(self):
+		try:
+			self.world.pause(self.source)
+		except:
+			raise SoundNotPlayingError(f"Sound {source} is no longer playing.")
+
+	def resume(self):
+		try:
+			self.world.resume(self.source)
+		except:
+			raise SoundNotPlayingError(f"Sound {source} is no longer playing.")
+
+	def get_source_object(self):
+		return self.source

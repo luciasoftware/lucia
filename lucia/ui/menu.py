@@ -34,11 +34,11 @@ class Menu():
 		self.running = False
 		self.items = {}
 		self.shouldInterrupt = True
-		self.enter_sound = lucia.audio.Sound()
-		self.scroll_sound = lucia.audio.Sound()
-		self.open_sound = lucia.audio.Sound()
-		self.border_sound = lucia.audio.Sound()
-		self.music = lucia.audio.Sound()
+		self.enter_sound = lucia.audio_backend.Sound()
+		self.scroll_sound = lucia.audio_backend.Sound()
+		self.open_sound = lucia.audio_backend.Sound()
+		self.border_sound = lucia.audio_backend.Sound()
+		self.music = lucia.audio_backend.Sound()
 		# in this example we catch the exceptions to allow the end developer to provide no sounds without problems.
 		try:
 			self.enter_sound.load(enter_sound)

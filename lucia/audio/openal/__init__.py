@@ -16,6 +16,19 @@ from openal import audio as oAudio # if not done this way, it will conflict will
 from .soundpool import *
 from .sound import *
 
+audio_world = None
+
+# this function most be called for each wrapper.
+def initialize():
+	global audio_world
+	audio_world = oAudio.SoundSink()
+	audio_world.activate()
+
+# This function most be called for each wrapper.
+def update_audio_system():
+	pass
+
+# below is all the wrapper specific stuff.
 class SoundNotPlayingError(ValueError):
 	pass
 
@@ -33,7 +46,3 @@ def _get_audio_data(soundfile):
 		except:
 			raise UnsupportedAudioFormatError()
 	return data
-
-def initialize():
-	audio_world = oAudio.SoundSink()
-	audio_world.activate()

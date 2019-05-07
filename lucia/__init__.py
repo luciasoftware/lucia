@@ -57,6 +57,7 @@ def initialize(audiobackend=AudioBackend.OPENAL):
 	sdl2.ext.init()
 	if audiobackend == AudioBackend.OPENAL:
 		from .audio import openal as backend_openal
+		backend_openal.initialize()
 		audio_backend = backend_openal
 	if audiobackend == AudioBackend.BASS:
 		raise AudioBackendNotSupportedException("BASS backend not implemented yet.")
@@ -79,7 +80,7 @@ def show_window(title="LuciaGame", size=(640,480), **kwargs):
 def process_events():
 	"""This processes events for the window
 	This should be called in any loop, to insure that the window and application stays responsive"""
-	global current_key_pressed, current_key_released, running, window, audio_world
+	global current_key_pressed, current_key_released, running, window, audio_backend
 	current_key_pressed = 0
 	current_key_released = 0
 	events = sdl2.ext.get_events()
@@ -99,7 +100,7 @@ def process_events():
 				if i==event.key.keysym.sym:
 					keys_held.remove(i)
 		window.refresh()
-		audio_world.update()
+		audio_backend.update_audio_system()
 	return events
 
 def key_pressed(key_code):
