@@ -38,12 +38,18 @@ from .resourcemanager import *
 
 window = None
 audio_world = None
+audio_backend = None
 running = False
 current_key_pressed = 0
 current_key_released = 0
 keys_held = []
 
-def initialize():
+class AudioBackend():
+	OPENAL = 0
+	BASS = 1
+	FMOD = 2
+
+def initialize(audiobackend=AudioBackend.OPENAL):
 	"""Initialize lucia and the underlying graphic, audio, interface engines"""
 	"""Initialize the underlying engines"""
 	global audio_world, running
