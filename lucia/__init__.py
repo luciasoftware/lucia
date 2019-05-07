@@ -80,10 +80,11 @@ def process_events():
 		if event.type == sdl2.SDL_KEYDOWN:
 			current_key_pressed = event.key.keysym.sym
 			keys_held.append(event.key.keysym.sym)
-		if event.type == sdl2.SDL_KEYUP:
+		elif event.type == sdl2.SDL_KEYUP:
 			current_key_released = event.key.keysym.sym
-			if event.key.keysym.sym in keys_held:
-				keys_held.remove(event.key.keysym.sym)
+			for i in keys_held:
+				if i==event.key.keysym.sym:
+					keys_held.remove(i)
 		window.refresh()
 		audio_world.update()
 	return events
@@ -112,8 +113,8 @@ def key_down(key_code):
 	
 	returns: True if the specified key kode is beeing held down, False otherwise.
 	"""
-	global held_keys
-	return key_code in held_keys
+	global keys_held
+	return key_code in keys_held
 
 def key_up(key_code):
 	"""Check if a key isn't beeing held down (ie if it's not pressed and held)
@@ -121,5 +122,5 @@ def key_up(key_code):
 	
 	returns: True if key is not held down, False otherwise
 	"""
-	global held_keys
-	return key_code not in held_keys
+	global keys_held
+	return key_code not in keys_held
