@@ -22,6 +22,7 @@ install_requires=[
 'pycryptodomex',
 'pysoundfile',
 'numpy',
+'bson',
 'PyAl',
 'platform_utils',
 'libloader',
