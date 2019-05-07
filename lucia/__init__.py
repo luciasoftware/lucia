@@ -19,8 +19,8 @@ In addition, this part of lucia also contains must keyboard functions.
 """
 
 import os
-os.environ["PYAL_DLL_PATH"] = os.path.dirname(__file__)
-os.environ["PYSDL2_DLL_PATH"] = os.path.dirname(__file__)
+os.environ["PYAL_DLL_PATH"] = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+os.environ["PYSDL2_DLL_PATH"] = os.path.dirname(os.path.realpath(__file__))
 
 import sys
 import sdl2
@@ -28,7 +28,6 @@ import sdl2.ext
 from sdl2.keycode import *
 
 # import subpackages..
-from openal import audio as oAudio # if not done this way, it will conflict will lucia.audio
 from . import audio, ui, utils
 
 # import submodules
@@ -37,12 +36,14 @@ from .resourcemanager import *
 
 
 window = None
-audio_world = None
 audio_backend = None
 running = False
 current_key_pressed = 0
 current_key_released = 0
 keys_held = []
+
+class AudioBackendNotSupportedException(ValueError):
+	pass
 
 class AudioBackend():
 	OPENAL = 0
@@ -52,10 +53,16 @@ class AudioBackend():
 def initialize(audiobackend=AudioBackend.OPENAL):
 	"""Initialize lucia and the underlying graphic, audio, interface engines"""
 	"""Initialize the underlying engines"""
-	global audio_world, running
+	global audio_backend, running
 	sdl2.ext.init()
-	audio_world = oAudio.SoundSink()
-	audio_world.activate()
+	if audiobackend == AudioBackend.OPENAL:
+		from .audio import openal as backend_openal
+		audio_backend = backend_openal
+	if audiobackend == AudioBackend.BASS:
+		raise AudioBackendNotSupportedException("BASS backend not implemented yet.")
+	if audiobackend == AudioBackend.FMOD:
+		raise AudioBackendNotSupportedException("FMOD backend not implemented yet.")
+	print(audio_backend)
 	running = True
 
 def quit():

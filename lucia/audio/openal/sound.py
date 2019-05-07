@@ -15,7 +15,7 @@
 import lucia
 from openal import al, alc, audio
 
-class Sound():
+class Sound(lucia.audio.Sound):
 	def __init__(self, soundfile=""):
 		self.soundfile = soundfile
 		self.world = lucia.audio_world

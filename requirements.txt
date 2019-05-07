@@ -2,6 +2,7 @@ pysdl2
 pycryptodomex
 pysoundfile
 numpy
+bson
 git+https://github.com/NicklasMCHD/PyAL.git
 git+https://github.com/Accessiware/platform_utils.git
 git+https://github.com/Accessiware/libloader.git

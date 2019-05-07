@@ -12,6 +12,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
+from openal import audio as oAudio # if not done this way, it will conflict will lucia.audio
 from .soundpool import *
 from .sound import *
 
@@ -33,3 +34,6 @@ def _get_audio_data(soundfile):
 			raise UnsupportedAudioFormatError()
 	return data
 
+def initialize():
+	audio_world = oAudio.SoundSink()
+	audio_world.activate()
