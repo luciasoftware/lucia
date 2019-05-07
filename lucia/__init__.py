@@ -42,7 +42,7 @@ current_key_pressed = 0
 current_key_released = 0
 keys_held = []
 
-class AudioBackendNotSupportedException(ValueError):
+class AudioBackendException(ValueError):
 	pass
 
 class AudioBackend():
@@ -60,9 +60,9 @@ def initialize(audiobackend=AudioBackend.OPENAL):
 		backend_openal.initialize()
 		audio_backend = backend_openal
 	if audiobackend == AudioBackend.BASS:
-		raise AudioBackendNotSupportedException("BASS backend not implemented yet.")
+		raise AudioBackendException("BASS backend not implemented yet.")
 	if audiobackend == AudioBackend.FMOD:
-		raise AudioBackendNotSupportedException("FMOD backend not implemented yet.")
+		raise AudioBackendException("FMOD backend not implemented yet.")
 	print(audio_backend)
 	running = True
 
