@@ -23,13 +23,14 @@ class SoundPool(lucia.audio.SoundPool):
 		self.sources = []
 		self.all_paused = False
 		self.default_rolloff_factor = rolloff_factor
-		self.world = lucia.audio_world
+		self.world = lucia.get_audio_backend().audio_world
 		self.listener = self.world.listener
 		#get list of available htrf tables
 		self.hrtf_buffers = [alc.ALCint(),alc.ALCint*4,alc.ALCint()]
 		alc.alcGetIntegerv(self.world.device,alc.ALC_NUM_HRTF_SPECIFIERS_SOFT, 1,self.hrtf_buffers[0])
 		#attributes for device to set specified hrtf table
 		self.hrtf_select = self.hrtf_buffers[1](alc.ALC_HRTF_SOFT,alc.ALC_TRUE,alc.ALC_HRTF_ID_SOFT,1)
+		lucia.get_audio_backend().sound_pools.append(self)
 
 	def set_hrtf(self,num):
 		if num == None:
@@ -54,6 +55,9 @@ class SoundPool(lucia.audio.SoundPool):
 			return True
 		elif self.hrtf_buffers[2].value == alc.ALC_HRTF_UNSUPPORTED_FORMAT_SOFT:
 			return False
+
+	def __del__(self):
+		del lucia.get_audio_backend().sound_pools[self]
 
 	def pause_all(self):
 		for source in self.sources:

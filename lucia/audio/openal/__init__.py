@@ -12,21 +12,33 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
+import lucia
 from openal import audio as oAudio # if not done this way, it will conflict will lucia.audio
 from .soundpool import *
 from .sound import *
 
 audio_world = None
+sound_pools = []
 
-# this function most be called for each wrapper.
-def initialize():
-	global audio_world
-	audio_world = oAudio.SoundSink()
-	audio_world.activate()
-
-# This function most be called for each wrapper.
-def update_audio_system():
-	pass
+class OpenALAudioBackend(lucia.audio.AudioBackend):
+	# this function most be called for each wrapper.
+	def initialize(self):
+		global audio_world
+		audio_world = oAudio.SoundSink()
+		audio_world.activate()
+	
+	def quit(self):
+		pass # nothing needed here.
+	
+	# This function most be called for each wrapper.
+	def update_audio_system(self):
+		audio_world.update()
+	
+	def is_hrtf_compatible(self):
+		return False
+	
+	def enable_hrtf(self, should_enable):
+		raise lucia.audio.BackActionNotSupported("ENabling HRTF back wide is not available with the OpenAL backend")
 
 # below is all the wrapper specific stuff.
 class SoundNotPlayingError(ValueError):

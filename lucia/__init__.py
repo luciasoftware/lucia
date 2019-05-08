@@ -37,6 +37,7 @@ from .resourcemanager import *
 
 window = None
 audio_backend = None
+audio_backend_class = None
 running = False
 current_key_pressed = 0
 current_key_released = 0
@@ -53,11 +54,12 @@ class AudioBackend():
 def initialize(audiobackend=AudioBackend.OPENAL):
 	"""Initialize lucia and the underlying graphic, audio, interface engines"""
 	"""Initialize the underlying engines"""
-	global audio_backend, running
+	global audio_backend, audio_backend_class, running
 	sdl2.ext.init()
 	if audiobackend == AudioBackend.OPENAL:
 		from .audio import openal as backend_openal
-		backend_openal.initialize()
+		audio_backend_class = backend_openal.OpenALAudioBackend()
+		audio_backend_class.initialize()
 		audio_backend = backend_openal
 	if audiobackend == AudioBackend.BASS:
 		raise AudioBackendException("BASS backend not implemented yet.")
@@ -99,7 +101,7 @@ def process_events():
 				if i==event.key.keysym.sym:
 					keys_held.remove(i)
 		window.refresh()
-		audio_backend.update_audio_system()
+		audio_backend_class.update_audio_system()
 	return events
 
 def key_pressed(key_code):
