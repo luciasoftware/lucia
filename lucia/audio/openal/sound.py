@@ -28,7 +28,7 @@ class Sound(lucia.audio.Sound):
 		if soundfile == "":
 			raise ValueError("No audio data provided")
 		self.soundfile = soundfile
-		self.source.queue(lucia.audio._get_audio_data(self.soundfile))
+		self.source.queue(lucia.audio_backend._get_audio_data(self.soundfile))
 		return self.source
 
 	def play(self):
