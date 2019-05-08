@@ -2,8 +2,6 @@ import lucia
 from .sound import *
 from .soundpool import *
 
-from sound_lib import listener, main, music, input, output, stream
-
 generic_output = None # used for sounds objects.
 
 class BassAudioBackend(lucia.audio.AudioBackend):
@@ -18,7 +16,7 @@ class BassAudioBackend(lucia.audio.AudioBackend):
 		return False
 	
 	def enable_hrtf(self, should_enable):
-		raise lucia.audio.BackActionNotSupported("ENabling HRTF back wide is not available with the OpenAL backend")
+		raise lucia.audio.BackActionNotSupported("ENabling HRTF back wide is not available with the Bass backend")
 	
 	def update_audio_system(self):
 		raise lucia.AudioBackendException("BASS wrapper not implemented yet.")
