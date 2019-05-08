@@ -62,7 +62,10 @@ def initialize(audiobackend=AudioBackend.OPENAL):
 		audio_backend_class.initialize()
 		audio_backend = backend_openal
 	if audiobackend == AudioBackend.BASS:
-		raise AudioBackendException("BASS backend not implemented yet.")
+		from .audio import bass as backend_bass
+		audio_backend_class = backend_bass.BassAudioBackend()
+		audio_backend_class.initialize()
+		audio_backend = backend_bass
 	if audiobackend == AudioBackend.FMOD:
 		raise AudioBackendException("FMOD backend not implemented yet.")
 	running = True
