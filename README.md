@@ -12,13 +12,33 @@ In addition lucia should be cross platform, At Least on windows and mac.
 * lucia/audio - Audio handling.
 * lucia/interface - things that pop onto the screen (like menus, edit fields and dialogs).
 * lucia/utils - things coded into the engine, but not necessarily required in any game.
+And in addition
+* docs - documentation for lucia (auto generated)
+* tests - tests for lucia.
 
-### Todo
-* Add checksum checks to the resource manager.
-* Proper distance handling with rolloff and silence after a certain distance, should be no more than 70.
-* A documentation of the toolset available and how it may be used, with some examples.
-* More exceptions need to be thrown out to the user (for better error handling).
+### Building / Running:
+#### Running tests:
+To run the tests run the following command:
+> $ python setup.py test
 
-# Bugs (issues can be attached)
-* Resource files doesn't load correctly on mac.
-* There exists a bug, that shws after installing lucia (ImportError, no module named pywintypes). For now, a fix is by reinstalling pywin32 (pip uinstall pywin32 and pip install pywin32).
+#### Generating documentation:
+To generate Lucia's documentation, you first need to install Sphinx
+ > $ pip install Sphinx
+ after to into the "docs" folder and run:
+ > $ cd docs
+ > $ ./make.bat
+
+### Contributing
+Everyone is welcome to help improve Lucia, to start look at the opened issues, and go from there.
+
+### License:
+Copyright (C) 2019  LuciaSoftware and it's contributors.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, version 3 of the License.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
