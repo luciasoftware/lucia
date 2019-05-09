@@ -33,7 +33,8 @@ while lucia.running:
 	if lucia.key_pressed(lucia.SDLK_a):
 		lucia.output.speak("a is pressed")
 	if lucia.key_down(lucia.SDLK_s):
-		lucia.output.speak("s is being held down")
+		#lucia.output.speak("s is being held down")
+		print("LOL")
 	if lucia.key_pressed(lucia.SDLK_ESCAPE):
 		lucia.quit()
 		sys.exit()
