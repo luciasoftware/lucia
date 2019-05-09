@@ -114,7 +114,9 @@ def key_pressed(key_code):
 	returns: True if the specified key kode was pressed, False otherwise.
 	"""
 	global current_key_pressed
-	return current_key_pressed == key_code
+	state=current_key_pressed == key_code
+	current_key_pressed=0
+	return state
 
 def key_released(key_code):
 	"""Checks if a key was released down this frame (single key release)
@@ -123,7 +125,9 @@ def key_released(key_code):
 	returns: True if the specified key kode was released, False otherwise.
 	"""
 	global current_key_released
-	return current_key_released == key_code
+	state=current_key_released == key_code
+	current_key_released=0
+	return state
 
 def key_down(key_code):
 	"""Checks if a key is beeing held down.

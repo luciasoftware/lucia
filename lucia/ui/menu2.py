@@ -1,14 +1,29 @@
-"""enhanced menu for advance uses. Make sure you create wx.App and call the menu before creating any menus with this module. See examples/demmo1/main2.py if you need an idea how this module is used"""
-import lucia
-from lucia.audio.soundpool import *
-from lucia.ui.virtualinput import *
+# Copyright (C) 2018  LuciaSoftware and it's contributors.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
-#Events
-CANCELEVENT=0
+"""enhanced menu for advance uses. Make sure you create wx.App and call the menu before creating any menus with this module. See examples/demmo1/main2.py if you need an idea how this module is used"""
 
 import sys
 import time
+
+import lucia
+from lucia.audio.soundpool import *
+from lucia.ui.virtualinput import *
 from lucia import output
+
+#Events
+CANCELEVENT=0
 
 def getinput(title, message, multiline=False, value="", mode="plaintext"):
 	if mode=="plaintext":
