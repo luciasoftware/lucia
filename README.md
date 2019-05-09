@@ -16,6 +16,21 @@ And in addition
 * docs - documentation for lucia (auto generated)
 * tests - tests for lucia.
 
+
+### Installing lucia
+NOTE: LUCIA IS STILL IN ALPHA
+There's two ways you can install lucia at the moment because Lucia aren't on pypi yet:
+Through pip:
+> $ pip install git+https://github.com/LuciaSoftware/lucia.git
+
+Or the manual way:
+> $ git clone https://github.com/LuciaSoftware/lucia.git
+
+> $ cd lucia
+
+> $ python setup.py install
+
+
 ### Building / Running:
 #### Running tests:
 To run the tests run the following command:
@@ -23,10 +38,12 @@ To run the tests run the following command:
 
 #### Generating documentation:
 To generate Lucia's documentation, you first need to install Sphinx
- > $ pip install Sphinx
- after to into the "docs" folder and run:
- > $ cd docs
- > $ ./make.bat
+> $ pip install Sphinx
+
+after go into the "docs" folder and run:
+> $ cd docs
+
+> $ ./make.bat
 
 ### Contributing
 Everyone is welcome to help improve Lucia, to start look at the opened issues, and go from there.
