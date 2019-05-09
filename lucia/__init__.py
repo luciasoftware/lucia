@@ -39,8 +39,8 @@ window = None
 audio_backend = None
 audio_backend_class = None
 running = False
-current_key_pressed = 0
-current_key_released = 0
+current_key_pressed = -1
+current_key_released = -1
 keys_held = []
 
 class AudioBackendException(ValueError):
@@ -85,8 +85,8 @@ def process_events():
 	"""This processes events for the window
 	This should be called in any loop, to insure that the window and application stays responsive"""
 	global current_key_pressed, current_key_released, keys_held, running, window, audio_backend
-	current_key_pressed = 0
-	current_key_released = 0
+	current_key_pressed = -1
+	current_key_released = -1
 	events = sdl2.ext.get_events()
 	for event in events:
 		if event.type == sdl2.SDL_QUIT:
