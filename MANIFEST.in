@@ -1,5 +1,4 @@
 include README.md
 include LICENSE
-include docs
-include examples
-
+include docs/*
+include examples/*
