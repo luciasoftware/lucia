@@ -13,16 +13,17 @@
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
 """enhanced menu for advance uses. Make sure you create wx.App and call the menu before creating any menus with this module. See examples/demmo1/main2.py if you need an idea how this module is used"""
-import lucia
-from lucia.audio.soundpool import *
-from lucia.ui.virtualinput import *
-
-#Events
-CANCELEVENT=0
 
 import sys
 import time
+
+import lucia
+from lucia.audio.soundpool import *
+from lucia.ui.virtualinput import *
 from lucia import output
+
+#Events
+CANCELEVENT=0
 
 def getinput(title, message, multiline=False, value="", mode="plaintext"):
 	if mode=="plaintext":
