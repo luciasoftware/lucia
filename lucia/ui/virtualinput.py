@@ -20,9 +20,9 @@ WHITELIST_ALL = [i for i in string.printable if not i=="\r" or i=="\n"]
 WHITELIST_LETTERS = [i for i in string.ascii_letters]
 WHITELIST_DIGITS = [i for i in string.digits]
 WHITELIST_HEXDIGITS = [i for i in string.hexdigits]
-WHITELIST_NEGDIGITS=WHITELIST_DIGITS+'-'
-WHITELIST_FLOATDIGITS=WHITELIST_DIGITS+'.'
-WHITELIST_NEGFLOATDIGITS=WHITELIST_NEGDIGITS+'-'
+WHITELIST_NEGDIGITS=WHITELIST_DIGITS+['-']
+WHITELIST_FLOATDIGITS=WHITELIST_DIGITS+['.']
+WHITELIST_NEGFLOATDIGITS=WHITELIST_NEGDIGITS+['-']
 
 class VirtualInput():
 	def __init__(self, message, password=False, whitelist=WHITELIST_ALL, value="", callback=None):
