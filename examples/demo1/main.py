@@ -21,7 +21,7 @@ print("Importing lucia")
 import lucia
 
 print("Initializing lucia")
-lucia.initialize(audiobackend=lucia.AudioBackend.BASS)
+lucia.initialize(audiobackend=lucia.AudioBackend.OPENAL)
 
 print("Showing the window")
 test = lucia.show_window()

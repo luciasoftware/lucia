@@ -16,7 +16,7 @@ import lucia
 from sound_lib import stream
 
 class Sound(lucia.audio.Sound):
-	def __init__(self, soundfile="")):
+	def __init__(self, soundfile=""):
 		self.stream = None
 		self.soundfile = soundfile
 		if soundfile != "":
@@ -27,12 +27,12 @@ class Sound(lucia.audio.Sound):
 		if soundfile == "":
 			raise ValueError("No audio data provided")
 		if isinstance(soundfile, str):
-			self.source = stream.FileStream(mem=False, soundfile)
+			self.source = stream.FileStream(soundfile,Mem=false)
 		if isinstance(soundfile, str):
-			self.source = stream.FileStream(mem=False, soundfile)
+			self.source = stream.FileStream(soundfile,mem=False)
 		else:
-			self.source = stream.FileStream(mem=True, io.BytesIO(soundfile)
-		self.soundfile = soundfile
+			self.source = stream.FileStream(io.BytesIO(soundfile),mem=True)
+		self.soundfile=soundfile
 		return self.source
 	
 	def play(self):
