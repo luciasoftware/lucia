@@ -27,11 +27,9 @@ class Sound(lucia.audio.Sound):
 		if soundfile == "":
 			raise ValueError("No audio data provided")
 		if isinstance(soundfile, str):
-			self.source = stream.FileStream(soundfile,Mem=false)
-		if isinstance(soundfile, str):
-			self.source = stream.FileStream(soundfile,mem=False)
+			self.source = stream.FileStream(file=soundfile,mem=False)
 		else:
-			self.source = stream.FileStream(io.BytesIO(soundfile),mem=True)
+			self.source = stream.FileStream(file=io.BytesIO(soundfile),mem=True)
 		self.soundfile=soundfile
 		return self.source
 	

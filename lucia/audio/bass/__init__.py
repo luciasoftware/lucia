@@ -16,15 +16,18 @@ import lucia
 from .sound import *
 from .soundpool import *
 
+from sound_lib import output
+
 generic_output = None # used for sounds objects.
 
 class BassAudioBackend(lucia.audio.AudioBackend):
 	def initialize(self):
 		global generic_output
-		
+		generic_output = output.ThreeDOutput()
 	
 	def quit(self):
-		pass
+		global generic_output
+		generic_output = None
 	
 	def is_hrtf_compatible(self):
 		return False
