@@ -15,7 +15,7 @@ _south = 270
 _southeast = 315
 
 
-class vector:
+class Vector():
  def __init__(self, x=0.0, y=0.0, z=0.0):
   self.x = x
   self.y= y
@@ -33,7 +33,7 @@ def move(coords, deg=0.0, zdeg=0.0):
 	x, y, z = coords
 	if deg >= 360:
 		deg = deg - 360
-	r = vector()
+	r = Vector()
 	r.x=x+cos(radians(deg))
 	r.y=y+sin(radians(deg))
 	r.z=z+sin(radians(zdeg))

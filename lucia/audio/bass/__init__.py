@@ -24,6 +24,7 @@ class BassAudioBackend(lucia.audio.AudioBackend):
 	def initialize(self):
 		global generic_output
 		generic_output = output.ThreeDOutput()
+		generic_output.start()
 	
 	def quit(self):
 		global generic_output
@@ -36,4 +37,4 @@ class BassAudioBackend(lucia.audio.AudioBackend):
 		raise lucia.audio.BackActionNotSupported("ENabling HRTF back wide is not available with the Bass backend")
 	
 	def update_audio_system(self):
-		raise lucia.AudioBackendException("BASS wrapper not implemented yet.")
+		pass

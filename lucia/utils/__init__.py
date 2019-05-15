@@ -14,6 +14,6 @@
 
 #from . import network
 from .number_to_words import *
-from .rotation import *
 from .instance_checker import *
 from .timer import *
+from . import rotation
