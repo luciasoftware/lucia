@@ -19,8 +19,13 @@ In addition, this part of lucia also contains must keyboard functions.
 """
 
 import os
-os.environ["PYAL_DLL_PATH"] = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-os.environ["PYSDL2_DLL_PATH"] = os.path.dirname(os.path.realpath(__file__))
+import platform
+os_bit, os_name = platform.architecture()
+os.environ["PYAL_DLL_PATH"] = os.path.join(os.path.dirname(os.path.realpath(__file__)), "lib", os_bit)
+os.environ["PYSDL2_DLL_PATH"] = os.path.join(os.path.dirname(os.path.realpath(__file__)),  "lib", os_bit)
+
+print(os.environ["PYAL_DLL_PATH"])
+print(os.environ["PYSDL2_DLL_PATH"])
 
 import sys
 import sdl2
