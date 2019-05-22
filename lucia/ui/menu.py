@@ -13,7 +13,7 @@
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
 import lucia
-import sdl2
+import pygame
 import time
 
 class Menu():
@@ -108,7 +108,7 @@ class Menu():
 		while self.running and lucia.running:
 			lucia.process_events()
 			time.sleep(0.005)
-			if lucia.key_pressed(sdl2.SDLK_ESCAPE):
+			if lucia.key_pressed(pygame.K_ESCAPE):
 				if self.enter_sound != "":
 					self.enter_sound.play()
 					try:
@@ -116,7 +116,7 @@ class Menu():
 					except: # thrown if no music was specified.
 						pass
 				return "-1"
-			if lucia.key_pressed(sdl2.SDLK_DOWN):
+			if lucia.key_pressed(pygame.K_DOWN):
 				if self.count < len(self.items)-1:
 					self.count = self.count+1
 					if self.scroll_sound != "":
@@ -125,7 +125,7 @@ class Menu():
 					if self.border_sound != "":
 						self.border_sound.play()
 				self.speechMethod.speak(list(self.items)[self.count], self.shouldInterrupt)
-			if lucia.key_pressed(sdl2.SDLK_UP):
+			if lucia.key_pressed(pygame.K_UP):
 				if self.count > 0:
 					self.count = self.count-1
 					if self.scroll_sound != "":
@@ -134,7 +134,7 @@ class Menu():
 					if self.border_sound != "":
 						self.border_sound.play()
 				self.speechMethod.speak(list(self.items)[self.count], self.shouldInterrupt)
-			if lucia.key_pressed(sdl2.SDLK_RETURN):
+			if lucia.key_pressed(pygame.K_RETURN):
 				if self.enter_sound != "":
 					self.enter_sound.play()
 				self.running = False

@@ -18,9 +18,8 @@ import sys
 import time
 
 import lucia
-from lucia.audio.soundpool import *
+import pygame
 from lucia.ui.virtualinput import *
-from lucia import output
 
 #Events
 CANCELEVENT=0
@@ -62,14 +61,14 @@ class Menu:
 		self.fpscap=fpscap
 		self.on_index_change=on_index_change #make sure this is a function. It is called whenever the index of a menu is changed. The index change happens whenever user cycles between menu items.
 		self.callback=callback_function #This should be a function. This function is called within the menu loop
-		self.pool=SoundPool()
+		self.pool=lucia.audio_backend.SoundPool()
 	
 	def run(self):
 		try:
-			output.speak(self.title)
+			lucia.output.speak(self.title)
 			return self.loop()
 		except Exception as e:
-			output.speak(str(e))
+			lucia.output.speak(str(e))
 	def loop(self):
 		while 1:
 			time.sleep(0.005)
@@ -77,7 +76,7 @@ class Menu:
 				lucia.process_events()
 				if callable(self.callback):
 					self.callback()
-				if lucia.key_pressed(lucia.SDLK_RETURN):
+				if lucia.key_pressed(pygame.K_RETURN):
 					if self.items[self.itempos].can_return:
 						if self.entersound != "": source=self.pool.play_stationary(self.entersound)
 						list_values=[]
@@ -88,7 +87,7 @@ class Menu:
 								list_values.append({"name": x.name, "value": x.value, "toggle_value": x.toggle_value})
 						list_values.insert(0, {"name": self.items[self.itempos].name, "value": self.items[self.itempos].value, "toggle_value": self.items[self.itempos].toggle_value})
 						return list_values
-				elif lucia.key_pressed(lucia.SDLK_UP):
+				elif lucia.key_pressed(pygame.K_UP):
 					if self.itempos > 0:
 						self.itempos-=1
 						if self.clicksound != "": clicksound=self.pool.play_stationary(self.clicksound)
@@ -97,22 +96,22 @@ class Menu:
 						if callable(self.items[self.itempos].on_focus):
 							self.items[self.itempos].on_focus(self)
 						if self.items[self.itempos].has_value==False and self.items[self.itempos].can_be_toggled==False:
-							output.speak(self.items[self.itempos].name)
+							lucia.output.speak(self.items[self.itempos].name)
 						elif self.items[self.itempos].has_value and self.items[self.itempos].can_be_toggled==False:
-							output.speak(self.items[self.itempos].name+": "+str(self.items[self.itempos].value)+". Press left shift or right shift to change this item's value")
+							lucia.output.speak(self.items[self.itempos].name+": "+str(self.items[self.itempos].value)+". Press left shift or right shift to change this item's value")
 						elif self.items[self.itempos].has_value==False and self.items[self.itempos].can_be_toggled:
 							if self.items[self.itempos].toggle_value==True:
-								output.speak(self.items[self.itempos].name+": On. Press space to switch off")
+								lucia.output.speak(self.items[self.itempos].name+": On. Press space to switch off")
 							else:
-								output.speak(self.items[self.itempos].name+": Off. Press space to switch on")
+								lucia.output.speak(self.items[self.itempos].name+": Off. Press space to switch on")
 						elif self.items[self.itempos].has_value and self.items[self.itempos].can_be_toggled:
 							speakstr=self.items[self.itempos].name+". Value: "+str(self.items[self.itempos].value)
 							if self.items[self.itempos].toggle_value==True:
 								speakstr+=". Switch: On"
 							else:
 								speakstr+=". Switch: Off"
-							output.speak(speakstr+". Press left shift or right shift to change this item's value. Press space to toggle on or off")
-				elif lucia.key_pressed(lucia.SDLK_DOWN):
+							lucia.output.speak(speakstr+". Press left shift or right shift to change this item's value. Press space to toggle on or off")
+				elif lucia.key_pressed(pygame.K_DOWN):
 					if self.itempos < len(self.items)-1:
 						self.itempos+=1
 						if self.clicksound != "": clicksound=self.pool.play_stationary(self.clicksound)
@@ -121,35 +120,35 @@ class Menu:
 						if self.on_index_change!=None:
 							self.on_index_change()
 						if self.items[self.itempos].has_value==False and self.items[self.itempos].can_be_toggled==False:
-							output.speak(self.items[self.itempos].name)
+							lucia.output.speak(self.items[self.itempos].name)
 						elif self.items[self.itempos].has_value and self.items[self.itempos].can_be_toggled==False:
-							output.speak(self.items[self.itempos].name+": "+str(self.items[self.itempos].value)+". Press left shift or right shift to change this item's value")
+							lucia.output.speak(self.items[self.itempos].name+": "+str(self.items[self.itempos].value)+". Press left shift or right shift to change this item's value")
 						elif self.items[self.itempos].has_value==False and self.items[self.itempos].can_be_toggled:
 							if self.items[self.itempos].toggle_value==True:
-								output.speak(self.items[self.itempos].name+": On. Press space to switch off")
+								lucia.output.speak(self.items[self.itempos].name+": On. Press space to switch off")
 							else:
-								output.speak(self.items[self.itempos].name+": Off. Press space to switch on")
+								lucia.output.speak(self.items[self.itempos].name+": Off. Press space to switch on")
 						elif self.items[self.itempos].has_value and self.items[self.itempos].can_be_toggled:
 							speakstr=self.items[self.itempos].name+". Value: "+str(self.items[self.itempos].value)
 							if self.items[self.itempos].toggle_value==True:
 								speakstr+=". Switch: On"
 							else:
 								speakstr+=". Switch: Off"
-							output.speak(speakstr+". Press left shift or right shift to change this item's value. Press space to toggle on or off")
-				elif lucia.key_pressed(lucia.SDLK_SPACE):
+							lucia.output.speak(speakstr+". Press left shift or right shift to change this item's value. Press space to toggle on or off")
+				elif lucia.key_pressed(pygame.K_SPACE):
 					if self.itempos>-1 and self.itempos<len(self.items):
 						if self.items[self.itempos].can_be_toggled:
 							if self.entersound != "": entersound=self.pool.play_stationary(self.entersound)
 							if self.items[self.itempos].toggle_value==True:
-								output.speak("off")
+								lucia.output.speak("off")
 								self.items[self.itempos].toggle_value=False
 							else:
-								output.speak("on")
+								lucia.output.speak("on")
 								self.items[self.itempos].toggle_value=True
-				elif lucia.key_pressed(lucia.SDLK_LSHIFT) or lucia.key_pressed(lucia.SDLK_RSHIFT):
+				elif lucia.key_down(pygame.K_LSHIFT) or lucia.key_down(pygame.K_RSHIFT):
 					if self.items[self.itempos].has_value==True:
 						self.items[self.itempos].value=getinput("change value", self.items[self.itempos].name+". ", value=self.items[self.itempos].value, mode=self.items[self.itempos].value_mode)
-						output.speak("value set to "+str(self.items[self.itempos].value))
+						lucia.output.speak("value set to "+str(self.items[self.itempos].value))
 						if self.entersound != "": entersound=self.pool.play_stationary(self.entersound)
 			except Exception as e:
-				output.speak(str(e))
+				lucia.output.speak(str(e))

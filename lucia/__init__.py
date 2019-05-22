@@ -25,12 +25,10 @@ os.environ["PYAL_DLL_PATH"] = os.path.join(os.path.dirname(os.path.realpath(__fi
 os.environ["PYSDL2_DLL_PATH"] = os.path.join(os.path.dirname(os.path.realpath(__file__)),  "lib", os_bit)
 
 print(os.environ["PYAL_DLL_PATH"])
-print(os.environ["PYSDL2_DLL_PATH"])
 
 import sys
-import sdl2
-import sdl2.ext
-from sdl2.keycode import *
+import pygame
+from pygame.locals import *
 
 # import subpackages..
 from . import audio, ui, utils
@@ -46,6 +44,7 @@ audio_backend_class = None
 running = False
 current_key_pressed = -1
 current_key_released = -1
+old_keys_held = []
 keys_held = []
 
 class AudioBackendException(ValueError):
@@ -60,7 +59,7 @@ def initialize(audiobackend=AudioBackend.OPENAL):
 	"""Initialize lucia and the underlying graphic, audio, interface engines"""
 	"""Initialize the underlying engines"""
 	global audio_backend, audio_backend_class, running
-	sdl2.ext.init()
+	pygame.init()
 	if audiobackend == AudioBackend.OPENAL:
 		from .audio import openal as backend_openal
 		audio_backend_class = backend_openal.OpenALAudioBackend()
@@ -77,77 +76,74 @@ def initialize(audiobackend=AudioBackend.OPENAL):
 
 def quit():
 	"""Shutdown lucia and close underlying engines freeing up system resources"""
-	sdl2.ext.quit()
+	pygame.quit()
 
-def show_window(title="LuciaGame", size=(640,480), **kwargs):
+def show_window(title="LuciaGame", size=(640,480)):
 	"""Shows the main game window on the screen, this is most likely called at the start of a game"""
 	global window
-	window = sdl2.ext.Window(title, size, *kwargs)
-	window.show()
+	window = pygame.display.set_mode(size)
+	pygame.display.set_caption(title)
 	return window
 
 def process_events():
 	"""This processes events for the window
 	This should be called in any loop, to insure that the window and application stays responsive"""
-	global current_key_pressed, current_key_released, keys_held, running, window, audio_backend
+	global current_key_pressed, current_key_released, old_keys_held, keys_held, running, window, audio_backend
 	current_key_pressed = -1
 	current_key_released = -1
-	events = sdl2.ext.get_events()
+	old_keys_held = keys_held
+	events = pygame.event.get()
 	for event in events:
-		if event.type == sdl2.SDL_QUIT:
+		if event.type == QUIT:
 			running = False
 			# for now just exit, in future call registered quit listeners.
 			quit()
 			sys.exit(0)
 			break
-		if event.type == sdl2.SDL_KEYDOWN:
-			current_key_pressed = event.key.keysym.sym
-			keys_held.append(event.key.keysym.sym)
-		if event.type == sdl2.SDL_KEYUP:
-			current_key_released = event.key.keysym.sym
-			for i in keys_held:
-				if i==event.key.keysym.sym:
-					keys_held.remove(i)
-		window.refresh()
+		# update key state here
+		keys_held = ()
+		keys_held = pygame.key.get_pressed()
+		if event.type == pygame.KEYDOWN:
+			if old_keys_held[event.key] == False:
+				current_key_pressed = event.key
+		if event.type == pygame.KEYUP :
+			current_key_released = event.key
+		pygame.display.update()
 		audio_backend_class.update_audio_system()
 	return events
 
 def key_pressed(key_code):
 	"""Checks if a key was pressed down this frame (single key press)
-	* key_code: a lucia.SDLK key code
+	* key_code: a pygame.K_ key code
 	
 	returns: True if the specified key kode was pressed, False otherwise.
 	"""
 	global current_key_pressed
-	state=current_key_pressed == key_code
-	current_key_pressed=0
-	return state
+	return current_key_pressed == key_code
 
 def key_released(key_code):
 	"""Checks if a key was released down this frame (single key release)
-	* key_code: a lucia.SDLK key code
+	* key_code: pygame.K_ key code
 	
 	returns: True if the specified key kode was released, False otherwise.
 	"""
 	global current_key_released
-	state=current_key_released == key_code
-	current_key_released=0
-	return state
+	return current_key_released == key_code
 
 def key_down(key_code):
 	"""Checks if a key is beeing held down.
-	* key_code: a lucia.SDLK key code
+	* key_code: a pygame.K_ key code
 	
 	returns: True if the specified key kode is beeing held down, False otherwise.
 	"""
 	global keys_held
-	return key_code in keys_held
+	return keys_held[key_code]
 
 def key_up(key_code):
 	"""Check if a key isn't beeing held down (ie if it's not pressed and held)
-	key_code : An lucia.SDLK key code
+	key_code : An pygame.K_ key code
 	
 	returns: True if key is not held down, False otherwise
 	"""
 	global keys_held
-	return key_code not in keys_held
+	return keys_held[key_code] == False

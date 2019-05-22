@@ -12,8 +12,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
-import sdl2
 import lucia
+import pygame
 import string
 
 WHITELIST_ALL = [i for i in string.printable if not i=="\r" or i=="\n"]
@@ -42,24 +42,24 @@ class VirtualInput():
 				break
 			events = lucia.process_events()
 			for event in events:
-				if event.type == sdl2.SDL_KEYDOWN:
-					if event.key.keysym.sym in (sdl2.SDLK_DOWN, sdl2.SDLK_UP):
+				if event.type == pygame.KEYDOWN:
+					if event.key in (pygame.K_DOWN,pygame.K_UP):
 						lucia.output.output(self.text) if self.password == False else lucia.output.output(f"{len(self.text)} hidden")
 						continue
-					if event.key.keysym.sym == sdl2.SDLK_BACKSPACE:
+					if event.key == pygame.K_BACKSPACE:
 						if len(self.text) == 0:
 							continue
 						last = self.text[-1]
 						self.text = self.text[:-1]
 						lucia.output.output(last + " deleted") if self.password == False else lucia.output.output("hidden deleted")
-					if event.key.keysym.sym == sdl2.SDLK_RETURN:
+					if event.key == pygame.K_RETURN:
 						return self.text
-					if event.key.keysym.sym == sdl2.SDLK_SPACE:
+					if event.key == pygame.K_SPACE:
 						self.text += " "
 						lucia.output.output("space") if self.password == False else lucia.output.output("hidden")
 					try:
-						if chr(event.key.keysym.sym) in self.allowed_characters:
-							self.text += chr(event.key.keysym.sym)
-							lucia.output.output(chr(event.key.keysym.sym)) if self.password == False else lucia.output.output("hidden")
+						if chr(event.key) in self.allowed_characters:
+							self.text += chr(event.key)
+							lucia.output.output(chr(event.key)) if self.password == False else lucia.output.output("hidden")
 					except ValueError:
 						continue

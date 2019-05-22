@@ -44,6 +44,6 @@ install_requires=dependencies,
 'https://github.com/Accessiware/sound_lib/tarball/master#egg=sound_lib',
 'https://github.com/Accessiware/accessible_output2/tarball/master#egg=accessible_output2',
 ],
-include_package_data=False,
+include_package_data=True,
 zip_safe=False
 )
