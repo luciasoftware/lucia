@@ -10,7 +10,7 @@ def readme():
 
 dependencies =[
 'pypiwin32',
-'pysdl2',
+'pygame',
 'pycryptodomex',
 'pysoundfile',
 'numpy',

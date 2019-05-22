@@ -22,7 +22,6 @@ import os
 import platform
 os_bit, os_name = platform.architecture()
 os.environ["PYAL_DLL_PATH"] = os.path.join(os.path.dirname(os.path.realpath(__file__)), "lib", os_bit)
-os.environ["PYSDL2_DLL_PATH"] = os.path.join(os.path.dirname(os.path.realpath(__file__)),  "lib", os_bit)
 
 print(os.environ["PYAL_DLL_PATH"])
 
