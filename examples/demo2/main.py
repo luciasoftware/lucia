@@ -20,6 +20,7 @@ import time
 
 print("Importing lucia")
 import lucia
+import pygame
 
 print("Initializing lucia")
 lucia.initialize()
@@ -34,7 +35,12 @@ while 1:
 		lucia.output.speak("a is pressed")
 	if lucia.key_down(lucia.SDLK_s):
 		lucia.output.speak("s is being held down")
+	time.sleep(0.05)
+	if lucia.key_pressed(pygame.K_a):
+		lucia.output.speak("a is pressed")
+	if lucia.key_down(pygame.K_s):
+		#lucia.output.speak("s is being held down")
 		print("LOL")
-	if lucia.key_pressed(lucia.SDLK_ESCAPE):
+	if lucia.key_pressed(pygame.K_ESCAPE):
 		lucia.quit()
 		sys.exit()

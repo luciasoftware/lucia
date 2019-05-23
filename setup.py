@@ -2,14 +2,15 @@
 # Note: To make it ready for official publishing, continue guide at: https://python-packaging.readthedocs.io/en/latest/metadata.html
 # Note2: When adding extra dependencies to lucia, remember to add them below (and their source link, if they aren't available on pypi).
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 def readme():
 	with open('README.md') as f:
 		return f.read()
 
 dependencies =[
-'pysdl2',
+'pypiwin32',
+'pygame',
 'pycryptodomex',
 'pysoundfile',
 'numpy',
@@ -21,6 +22,9 @@ dependencies =[
 'accessible_output2',
 ]
 
+lucia_packages = find_packages(".")
+
+
 setup(
 name='lucia',
 version='0.0.1',
@@ -29,7 +33,7 @@ long_description=readme(),
 url='http://github.com/LuciaSoftware/lucia',
 author='Lucia Software',
 license='LGPL',
-packages=['lucia', 'lucia.audio', 'lucia.audio.bass', 'lucia.audio.openal', 'lucia.ui', 'lucia.utils'],
+packages=lucia_packages,
 setup_requires=["pytest-runner"],
 tests_require=["pytest"] + dependencies,
 install_requires=dependencies,
@@ -41,6 +45,5 @@ install_requires=dependencies,
 'https://github.com/Accessiware/accessible_output2/tarball/master#egg=accessible_output2',
 ],
 include_package_data=True,
-package_data={'lucia': ['OpenAL32.dll', 'SDL2.dll']},
 zip_safe=False
 )
