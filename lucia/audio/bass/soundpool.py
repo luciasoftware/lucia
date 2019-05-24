@@ -49,7 +49,7 @@ class SoundPool(lucia.audio.SoundPool):
 				source.set_looping(looping)
 		else:
 			source = stream.FileStream(mem=True, file=io.BytesIO(soundfile))
-				source.set_looping(looping)
+			source.set_looping(looping)
 		source.set_3d_position(position=(x,y,z))
 		source.play()
 		self.sources.append(source)

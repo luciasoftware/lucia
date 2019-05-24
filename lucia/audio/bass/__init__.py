@@ -24,6 +24,8 @@ class BassAudioBackend(lucia.audio.AudioBackend):
 	def initialize(self):
 		global generic_output
 		generic_output = output.ThreeDOutput()
+		generic_output.set_3d_factors(1,1,1)
+		generic_output.set_3d_algorithm("default")
 		generic_output.start()
 	
 	def quit(self):
