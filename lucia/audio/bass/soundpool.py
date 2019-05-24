@@ -20,32 +20,36 @@ class SoundPool(lucia.audio.SoundPool):
 		self.listener = listener.Listener()
 		self.sources = []
 
-	def play_stationary(self, soundfile):
+	def play_stationary(self, soundfile, looping=False):
 		source = None
 		if soundfile == "":
 			raise ValueError("No audio data provided")
 		if isinstance(soundfile, str):
 			source = stream.FileStream(mem=False, file=soundfile)
+			source.set_looping(looping)
 		else:
 			source = stream.FileStream(mem=True, file=io.BytesIO(soundfile))
+			source.set_looping(looping)
 		source.play()
 		self.sources.append(source)
 		return source
 
-	def play_1d(self, soundfile, x):
-		return self.play3d(soundfile, x, 0, 0)
+	def play_1d(self, soundfile, x, looping=False):
+		return self.play3d(soundfile, x, 0, 0, looping)
 
-	def play_2d(self, soundfile, x, y):
-		return self.play3d(soundfile, x, y, 0)
+	def play_2d(self, soundfile, x, y, looping=False):
+		return self.play3d(soundfile, x, y, 0, looping)
 
-	def play_3d(self, soundfile, x, y, z):
+	def play_3d(self, soundfile, x, y, z, looping=False):
 		source = None
 		if soundfile == "":
 			raise ValueError("No audio data provided")
 		if isinstance(soundfile, str):
 				source = stream.FileStream(mem=False, file=soundfile)
+				source.set_looping(looping)
 		else:
 			source = stream.FileStream(mem=True, file=io.BytesIO(soundfile))
+				source.set_looping(looping)
 		source.set_3d_position(position=(x,y,z))
 		source.play()
 		self.sources.append(source)
