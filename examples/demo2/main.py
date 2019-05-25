@@ -28,8 +28,13 @@ lucia.initialize()
 print("Showing the window")
 test = lucia.show_window()
 
-while lucia.running:
+while 1:
+	time.sleep(0.005)
 	lucia.process_events()
+	if lucia.key_pressed(lucia.SDLK_a):
+		lucia.output.speak("a is pressed")
+	if lucia.key_down(lucia.SDLK_s):
+		lucia.output.speak("s is being held down")
 	time.sleep(0.05)
 	if lucia.key_pressed(pygame.K_a):
 		lucia.output.speak("a is pressed")
