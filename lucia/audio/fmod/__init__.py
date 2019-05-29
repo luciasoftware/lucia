@@ -13,9 +13,26 @@
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
 import lucia
+import pyfmode
 
-def initialize():
-	raise lucia.AudioBackendException("FMOD wrapper not implemented yet.")
+system = None
 
-def update_audio_system():
-	raise lucia.AudioBackendException("FMOD wrapper not implemented yet.")
+class FMODAudioBackend(lucia.audio.AudioBackend):
+	def initialize(self):
+		global system
+		system = pyfmodex.System()
+		system.init()
+	
+	def quit(self):
+		global system
+		system.close()
+	
+	def is_hrtf_compatible(self):
+		return False
+	
+	def enable_hrtf(self, should_enable):
+		raise lucia.audio.BackActionNotSupported("ENabling HRTF back wide is not available with the FMOD backend")
+	
+	def update_audio_system(self):
+		global system
+		system.update()
