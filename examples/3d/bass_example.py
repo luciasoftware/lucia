@@ -13,7 +13,7 @@ pool = lucia.audio_backend.SoundPool()
 player = lucia.utils.rotation.Vector()
 direction = 90
 
-pool.play_3d(os.path.join(os.getcwd(), "examples", "3d", "youtube.ogg"), 5, 5, 5).set_volume(.4)
+pool.play_3d(os.path.join(os.getcwd(), "examples", "3d", "youtube.wav"), 5, 5, 5).set_volume(.4)
 
 while True:
 	lucia.process_events()

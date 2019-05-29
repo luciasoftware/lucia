@@ -16,6 +16,7 @@ dependencies =[
 'numpy',
 'bson',
 'PyAl',
+'pyfmodex',
 'platform_utils',
 'libloader',
 'sound_lib',
