@@ -23,13 +23,12 @@ generic_output = None # used for sounds objects.
 class BassAudioBackend(lucia.audio.AudioBackend):
 	def initialize(self):
 		global generic_output
-		generic_output = output.ThreeDOutput()
-		generic_output.set_3d_factors(1,1,1)
-		generic_output.set_3d_algorithm("default")
+		generic_output = output.Output() # initializing default output because the 3d one doesnt work.
 		generic_output.start()
 	
 	def quit(self):
 		global generic_output
+		generic_output.stop()
 		generic_output = None
 	
 	def is_hrtf_compatible(self):
