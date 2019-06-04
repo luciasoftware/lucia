@@ -11,13 +11,14 @@ window = lucia.show_window()
 
 pool = lucia.audio_backend.SoundPool()
 player = lucia.utils.rotation.Vector()
-direction = 90
+direction = 180
 
-pool.play_3d(os.path.join(os.getcwd(), "examples", "3d", "youtube.wav"), 5, 5, 5, 10, 10, 10, False)
+s = pool.play_3d(os.path.join(os.getcwd(), "examples", "3d", "youtube2.ogg"), 5, 5, 0, 10, 10, 0, True)
+print(s)
 
 while True:
 	lucia.process_events()
-	if lucia.key_down(pygame.K_w):
+	if lucia.key_pressed(pygame.K_w):
 		player = lucia.utils.rotation.move((player.x,player.y,player.z), direction)
 	if lucia.key_pressed(pygame.K_a):
 		player = lucia.utils.rotation.move((player.x,player.y,player.z), direction-90)

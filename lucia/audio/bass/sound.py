@@ -25,7 +25,7 @@ class Sound():
 	def load(self,filename=""):
 		if self.handle:
 			self.close()
-		if isinstnace(filename, str):
+		if isinstance(filename, str):
 			self.handle =stream.FileStream(file=filename)
 		else:
 			self.handle =stream.FileStream(mem=True, file=filename)

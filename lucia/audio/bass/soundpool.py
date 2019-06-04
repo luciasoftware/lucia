@@ -18,7 +18,6 @@ class SoundPoolItem:
 	def __init__(self,filename, **kwargbs):
 		self.handle=sound.Sound()
 		self.filename=filename
-		self.packname="sounds/"
 		self.x=kwargbs.get("x", 0)
 		self.y=kwargbs.get("y", 0)
 		self.z=kwargbs.get("z", 0)
@@ -53,7 +52,7 @@ class SoundPoolItem:
 				return
 			if total_distance<=max_distance and self.handle.handle==None:
 				try:
-					self.handle.load(self.packname+self.filename)
+					self.handle.load(self.filename)
 				except:
 					pass
 					return
@@ -141,7 +140,7 @@ class SoundPool:
 		if self.clean_frequency<=0: self.clean_unused()
 		s=SoundPoolItem(filename=filename,looping=looping,start_offset=offset,start_pan=start_pan,start_volume=start_volume,start_pitch=start_pitch,persistent=persistent,stationary=True)
 		try:
-			s.handle.load(s.packname+filename)
+			s.handle.load(filename)
 		except:
 			s.reset()
 			return -1 
@@ -172,7 +171,7 @@ class SoundPool:
 				self.items.append(s)
 				return s
 		try:
-			s.handle.load(s.packname+filename)
+			s.handle.load(filename)
 		except:
 			s.reset()
 			return -1
@@ -203,7 +202,7 @@ class SoundPool:
 				self.items.append(s)
 				return s
 		try:
-			s.handle.load(s.packname+filename)
+			s.handle.load(filename)
 		except:
 			s.reset() 
 			return -1 
@@ -235,7 +234,7 @@ class SoundPool:
 				self.items.append(s)
 				return s
 		try:
-			s.handle.load(s.packname+filename)
+			s.handle.load(filename)
 		except:
 			s.reset() 
 			return -1 
