@@ -17,7 +17,7 @@ import sound_lib
 from sound_lib import stream
 import lucia
 
-class sound():
+class Sound():
 	def __init__(self):
 		self.handle=None
 		self.freq=44100

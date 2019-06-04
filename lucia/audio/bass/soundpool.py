@@ -12,11 +12,11 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.		If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 #Credit to Carter Tem who wrote the fixed sound positioning functions and the actual sound class.
-import sound,sound_positioning
+from . import sound,sound_positioning
 
-class sound_pool_item:
+class SoundPoolItem:
 	def __init__(self,filename, **kwargbs):
-		self.handle=sound.sound()
+		self.handle=sound.Sound()
 		self.filename=filename
 		self.packname="sounds/"
 		self.x=kwargbs.get("x", 0)
@@ -121,7 +121,7 @@ class sound_pool_item:
 		if listener_z>True_z: distance+=(listener_z-True_z)
 		return distance
 
-class sound_pool:
+class SoundPool:
 	def __init__(self):
 		self.items=[]
 		self.max_distance=70
@@ -139,7 +139,7 @@ class sound_pool:
 	def play_stationary_extended(self,filename, looping, offset, start_pan,start_volume,start_pitch,persistent=False):
 		self.clean_frequency-=1
 		if self.clean_frequency<=0: self.clean_unused()
-		s=sound_pool_item(filename=filename,looping=looping,start_offset=offset,start_pan=start_pan,start_volume=start_volume,start_pitch=start_pitch,persistent=persistent,stationary=True)
+		s=SoundPoolItem(filename=filename,looping=looping,start_offset=offset,start_pan=start_pan,start_volume=start_volume,start_pitch=start_pitch,persistent=persistent,stationary=True)
 		try:
 			s.handle.load(s.packname+filename)
 		except:
@@ -160,7 +160,7 @@ class sound_pool:
 	def play_extended_1d(self,filename,listener_x,sound_x,left_range,right_range,looping,offset,start_pan,start_volume,start_pitch,persistent=False):
 		self.clean_frequency-=1
 		if self.clean_frequency<=0: self.clean_unused()
-		s=sound_pool_item(filename=filename,x=sound_x,looping=looping,stationary=True,start_pan=start_pan,start_volume=start_volume,start_pitch=start_pitch,persistent=persistent,pan_step=self.pan_step,volume_step=self.volume_step,behind_pitch_decrease=0.0,left_range=left_range,right_range=right_range,backward_range=0,forward_range=0,is_3d=False,start_offset=offset)
+		s=SoundPoolItem(filename=filename,x=sound_x,looping=looping,stationary=True,start_pan=start_pan,start_volume=start_volume,start_pitch=start_pitch,persistent=persistent,pan_step=self.pan_step,volume_step=self.volume_step,behind_pitch_decrease=0.0,left_range=left_range,right_range=right_range,backward_range=0,forward_range=0,is_3d=False,start_offset=offset)
 		if self.max_distance>0 and s.get_total_distance(listener_x, 0, 0)>self.max_distance:
 			if not looping:
 				s.reset()
@@ -191,7 +191,7 @@ class sound_pool:
 	def play_extended_2d(self,filename,listener_x,listener_y,sound_x,sound_y,left_range,right_range,backward_range,forward_range,looping,offset,start_pan,start_volume,start_pitch,persistent=False):
 		self.clean_frequency-=1
 		if self.clean_frequency<=0: self.clean_unused()
-		s=sound_pool_item(filename=filename,x=sound_x,y=sound_y,looping=looping,start_pan=start_pan,start_volume=start_volume,start_pitch=start_pitch,persistent=persistent,pan_step=self.pan_step,volume_step=self.volume_step,behind_pitch_decrease=self.behind_pitch_decrease,left_range=left_range,right_range=right_range,backward_range=backward_range,forward_range=forward_range,is_3d=True,start_offset=offset)
+		s=SoundPoolItem(filename=filename,x=sound_x,y=sound_y,looping=looping,start_pan=start_pan,start_volume=start_volume,start_pitch=start_pitch,persistent=persistent,pan_step=self.pan_step,volume_step=self.volume_step,behind_pitch_decrease=self.behind_pitch_decrease,left_range=left_range,right_range=right_range,backward_range=backward_range,forward_range=forward_range,is_3d=True,start_offset=offset)
 		if self.max_distance>0 and s.get_total_distance(listener_x, listener_y, 0)>self.max_distance:
 			if looping==False:
 				s.reset() 
@@ -222,7 +222,7 @@ class sound_pool:
 	def play_extended_3d(self,filename,listener_x,listener_y,listener_z,sound_x,sound_y,sound_z,left_range,right_range,backward_range,forward_range,upper_range,lower_range,looping,offset,start_pan,start_volume,start_pitch,persistent,keep_pitch):
 		self.clean_frequency-=1
 		if self.clean_frequency<=0: self.clean_unused()
-		s=sound_pool_item(filename=filename,x=sound_x,y=sound_y,z=sound_z,looping=looping,pan_step=self.pan_step,volume_step=self.volume_step,behind_pitch_decrease=self.behind_pitch_decrease,start_pan=start_pan,start_volume=start_volume,start_pitch=start_pitch,left_range=left_range,right_range=right_range,backward_range=backward_range,forward_range=forward_range,lower_range=lower_range,upper_range=upper_range,is_3d=True,persistent=persistent,start_offset=offset)
+		s=SoundPoolItem(filename=filename,x=sound_x,y=sound_y,z=sound_z,looping=looping,pan_step=self.pan_step,volume_step=self.volume_step,behind_pitch_decrease=self.behind_pitch_decrease,start_pan=start_pan,start_volume=start_volume,start_pitch=start_pitch,left_range=left_range,right_range=right_range,backward_range=backward_range,forward_range=forward_range,lower_range=lower_range,upper_range=upper_range,is_3d=True,persistent=persistent,start_offset=offset)
 		if self.max_distance>0 and s.get_total_distance(listener_x, listener_y, listener_z)>self.max_distance:
 			if looping==False:
 				s.reset() 

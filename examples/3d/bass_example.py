@@ -13,7 +13,7 @@ pool = lucia.audio_backend.SoundPool()
 player = lucia.utils.rotation.Vector()
 direction = 90
 
-pool.play_3d(os.path.join(os.getcwd(), "examples", "3d", "youtube.wav"), 5, 5, 5).set_volume(.4)
+pool.play_3d(os.path.join(os.getcwd(), "examples", "3d", "youtube.wav"), 5, 5, 5, 10, 10, 10, False)
 
 while True:
 	lucia.process_events()
@@ -31,4 +31,5 @@ while True:
 	if lucia.key_pressed(pygame.K_c):
 		lucia.output.output(f"Cors {round(player.x,0)}, {round(player.y,0)}, {round(player.z,0)}")
 	time.sleep(.005)
+	pool.update_listener_3d(round(player.x,0), round(player.y,0), round(player.z,0))
 
