@@ -2,6 +2,7 @@
 #ported to python by Paul Iyobo <https://github.com/pauliyobo/rotation.py>
 #modified by LuciaSoftware and it's contributors.
 
+import lucia
 from math import pi, sin, cos, atan, radians, sqrt
 
 
@@ -34,10 +35,17 @@ def move(coords, deg=0.0, zdeg=0.0):
 	if deg >= 360:
 		deg = deg - 360
 	r = Vector()
-	r.x=x+cos(radians(deg))
-	r.y=y+sin(radians(deg))
-	r.z=z+sin(radians(zdeg))
-	return r
+	# If using bass, we are using bgt's style of handling coors for now, x is left and right, y is forward and backwards and z is up and down.
+	if isinstance(lucia.audio_backend_class, lucia.audio.bass.BassAudioBackend):
+		r.x=x+sin(radians(deg))
+		r.y=y+cos(radians(deg))
+		r.z=z+sin(radians(zdeg))
+		return r
+	else: # if using openal or fmod
+		r.x=x+cos(radians(deg))
+		r.y=y+sin(radians(deg))
+		r.z=z+sin(radians(zdeg))
+		return r
 
 
 def getdir(facing):
