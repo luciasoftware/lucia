@@ -185,10 +185,10 @@ class sound_pool:
 		self.items.append(s)
 		return s
 
-	def play_2d(self,filename,		 listener_x,		 listener_y,		 sound_x,		 sound_y,		 looping,		 persistent=False):
+	def play_2d(self,filename,listener_x,listener_y,sound_x,sound_y,looping,persistent=False):
 		return self.play_extended_2d(filename, listener_x, listener_y, sound_x, sound_y, 0, 0, 0, 0, looping, 0, 0, 0, 100, persistent) 
 
-	def play_extended_2d(self,filename,		 listener_x,		 listener_y,		 sound_x,		 sound_y,		 left_range,		 right_range,		 backward_range,		 forward_range,		 looping,		 offset,		 start_pan,		 start_volume,		 start_pitch,		 persistent=False):
+	def play_extended_2d(self,filename,listener_x,listener_y,sound_x,sound_y,left_range,right_range,backward_range,forward_range,looping,offset,start_pan,start_volume,start_pitch,persistent=False):
 		self.clean_frequency-=1
 		if self.clean_frequency<=0: self.clean_unused()
 		s=sound_pool_item(filename=filename,x=sound_x,y=sound_y,looping=looping,start_pan=start_pan,start_volume=start_volume,start_pitch=start_pitch,persistent=persistent,pan_step=self.pan_step,volume_step=self.volume_step,behind_pitch_decrease=self.behind_pitch_decrease,left_range=left_range,right_range=right_range,backward_range=backward_range,forward_range=forward_range,is_3d=True,start_offset=offset)
@@ -216,10 +216,10 @@ class sound_pool:
 		self.items.append(s)
 		return s
  
-	def play_3d(self,filename,		 listener_x,		 listener_y,		 listener_z,		 sound_x,		 sound_y,		 sound_z,		 looping,		 persistent=False,keep_pitch=False):
+	def play_3d(self,filename,listener_x,listener_y,listener_z,sound_x,sound_y,sound_z,looping,persistent=False,keep_pitch=False):
 		return self.play_extended_3d(filename, listener_x, listener_y, listener_z, sound_x, sound_y, sound_z, 0, 0, 0, 0, 0, 0, looping, 0, 0, 0, 100, persistent,keep_pitch) 
 
-	def play_extended_3d(self,filename,		 listener_x,		 listener_y,		 listener_z,		 sound_x,		 sound_y,		 sound_z,		 left_range,		 right_range,		 backward_range,		 forward_range,		 upper_range,		 lower_range,		 looping,		 offset,		 start_pan,		 start_volume,		 start_pitch,		 persistent,keep_pitch):
+	def play_extended_3d(self,filename,listener_x,listener_y,listener_z,sound_x,sound_y,sound_z,left_range,right_range,backward_range,forward_range,upper_range,lower_range,looping,offset,start_pan,start_volume,start_pitch,persistent,keep_pitch):
 		self.clean_frequency-=1
 		if self.clean_frequency<=0: self.clean_unused()
 		s=sound_pool_item(filename=filename,x=sound_x,y=sound_y,z=sound_z,looping=looping,pan_step=self.pan_step,volume_step=self.volume_step,behind_pitch_decrease=self.behind_pitch_decrease,start_pan=start_pan,start_volume=start_volume,start_pitch=start_pitch,left_range=left_range,right_range=right_range,backward_range=backward_range,forward_range=forward_range,lower_range=lower_range,upper_range=upper_range,is_3d=True,persistent=persistent,start_offset=offset)
@@ -291,30 +291,30 @@ class sound_pool:
 	def update_listener_1d(self,listener_x):
 		self.update_listener_3d(listener_x, 0, 0) 
 
-	def update_listener_2d(self,listener_x,		 listener_y):
+	def update_listener_2d(self,listener_x,listener_y):
 		self.update_listener_3d(listener_x, listener_y, 0) 
 
-	def update_listener_3d(self,listener_x,		 listener_y,		 listener_z):
+	def update_listener_3d(self,listener_x,listener_y,listener_z):
 		if len(self.items)==0: return 
 		self.last_listener_x=listener_x 
 		self.last_listener_y=listener_y 
 		self.last_listener_z=listener_z 
 		for i in self.items: i.update(listener_x, listener_y, listener_z, self.max_distance)
 
-	def update_sound_1d(self,s,		 x):
+	def update_sound_1d(self,s,x):
 		return self.update_sound_3d(s, x, 0, 0) 
 
-	def update_sound_2d(self,s,		 x,		 y):
+	def update_sound_2d(self,s,x,y):
 		return self.update_sound_3d(s, x, y, 0) 
 
-	def update_sound_3d(self,s,		 x,		 y,		 z):
+	def update_sound_3d(self,s,x,y,z):
 		s.x=x 
 		s.y=y 
 		s.z=z 
 		s.update(self.last_listener_x, self.last_listener_y, self.last_listener_z, self.max_distance)
 		return True 
 
-	def update_sound_start_values(self,s,start_pan,		 start_volume,		 start_pitch):
+	def update_sound_start_values(self,s,start_pan,start_volume,start_pitch):
 		s.start_pan=start_pan 
 		s.start_volume=start_volume 
 		s.start_pitch=start_pitch 
@@ -327,13 +327,13 @@ class sound_pool:
 		if s.is_3d==False and s.handle.pitch!=start_pitch: s.handle.pitch=start_pitch 
 		return True 
 
-	def update_sound_range_1d(self,s,		 left_range,		 right_range):
+	def update_sound_range_1d(self,s,left_range,right_range):
 		return self.update_sound_range_3d(s, left_range, right_range, 0, 0, 0, 0) 
 
-	def update_sound_range_2d(self,s,		 left_range,		 right_range,		 backward_range,		 forward_range):
+	def update_sound_range_2d(self,s,left_range,right_range,backward_range,forward_range):
 		return self.update_sound_range_3d(s, left_range, right_range, backward_range, forward_range, 0, 0) 
 
-	def update_sound_range_3d(self,s,		 left_range,		 right_range,		 backward_range,		 forward_range,		 lower_range,		 upper_range):
+	def update_sound_range_3d(self,s,left_range,right_range,backward_range,forward_range,lower_range,upper_range):
 		s.left_range=left_range 
 		s.right_range=right_range 
 		s.backward_range=backward_range 
