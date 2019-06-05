@@ -328,19 +328,19 @@ class SoundPool:
 		return True 
 
 	def update_sound_range_1d(self,s,left_range,right_range):
-		return self.update_sound_range_3d(s, left_range, right_range, 0, 0, 0, 0) 
+		return self.update_sound_range_3d(s, left_range, right_range, 0, 0, 0, 0, 0) 
 
-	def update_sound_range_2d(self,s,left_range,right_range,backward_range,forward_range):
-		return self.update_sound_range_3d(s, left_range, right_range, backward_range, forward_range, 0, 0) 
+	def update_sound_range_2d(self,s,left_range,right_range,backward_range,forward_range, rotation):
+		return self.update_sound_range_3d(s, left_range, right_range, backward_range, forward_range, 0, 0, rotation) 
 
-	def update_sound_range_3d(self,s,left_range,right_range,backward_range,forward_range,lower_range,upper_range):
+	def update_sound_range_3d(self,s,left_range,right_range,backward_range,forward_range,lower_range,upper_range, rotation):
 		s.left_range=left_range 
 		s.right_range=right_range 
 		s.backward_range=backward_range 
 		s.forward_range=forward_range 
 		s.lower_range=lower_range 
 		s.upper_range=upper_range 
-		s.update(self.last_listener_x, self.last_listener_y, self.last_listener_z, self.max_distance) 
+		s.update(self.last_listener_x, self.last_listener_y, self.last_listener_z, rotation, self.max_distance) 
 		return True 
 
 	def destroy_sound(self,s):
