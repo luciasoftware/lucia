@@ -98,11 +98,13 @@ class ResourceFileVersion:
 	v1 = 1
 
 class ResourceFileItem(object):
-	def __init__(self, name, name_length, content, content_length):
+	def __init__(self, name, name_length, content, content_length, compress, encrypt):
 		self.name = name
 		self.name_length = name_length
 		self.content = content
 		self.content_length = content_length
+		self.compress = compress
+		self.encrypt = encrypt
 
 class ResourceFile:
 	def __init__(self, key, iv, header="lucia", version=ResourceFileVersion.v1):
@@ -134,10 +136,13 @@ class ResourceFile:
 			name_length = struct.unpack("1i", f.read(4))[0]
 			name = f.read(name_length)
 			content_length = struct.unpack("1i", f.read(4))[0]
+			content_state = struct.unpack("2i", f.read(8))
 			content = f.read(content_length)
-			content = decrypt_data(content, self.key, self.iv)
-			content = decompress_data(content)
-			item = ResourceFileItem(name, len(name), content, len(content))
+			if content_state[1]:
+				content = decrypt_data(content, self.key, self.iv)
+			if content_state[0]:
+				content = decompress_data(content)
+			item = ResourceFileItem(name, len(name), content, len(content), content_state[0], content_state[1])
 			self.files.append(item)
 
 	def save(self, filename):
@@ -153,13 +158,17 @@ class ResourceFile:
 			f.write(struct.pack("1i", item.name_length))
 			f.write(item.name)
 			f.write(struct.pack("1i", item.content_length))
-			content = compress_data(item.content)
-			content = encrypt_data(content, self.key, self.iv)
+			f.write(struct.pack("2i", item.compress, item.encrypt))
+			content = item.content
+			if item.compress:
+				content = compress_data(item.content)
+			if item.encrypt:
+				content = encrypt_data(content, self.key, self.iv)
 			f.write(content)
 		# and then close
 		f.close()
 
-	def add_file(self, name, internalname=None):
+	def add_file(self, name, compress=True, encrypt=True, internalname=None, ):
 		if os.path.exists(name) == False:
 			raise FileNotFoundError
 		f = open(name, "rb")
@@ -169,7 +178,7 @@ class ResourceFile:
 			name = internalname
 		if isinstance(name, str):
 			name = name.encode()
-		item = ResourceFileItem(name, len(name), content, len(content))
+		item = ResourceFileItem(name, len(name), content, len(content), compress, encrypt)
 		self.files.append(item)
 
 	def get(self, name):
