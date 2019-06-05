@@ -23,8 +23,6 @@ import platform
 os_bit, os_name = platform.architecture()
 os.environ["PYAL_DLL_PATH"] = os.path.join(os.path.dirname(os.path.realpath(__file__)), "lib", os_bit)
 
-print(os.environ["PYAL_DLL_PATH"])
-
 import sys
 import pygame
 from pygame.locals import *
