@@ -17,7 +17,7 @@ import sound_lib
 from sound_lib import stream
 import lucia
 
-class Sound():
+class Sound(lucia.audio.Sound):
 	def __init__(self):
 		self.handle=None
 		self.freq=44100
@@ -51,6 +51,12 @@ class Sound():
 
 	def get_source_object(self):
 		return self.handle
+
+	def pause(self):
+		self.handle.pause()
+
+	def resume(self):
+		self.handle.resume()
 
 	@property
 	def volume(self):
