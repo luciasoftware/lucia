@@ -18,11 +18,24 @@ class SoundPool(ABC):
 	@abstractmethod
 	def play_stationary(*args, **kwargs):
 		pass
-	def play3d(*args, **kwargs):
+	@abstractmethod
+	def play_1d(*args, **kwargs):
+		pass
+	@abstractmethod
+	def play_2d(*args, **kwargs):
+		pass
+	@abstractmethod
+	def play_3d(*args, **kwargs):
 		pass
 	
 	@abstractmethod
-	def update_listener3d(*args, **kwargs):
+	def update_listener_1d(*args, **kwargs):
+		pass
+	@abstractmethod
+	def update_listener_2d(*args, **kwargs):
+		pass
+	@abstractmethod
+	def update_listener_3d(*args, **kwargs):
 		pass
 	
 	@abstractmethod

@@ -12,6 +12,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.		If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 #Credit to Carter Tem who wrote the fixed sound positioning functions and the actual sound class.
+import lucia
 from . import sound,sound_positioning
 from math import radians
 
@@ -121,7 +122,7 @@ class SoundPoolItem:
 		if listener_z>True_z: distance+=(listener_z-True_z)
 		return distance
 
-class SoundPool:
+class SoundPool(lucia.audio.SoundPool):
 	def __init__(self):
 		self.items=[]
 		self.max_distance=70
@@ -133,7 +134,7 @@ class SoundPool:
 		self.last_listener_z=0
 		self.clean_frequency=3
 
-	def play_stationary(self,filename,looping,persistent=False):
+	def play_stationary(self,filename,looping=False,persistent=False):
 		return self.play_stationary_extended(filename, looping, 0, 0, 0, 100, persistent)
 
 	def play_stationary_extended(self,filename, looping, offset, start_pan,start_volume,start_pitch,persistent=False):
@@ -355,3 +356,13 @@ class SoundPool:
 			if i.handle.handle==None or not i.handle.handle.is_playing and not i.paused:
 				self.items.remove(i)
 				self.clean_frequency=3
+
+	def update_audio_system(self):
+		self.clean_unused()
+
+	def get_source_object(self, filename):
+		if len(self.items)==0: return None
+		for i in self.items:
+			if i.filename == filename:
+				return i
+		return None

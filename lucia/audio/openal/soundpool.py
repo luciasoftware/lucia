@@ -85,13 +85,13 @@ class SoundPool(lucia.audio.SoundPool):
 		self.sources.append(source)
 		return source
 
-	def play1d(self, soundfile, x, looping = False, rolloff_factor = -1):
+	def play_1d(self, soundfile, x, looping = False, rolloff_factor = -1):
 		return self.play_3d(soundfile,x,0,0,looping,rolloff_factor)
 
-	def play2d(self, soundfile, x, y, looping = False, rolloff_factor = -1):
+	def play_2d(self, soundfile, x, y, looping = False, rolloff_factor = -1):
 		return self.play_3d(soundfile,x,y,0,looping,rolloff_factor)
 
-	def play3d(self, soundfile, x, y, z, looping = False, pitch=1.0, volume=1.0, rolloff_factor=0.5):
+	def play_3d(self, soundfile, x, y, z, looping = False, pitch=1.0, volume=1.0, rolloff_factor=0.5):
 		source = audio.SoundSource(1.0, pitch, (x,z,-y))
 		source.queue(lucia.audio_backend._get_audio_data(soundfile))
 		source.looping = looping

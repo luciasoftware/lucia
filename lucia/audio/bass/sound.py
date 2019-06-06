@@ -49,6 +49,9 @@ class Sound():
 			self.handle.stop()
 			self.handle.set_position(0)
 
+	def get_source_object(self):
+		return self.handle
+
 	@property
 	def volume(self):
 		if not self.handle:
