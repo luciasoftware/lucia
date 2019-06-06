@@ -47,7 +47,7 @@ class ResourceFile:
 			self.header = self.header.encode()
 		self.header_length = len(self.header)
 		self.version = version
-		self.files = []
+		self.files = {}
 
 	def load(self, filename):
 		f = open(filename, "rb")
@@ -75,7 +75,7 @@ class ResourceFile:
 			if content_state[0]:
 				content = decompress_data(content)
 			item = ResourceFileItem(name, len(name), content, len(content), content_state[0], content_state[1])
-			self.files.append(item)
+			self.files[name] = item
 
 	def save(self, filename):
 		f = open(filename, "wb")
@@ -86,7 +86,7 @@ class ResourceFile:
 		# Write how many files are in the pack
 		f.write(struct.pack("1i", len(self.files)))
 		# and then loop through all files, and add them to the pack.
-		for item in self.files:
+		for item in self.files.values():
 			f.write(struct.pack("1i", item.name_length))
 			f.write(item.name)
 			f.write(struct.pack("1i", item.content_length))
@@ -111,7 +111,7 @@ class ResourceFile:
 		if isinstance(name, str):
 			name = name.encode()
 		item = ResourceFileItem(name, len(name), content, len(content), compress, encrypt)
-		self.files.append(item)
+		self.files[name] = item
 
 	def add_memory(self, name, content, compress=True, encrypt=True):
 		if isinstance(name,str):
@@ -119,23 +119,24 @@ class ResourceFile:
 		if isinstance(content,str):
 			content = content.encode()
 		item = ResourceFileItem(name, len(name), content, len(content), compress, encrypt)
-		self.files.append(item)
+		self.files[name] = item
 
 	def get(self, name):
 		if isinstance(name, str):
 			name = name.encode()
-		for item in self.files:
-			if name == item.name:
-				return item.content
+		val = self.files[name]
+		if isinstance(val,ResourceFileItem):
+			return val.content
 		return None
 
 	def exist(self, name):
 		if isinstance(name, str):
 			name = name.encode()
-		for item in self.files:
-			if name == item.name:
-				return True
-		return False
+		return name in self.files.keys()
+
+	def list(self):
+		return self.files.keys()
+
 
 # Internal stuff.
 class unsupportedAlgorithm(Exception):
