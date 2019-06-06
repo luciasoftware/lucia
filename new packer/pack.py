@@ -17,22 +17,6 @@
 ZLIB = 1
 LZMA = 2
 BZ2 = 3
-
-# These are the file types you want to exclude from the pack.
-excluded_file_types = (".py", ".pyc", ".log", ".dll", ".dat")
-
-class unsupportedAlgorithm(Exception):
-	"""raised when the user tries supplying an algorithm not specified in constants"""
-	pass
-
-class InvalidPackHeader(Exception):
-	"""raised when the packs header is invalid, usually raised, if the version number doesn't match any schame"""
-	pass
-
-class InvalidInitializationVector(Exception):
-	"""raised if the initialization vector, given to the encryption or decryption is not 16 bytes long"""
-	pass
-
 import lzma
 import zlib
 import bz2
@@ -40,58 +24,6 @@ from Cryptodome.Cipher import AES
 from Cryptodome.Hash import SHA1
 from Cryptodome.Hash import SHA256
 import pickle, sys, os, struct
-
-# Internal functions.
-def encrypt_data(data, key, iv):
-	if len(iv) != 16:
-		raise InvalidInitializationVector
-		return
-	try:
-		key = key.encode("utf-8")
-	except AttributeError:
-		pass
-	try:
-		data = data.encode("utf-8")
-	except AttributeError:
-		pass
-	encryptor = AES.new(SHA256.new(key).digest(), AES.MODE_CFB, iv.encode("utf-8"))
-	return encryptor.encrypt(data)
-
-def decrypt_data(data, key,iv):
-	if len(iv) != 16:
-		raise InvalidInitializationVector
-		return
-	try:
-			key = key.encode("utf-8")
-	except AttributeError:
-		pass
-	decryptor = AES.new(SHA256.new(key).digest(), AES.MODE_CFB, iv.encode("utf-8"))
-	decryptedData = decryptor.decrypt(data)
-	return decryptedData
-
-def compress_data(data, algorithm=1, compression_level=6):
-	if type(data)!=bytes:
-		data=data.encode()
-	if algorithm==1:
-		return zlib.compress(data, level=compression_level)
-	elif algorithm==2:
-		return lzma.compress(data, preset=compression_level)
-	elif algorithm == 3:
-		return bz2.compress(data, compresslevel=compression_level)
-	else:
-		raise unsupportedAlgorithm
-
-def decompress_data(data, algorithm=1):
-	if type(data)!=bytes:
-		data=data.encode()
-	if algorithm==1:
-		return zlib.decompress(data)
-	elif algorithm==2:
-		return lzma.decompress(data)
-	elif algorithm == 3:
-		return bz2.decompress(data)
-	else:
-		raise unsupportedAlgorithm
 
 class ResourceFileVersion:
 	"""The version should only change, if changes are introduced, that breaks backward compatibility"""
@@ -181,6 +113,14 @@ class ResourceFile:
 		item = ResourceFileItem(name, len(name), content, len(content), compress, encrypt)
 		self.files.append(item)
 
+	def add_memory(self, name, content, compress=True, encrypt=True):
+		if isinstance(name,str):
+			name = name.encode()
+		if isinstance(content,str):
+			content = content.encode()
+		item = ResourceFileItem(name, len(name), content, len(content), compress, encrypt)
+		self.files.append(item)
+
 	def get(self, name):
 		if isinstance(name, str):
 			name = name.encode()
@@ -188,3 +128,69 @@ class ResourceFile:
 			if name == item.name:
 				return item.content
 		return None
+
+
+# Internal stuff.
+class unsupportedAlgorithm(Exception):
+	"""raised when the user tries supplying an algorithm not specified in constants"""
+	pass
+
+class InvalidPackHeader(Exception):
+	"""raised when the packs header is invalid"""
+	pass
+
+class InvalidInitializationVector(Exception):
+	"""raised if the initialization vector, given to the encryption or decryption methods aren't 16 bytes long"""
+	pass
+
+
+def encrypt_data(data, key, iv):
+	if len(iv) != 16:
+		raise InvalidInitializationVector
+		return
+	try:
+		key = key.encode("utf-8")
+	except AttributeError:
+		pass
+	try:
+		data = data.encode("utf-8")
+	except AttributeError:
+		pass
+	encryptor = AES.new(SHA256.new(key).digest(), AES.MODE_CFB, iv.encode("utf-8"))
+	return encryptor.encrypt(data)
+
+def decrypt_data(data, key,iv):
+	if len(iv) != 16:
+		raise InvalidInitializationVector
+		return
+	try:
+			key = key.encode("utf-8")
+	except AttributeError:
+		pass
+	decryptor = AES.new(SHA256.new(key).digest(), AES.MODE_CFB, iv.encode("utf-8"))
+	decryptedData = decryptor.decrypt(data)
+	return decryptedData
+
+def compress_data(data, algorithm=1, compression_level=6):
+	if type(data)!=bytes:
+		data=data.encode()
+	if algorithm==1:
+		return zlib.compress(data, level=compression_level)
+	elif algorithm==2:
+		return lzma.compress(data, preset=compression_level)
+	elif algorithm == 3:
+		return bz2.compress(data, compresslevel=compression_level)
+	else:
+		raise unsupportedAlgorithm
+
+def decompress_data(data, algorithm=1):
+	if type(data)!=bytes:
+		data=data.encode()
+	if algorithm==1:
+		return zlib.decompress(data)
+	elif algorithm==2:
+		return lzma.decompress(data)
+	elif algorithm == 3:
+		return bz2.decompress(data)
+	else:
+		raise unsupportedAlgorithm
