@@ -73,6 +73,7 @@ def initialize(audiobackend=AudioBackend.OPENAL):
 
 def quit():
 	"""Shutdown lucia and close underlying engines freeing up system resources"""
+	audio_backend_class.quit()
 	pygame.quit()
 
 def show_window(title="LuciaGame", size=(640,480)):
