@@ -169,7 +169,7 @@ class SoundPool(lucia.audio.SoundPool):
 			else:
 				self.last_listener_x=listener_x
 				s.handle.pitch=start_pitch
-				s.update(self.listener_x, 0, 0, self.max_distance)
+				s.update(self.listener_x, 0, 0, 0, self.max_distance)
 				self.items.append(s)
 				return s
 		try:
@@ -180,7 +180,7 @@ class SoundPool(lucia.audio.SoundPool):
 		if s.start_offset>0: s.handle.position=s.start_offset
 		s.handle.pitch=start_pitch
 		self.last_listener_x=listener_x
-		s.update(listener_x, 0, 0, self.max_distance)
+		s.update(listener_x, 0, 0, 0, self.max_distance)
 		if looping: s.handle.play_looped()
 		else: s.handle.play()
 		self.items.append(s)
@@ -200,7 +200,7 @@ class SoundPool(lucia.audio.SoundPool):
 			else:
 				self.last_listener_x=listener_x 
 				self.last_listener_y=listener_y 
-				s.update(listener_x, listener_y, 0, self.max_distance) 
+				s.update(listener_x, listener_y, 0, 0, self.max_distance) 
 				self.items.append(s)
 				return s
 		try:
@@ -211,14 +211,14 @@ class SoundPool(lucia.audio.SoundPool):
 		if s.start_offset>0: s.handle.position=s.start_offset
 		self.last_listener_x=listener_x 
 		self.last_listener_y=listener_y 
-		s.update(listener_x, listener_y, 0, self.max_distance) 
+		s.update(listener_x, listener_y, 0, 0, self.max_distance) 
 		if looping: s.handle.play_looped() 
 		else: s.handle.play() 
 		self.items.append(s)
 		return s
  
-	def play_3d(self,filename,listener_x,listener_y,listener_z,sound_x,sound_y,sound_z,looping,persistent=False,keep_pitch=False):
-		return self.play_extended_3d(filename, listener_x, listener_y, listener_z, sound_x, sound_y, sound_z,  0,0, 0, 0, 0, 0, 0, looping, 0, 0, 0, 100, persistent,keep_pitch) 
+	def play_3d(self,filename,listener_x,listener_y,listener_z,sound_x,sound_y,sound_z,rotation=0,looping=False,persistent=False,keep_pitch=False):
+		return self.play_extended_3d(filename, listener_x, listener_y, listener_z, sound_x, sound_y, sound_z,  rotation,0, 0, 0, 0, 0, 0, looping, 0, 0, 0, 100, persistent,keep_pitch) 
 
 	def play_extended_3d(self,filename,listener_x,listener_y,listener_z,sound_x,sound_y,sound_z,rotation,left_range,right_range,backward_range,forward_range,upper_range,lower_range,looping,offset,start_pan,start_volume,start_pitch,persistent,keep_pitch):
 		self.clean_frequency-=1
@@ -231,7 +231,8 @@ class SoundPool(lucia.audio.SoundPool):
 			else:
 				self.last_listener_x=listener_x 
 				self.last_listener_y=listener_y 
-				self.last_listener_z=listener_z 
+				self.last_listener_z=listener_z
+				self.last_rotation = rotation
 				s.update(listener_x, listener_y, listener_z, rotation, self.max_distance) 
 				self.items.append(s)
 				return s
@@ -272,7 +273,7 @@ class SoundPool(lucia.audio.SoundPool):
 		if self.max_distance>0 and s.get_total_distance(self.last_listener_x, self.last_listener_y, self.last_listener_z)>self.max_distance:
 			if s.handle!=None: s.handle.close() 
 			return True
-		s.update(self.last_listener_x, self.last_listener_y, self.last_listener_z, self.max_distance) 
+		s.update(self.last_listener_x, self.last_listener_y, self.last_listener_z, self.last_rotation, self.max_distance) 
 		if s.handle.handle!=None and not self.items[s].handle.handle.is_playing:
 			if s.looping: s.handle.play_looped() 
 			else: s.handle.play()
@@ -290,16 +291,17 @@ class SoundPool(lucia.audio.SoundPool):
 		for i in self.items: i.reset()
 
 	def update_listener_1d(self,listener_x):
-		self.update_listener_3d(listener_x, 0, 0) 
+		self.update_listener_3d(listener_x, 0, 0,0) 
 
 	def update_listener_2d(self,listener_x,listener_y):
-		self.update_listener_3d(listener_x, listener_y, 0) 
+		self.update_listener_3d(listener_x, listener_y, 0,0) 
 
 	def update_listener_3d(self,listener_x,listener_y,listener_z, rotation):
 		if len(self.items)==0: return 
 		self.last_listener_x=listener_x 
 		self.last_listener_y=listener_y 
-		self.last_listener_z=listener_z 
+		self.last_listener_z=listener_z
+		self.last_rotation = rotation
 		for i in self.items: i.update(listener_x, listener_y, listener_z, rotation, self.max_distance)
 
 	def update_sound_1d(self,s,x):
@@ -312,14 +314,14 @@ class SoundPool(lucia.audio.SoundPool):
 		s.x=x 
 		s.y=y 
 		s.z=z 
-		s.update(self.last_listener_x, self.last_listener_y, self.last_listener_z, self.max_distance)
+		s.update(self.last_listener_x, self.last_listener_y, self.last_listener_z, self.last_rotation, self.max_distance)
 		return True 
 
 	def update_sound_start_values(self,s,start_pan,start_volume,start_pitch):
 		s.start_pan=start_pan 
 		s.start_volume=start_volume 
 		s.start_pitch=start_pitch 
-		s.update(last_listener_x, last_listener_y, last_listener_z, self.max_distance) 
+		s.update(last_listener_x, last_listener_y, last_listener_z, self.last_rotation. self.max_distance) 
 		if s.stationary and s.handle!=None:
 			s.handle.pan=start_pan 
 			s.handle.volume=start_volume 

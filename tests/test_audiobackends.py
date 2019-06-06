@@ -22,4 +22,4 @@ def test_bass():
 	testpool.update_audio_system()
 	testpool.update_listener_1d(1)
 	testpool.update_listener_2d(1,2)
-	testpool.update_listener_3d(1,2,3)
+	testpool.update_listener_3d(1,2,3,0)
