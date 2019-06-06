@@ -129,6 +129,13 @@ class ResourceFile:
 				return item.content
 		return None
 
+	def exist(self, name):
+		if isinstance(name, str):
+			name = name.encode()
+		for item in self.files:
+			if name == item.name:
+				return True
+		return False
 
 # Internal stuff.
 class unsupportedAlgorithm(Exception):
