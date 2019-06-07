@@ -123,12 +123,12 @@ class SoundPoolItem:
 		return distance
 
 class SoundPool(lucia.audio.SoundPool):
-	def __init__(self):
+	def __init__(self, max_distance=70, pan_step=20.0,volume_step=2.0,behind_pitch_decrease=4.0):
+		self.max_distance=max_distance
+		self.pan_step=pan_step
+		self.volume_step=volume_step
+		self.behind_pitch_decrease=behind_pitch_decrease
 		self.items=[]
-		self.max_distance=70
-		self.pan_step=20.0
-		self.volume_step=2.0
-		self.behind_pitch_decrease=4.0
 		self.last_listener_x=0
 		self.last_listener_y=0
 		self.last_listener_z=0
