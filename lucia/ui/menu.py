@@ -99,44 +99,60 @@ class Menu():
 		"""
 		self.count = 0
 		self.running = True
-		if self.music:
+		try:
 			self.music.play()
-		if self.open_sound != "":
+		except:
+			pass
+		try:
 			self.open_sound.play()
+		except:
+			pass
 		if intro != "":
 			self.speechMethod.speak(intro, interrupt)
 		while self.running and lucia.running:
 			lucia.process_events()
 			time.sleep(0.005)
 			if lucia.key_pressed(pygame.K_ESCAPE):
-				if self.enter_sound != "":
+				try:
 					self.enter_sound.play()
-					try:
-						self.music.stop()
-					except: # thrown if no music was specified.
-						pass
+				except:
+					pass
+				try:
+					self.music.stop()
+				except: # thrown if no music was specified.
+					pass
 				return "-1"
 			if lucia.key_pressed(pygame.K_DOWN):
 				if self.count < len(self.items)-1:
 					self.count = self.count+1
-					if self.scroll_sound != "":
+					try:
 						self.scroll_sound.play()
+					except:
+						pass
 				else:
-					if self.border_sound != "":
+					try:
 						self.border_sound.play()
+					except:
+						pass
 				self.speechMethod.speak(list(self.items)[self.count], self.shouldInterrupt)
 			if lucia.key_pressed(pygame.K_UP):
 				if self.count > 0:
 					self.count = self.count-1
-					if self.scroll_sound != "":
+					try:
 						self.scroll_sound.play()
+					except:
+						pass
 				else:
-					if self.border_sound != "":
+					try:
 						self.border_sound.play()
+					except:
+						pass
 				self.speechMethod.speak(list(self.items)[self.count], self.shouldInterrupt)
 			if lucia.key_pressed(pygame.K_RETURN):
-				if self.enter_sound != "":
+				try:
 					self.enter_sound.play()
+				except:
+					pass
 				self.running = False
 				try:
 					self.music.stop()
