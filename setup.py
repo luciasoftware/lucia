@@ -14,7 +14,6 @@ dependencies =[
 'pycryptodomex',
 'pysoundfile',
 'numpy',
-'bson',
 'PyAl',
 'pyfmodex',
 'platform_utils',
