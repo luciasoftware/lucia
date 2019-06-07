@@ -42,23 +42,23 @@ class Menu():
 		# in this example we catch the exceptions to allow the end developer to provide no sounds without problems.
 		try:
 			self.enter_sound.load(enter_sound)
-		except ValueError:
+		except:
 			pass
 		try:
 			self.scroll_sound .load(scroll_sound)
-		except ValueError:
+		except:
 			pass
 		try:
 			self.open_sound.load(open_sound)
-		except ValueError:
+		except:
 			pass
 		try:
 			self.border_sound.load(border_sound)
-		except ValueError:
+		except:
 			pass
 		try:
 			self.music.load(music)
-		except ValueError:
+		except:
 			pass
 		self.add_speech_method(lucia.output)
 
