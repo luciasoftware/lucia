@@ -32,7 +32,7 @@ from . import audio, ui, utils
 
 # import submodules
 from .output import *
-from .resourcemanager import *
+from .packfile import *
 
 
 window = None
