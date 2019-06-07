@@ -39,7 +39,7 @@ class ResourceFileItem(object):
 		self.encrypt = encrypt
 
 class ResourceFile:
-	def __init__(self, key, iv, header="lucia", version=ResourceFileVersion.v1):
+	def __init__(self, key, iv="1010102010101020", header="lucia", version=ResourceFileVersion.v1):
 		self.key = key
 		self.iv = iv
 		self.header = header
