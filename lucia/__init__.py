@@ -102,7 +102,7 @@ def process_events():
 		keys_held = ()
 		keys_held = pygame.key.get_pressed()
 		if event.type == pygame.KEYDOWN:
-			if old_keys_held[event.key] == False:
+			if len(old_keys_held)>0 and old_keys_held[event.key] == False:
 				current_key_pressed = event.key
 		if event.type == pygame.KEYUP :
 			current_key_released = event.key
