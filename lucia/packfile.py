@@ -87,7 +87,7 @@ class ResourceFile:
 		f.write(struct.pack("1i", len(self.files)))
 		# and then loop through all files, and add them to the pack.
 		for item in self.files.values():
-			f.write(struct.pack("1i", item.name_length))
+			f.write(struct.pack("1i", len(item.name)-1))
 			f.write(item.name)
 			f.write(struct.pack("1i", item.content_length))
 			f.write(struct.pack("2i", item.compress, item.encrypt))

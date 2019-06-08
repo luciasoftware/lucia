@@ -28,7 +28,7 @@ class Sound(lucia.audio.Sound):
 		if isinstance(filename, str):
 			self.handle =stream.FileStream(file=filename)
 		else:
-			self.handle =stream.FileStream(mem=True, file=filename)
+			self.handle =stream.FileStream(mem=True, file=filename, length=len(filename))
 		self.freq=self.handle.get_frequency()
 
 	def play(self):

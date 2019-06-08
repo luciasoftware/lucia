@@ -22,6 +22,7 @@ import os
 import platform
 os_bit, os_name = platform.architecture()
 os.environ["PYAL_DLL_PATH"] = os.path.join(os.path.dirname(os.path.realpath(__file__)), "lib", os_bit)
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 
 import sys
 import pygame

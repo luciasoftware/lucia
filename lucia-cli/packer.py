@@ -21,14 +21,6 @@ import sys
 import os
 from lucia.packfile import *
 
-def progress(count, total, status=''):
-	bar_len = 60
-	filled_len = int(round(bar_len * count / float(total)))
-	percents = round(100.0 * count / float(total), 1)
-	bar = '=' * filled_len + '-' * (bar_len - filled_len)
-	sys.stdout.write('[%s] %s%s ...%s\r' % (bar, percents, '%', status))
-	sys.stdout.flush()
-
 def get_list_of_files(dirName):
 	listOfFile = os.listdir(dirName)
 	allFiles = list()
@@ -43,7 +35,7 @@ def get_list_of_files(dirName):
 			allFiles.append(fullPath)
 	return allFiles
 
-if __name__ == "__main__":
+def main():
 	if len(sys.argv) != 3:
 		print(f"Usage: python -m lucia-cli.packer name encryptionkey")
 		sys.exit()
@@ -51,19 +43,29 @@ if __name__ == "__main__":
 	packfilename = sys.argv[1]
 	encryptionkey = sys.argv[2]
 	
-	print(f"Saving packfile {packfilename} in {os.getcwd()}.")
 	pack = ResourceFile(encryptionkey)
-	count = 0
 	files_to_pack = get_list_of_files(os.getcwd())
+	print("Processing files.")
 	for entry in files_to_pack:
 		pack.add_file(name=entry, internalname=entry[len(os.getcwd()):].strip("/").strip("\\\\").replace('\\', '/'))
-		count = count+1
-		progress(count-1, len(files_to_pack), "Packing {}".format(entry[len(os.getcwd()):].strip("/").strip("\\\\").replace('\\', '/')))
-	
-	print("")
-	progress(len(files_to_pack)-2, len(files_to_pack), "Saving pack to disk. This may take some time. Please wait!")
+	print("Done processing files.")
+	print("Saving pack to disk. This can take some time. Please wait.")
 	pack.save(os.path.join(os.getcwd(), packfilename))
-	print("")
-	progress(len(files_to_pack), len(files_to_pack), "Done")
+	print(f"Done, the pack can be found in:\n{os.path.join(os.getcwd(), packfilename)}")
 
+def clean():
+	if len(sys.argv) > 1:
+		sys.exit()
+	
+	packfilename = sys.argv[1]
+	if os.path.exists(os.path.join(os.getcwd(), packfilename)):
+		print("Deleting unfinished packfile.")
+		os.remove(os.path.join(os.getcwd(), packfilename))
+		print("Cleanup done.")
 
+if __name__ == "__main__":
+	try:
+		main()
+	except KeyboardInterrupt:
+		print("Aborted by user. Cleaning up.")
+		clean()
