@@ -22,9 +22,14 @@ class Vector():
   self.y= y
   self.z = z
 
- @property
- def getcoords(self):
+ 
+ def get_coords(self):
   return (self.x, self.y, self.z)
+
+ def set_coords(self, cords):
+  self.x, self.y, self.z = coords
+
+ coords = property(get_coords, set_coords)
 
  @property
  def get_tuple(self):
