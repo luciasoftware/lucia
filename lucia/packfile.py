@@ -23,18 +23,16 @@ import bz2
 from Cryptodome.Cipher import AES
 from Cryptodome.Hash import SHA1
 from Cryptodome.Hash import SHA256
-import pickle, sys, os, struct
+import pickle, sys, os, struct, base64
 
 class ResourceFileVersion:
 	"""The version should only change, if changes are introduced, that breaks backward compatibility"""
 	v1 = 1
 
 class ResourceFileItem(object):
-	def __init__(self, name, name_length, content, content_length, compress, encrypt):
+	def __init__(self, name, content, compress, encrypt):
 		self.name = name
-		self.name_length = name_length
 		self.content = content
-		self.content_length = content_length
 		self.compress = compress
 		self.encrypt = encrypt
 
@@ -74,7 +72,7 @@ class ResourceFile:
 				content = decrypt_data(content, self.key, self.iv)
 			if content_state[0]:
 				content = decompress_data(content)
-			item = ResourceFileItem(name, len(name), content, len(content), content_state[0], content_state[1])
+			item = ResourceFileItem(name, content, content_state[0], content_state[1])
 			self.files[name] = item
 
 	def save(self, filename):
@@ -87,15 +85,15 @@ class ResourceFile:
 		f.write(struct.pack("1i", len(self.files)))
 		# and then loop through all files, and add them to the pack.
 		for item in self.files.values():
-			f.write(struct.pack("1i", len(item.name)-1))
+			f.write(struct.pack("1i", len(item.name)))
 			f.write(item.name)
-			f.write(struct.pack("1i", item.content_length))
-			f.write(struct.pack("2i", item.compress, item.encrypt))
 			content = item.content
 			if item.compress:
 				content = compress_data(item.content)
 			if item.encrypt:
 				content = encrypt_data(content, self.key, self.iv)
+			f.write(struct.pack("1i", len(content)))
+			f.write(struct.pack("2i", item.compress, item.encrypt))
 			f.write(content)
 		# and then close
 		f.close()
@@ -110,7 +108,7 @@ class ResourceFile:
 			name = internalname
 		if isinstance(name, str):
 			name = name.encode()
-		item = ResourceFileItem(name, len(name), content, len(content), compress, encrypt)
+		item = ResourceFileItem(name, content, compress, encrypt)
 		self.files[name] = item
 
 	def add_memory(self, name, content, compress=True, encrypt=True):
@@ -118,7 +116,7 @@ class ResourceFile:
 			name = name.encode()
 		if isinstance(content,str):
 			content = content.encode()
-		item = ResourceFileItem(name, len(name), content, len(content), compress, encrypt)
+		item = ResourceFileItem(name, content, compress, encrypt)
 		self.files[name] = item
 
 	def get(self, name):
