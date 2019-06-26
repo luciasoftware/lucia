@@ -62,13 +62,14 @@ class Sound(lucia.audio.Sound):
 	def volume(self):
 		if not self.handle:
 			return False
-		return round(math.log10(self.handle.volume)*20)
+		return float(self.handle.volume)
 
 	@volume.setter
 	def volume(self,value):
+		"""Volume between 100 (full volume) to 0 silence"""
 		if not self.handle:
 			return False
-		self.handle.set_volume(10**(float(value)/20))
+		self.handle.set_volume(float(value/100))
 
 	@property
 	def pitch(self):
