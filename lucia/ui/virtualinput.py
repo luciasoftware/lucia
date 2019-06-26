@@ -25,7 +25,7 @@ WHITELIST_FLOATDIGITS=WHITELIST_DIGITS+['.']
 WHITELIST_NEGFLOATDIGITS=WHITELIST_NEGDIGITS+['-']
 
 class VirtualInput():
-	def __init__(self, message, password=False, whitelist=WHITELIST_ALL, value="", callback=None):
+	def __init__(self, message="", password=False, whitelist=WHITELIST_ALL, value="", callback=None):
 		self.text = value
 		self.message = message
 		self.password = password
@@ -35,6 +35,7 @@ class VirtualInput():
 		self.allowed_characters=whitelist
 
 	def run(self):
+		lucia.output.output(self.message)
 		while True:
 			if callable(self.callback):
 				self.callback(self)
