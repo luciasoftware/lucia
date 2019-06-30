@@ -42,17 +42,15 @@ class ResourceFile:
 	You will interact with resource files through methods provided by this object. This object may have any number of instances, however only one instance should interact with a given file on the file system at a time.
 	"""
 	
-	def __init__(self, key, iv, header=b'LURF', version=ResourceFileVersion.v1):
+	def __init__(self, key, header=b'LURF', version=ResourceFileVersion.v1):
 		"""Instantiates a resource container.
 		
 		args:
 		    :param key: The encryption key to be used in this resource file.
-		    :param iv: The initialization vector to be sent along with the key to the crypto functions.
 		    :param header (bytes, optional): The header to be used to designate this resource file. Defaults to b'LURF'
 		    :param version (int, optional): The version number to be written after the header. Defaults to 1.
 		"""
 		self.key = key
-		self.iv = iv
 		self.header = header
 		self.header_length = len(self.header)
 		self.version = version
@@ -86,7 +84,7 @@ class ResourceFile:
 			content = f.read(content_length)
 			#if pack file specifies, decrypt/decompress the content.
 			if content_state[1]:
-				content = data.decrypt(content, self.key, self.iv)
+				content = data.decrypt(content, self.key)
 			if content_state[0]:
 				content = data.decompress(content)
 			#create an item for this file
@@ -114,7 +112,7 @@ class ResourceFile:
 			if item.compress:
 				content = data.decompress(item.content)
 			if item.encrypt:
-				content = data.encrypt(content, self.key, self.iv)
+				content = data.encrypt(content, self.key)
 			f.write(struct.pack("1i", len(content)))
 			f.write(struct.pack("2i", item.compress, item.encrypt))
 			f.write(content)

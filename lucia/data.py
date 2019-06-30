@@ -20,8 +20,9 @@ import lzma
 import zlib
 import bz2
 from Cryptodome.Cipher import AES
-from Cryptodome.Hash import SHA1
 from Cryptodome.Hash import SHA256
+from Cryptodome.Util.Padding import *
+from Cryptodome import Random
 
 #constants
 #compression
@@ -33,15 +34,7 @@ class unsupportedAlgorithm(Exception):
 	"""raised when the user tries supplying an algorithm not specified in constants"""
 	pass
 
-class InvalidInitializationVector(Exception):
-	"""raised if the initialization vector, given to the encryption or decryption methods aren't 16 bytes long"""
-	pass
-
-
-def encrypt(data, key, iv):
-	if len(iv) != 16:
-		raise InvalidInitializationVector
-		return
+def encrypt(data, key):
 	try:
 		key = key.encode("utf-8")
 	except AttributeError:
@@ -50,28 +43,26 @@ def encrypt(data, key, iv):
 		data = data.encode("utf-8")
 	except AttributeError:
 		pass
-	try:
-		iv=iv.encode("utf-8")
-	except AttributeError:
-		pass
-	encryptor = AES.new(SHA256.new(key).digest(), AES.MODE_CFB, iv)
-	return encryptor.encrypt(data)
+	iv = Random.new().read(AES.block_size)
+	#Hashing key with SHA256 entirely alleviates the need for any padding.
+	key = SHA256.new(key).digest()
+	#len(data) must be a factor of AES.block_size.
+	data = pad(data, AES.block_size)
+	encryptor = AES.new(key, AES.MODE_CFB, iv)
+	return encryptor.encrypt(data)+iv
 
-def decrypt(data, key,iv):
-	if len(iv) != 16:
-		raise InvalidInitializationVector
-		return
+def decrypt(data, key):
 	try:
 			key = key.encode("utf-8")
 	except AttributeError:
 		pass
-	try:
-		iv=iv.encode("utf-8")
-	except AttributeError:
-		pass
-	decryptor = AES.new(SHA256.new(key).digest(), AES.MODE_CFB, iv.encode("utf-8"))
+	#Hashing key with SHA256 entirely alleviates the need for any padding.
+	key = SHA256.new(key).digest()
+	iv = data[-AES.block_size:]
+	data = data[:AES.block_size]
+	decryptor = AES.new(key, AES.MODE_CFB, iv)
 	decryptedData = decryptor.decrypt(data)
-	return decryptedData
+	return unpad(decryptedData, AES.block_size)
 
 def compress(data, algorithm=ZLIB, compression_level=6):
 	if not isinstance(data, bytes):
