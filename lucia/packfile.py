@@ -18,18 +18,11 @@ This module will aid in the interaction with and creation of data files for stor
 A lucia resource file is a binary file format with the ability to have encryption and/or compression instituted on a per-file basis at creation time. Using the get method one may retrieve the contents of any file added to the pack, for example to be used in a memory load function of a sound system.
 """
 
-#constants
-#compression
-ZLIB = 1
-LZMA = 2
-BZ2 = 3
-import lzma
-import zlib
-import bz2
-from Cryptodome.Cipher import AES
-from Cryptodome.Hash import SHA1
-from Cryptodome.Hash import SHA256
-import sys, os, struct, base64
+import sys, os, struct
+
+class InvalidPackHeader(Exception):
+	"""raised when the packs header is invalid"""
+	pass
 
 class ResourceFileVersion:
 	"""The version should only change if changes are introduced that breaks backwards compatibility"""
@@ -93,9 +86,9 @@ class ResourceFile:
 			content = f.read(content_length)
 			#if pack file specifies, decrypt/decompress the content.
 			if content_state[1]:
-				content = decrypt_data(content, self.key, self.iv)
+				content = data.decrypt(content, self.key, self.iv)
 			if content_state[0]:
-				content = decompress_data(content)
+				content = data.decompress(content)
 			#create an item for this file
 			item = ResourceFileItem(name, content, content_state[0], content_state[1])
 			self.files[name] = item
@@ -105,6 +98,7 @@ class ResourceFile:
 		
 		When creating a resource file, this is the final method you would call.
 		:param filename: The file name on disk to write to. Will be overwritten if already exists.
+		"""
 		f = open(filename, "wb")
 		# first write header
 		f.write(struct.pack(str(self.header_length)+"s", self.header))
@@ -118,9 +112,9 @@ class ResourceFile:
 			f.write(item.name)
 			content = item.content
 			if item.compress:
-				content = compress_data(item.content)
+				content = data.decompress(item.content)
 			if item.encrypt:
-				content = encrypt_data(content, self.key, self.iv)
+				content = data.encrypt(content, self.key, self.iv)
 			f.write(struct.pack("1i", len(content)))
 			f.write(struct.pack("2i", item.compress, item.encrypt))
 			f.write(content)
@@ -170,77 +164,3 @@ class ResourceFile:
 
 	def list(self):
 		return self.files.keys()
-
-
-# Internal stuff.
-class unsupportedAlgorithm(Exception):
-	"""raised when the user tries supplying an algorithm not specified in constants"""
-	pass
-
-class InvalidPackHeader(Exception):
-	"""raised when the packs header is invalid"""
-	pass
-
-class InvalidInitializationVector(Exception):
-	"""raised if the initialization vector, given to the encryption or decryption methods aren't 16 bytes long"""
-	pass
-
-
-def encrypt_data(data, key, iv):
-	if len(iv) != 16:
-		raise InvalidInitializationVector
-		return
-	try:
-		key = key.encode("utf-8")
-	except AttributeError:
-		pass
-	try:
-		data = data.encode("utf-8")
-	except AttributeError:
-		pass
-	try:
-		iv=iv.encode("utf-8")
-	except AttributeError:
-		pass
-	encryptor = AES.new(SHA256.new(key).digest(), AES.MODE_CFB, iv)
-	return encryptor.encrypt(data)
-
-def decrypt_data(data, key,iv):
-	if len(iv) != 16:
-		raise InvalidInitializationVector
-		return
-	try:
-			key = key.encode("utf-8")
-	except AttributeError:
-		pass
-	try:
-		iv=iv.encode("utf-8")
-	except AttributeError:
-		pass
-	decryptor = AES.new(SHA256.new(key).digest(), AES.MODE_CFB, iv.encode("utf-8"))
-	decryptedData = decryptor.decrypt(data)
-	return decryptedData
-
-def compress_data(data, algorithm=1, compression_level=6):
-	if type(data)!=bytes:
-		data=data.encode()
-	if algorithm==1:
-		return zlib.compress(data, level=compression_level)
-	elif algorithm==2:
-		return lzma.compress(data, preset=compression_level)
-	elif algorithm == 3:
-		return bz2.compress(data, compresslevel=compression_level)
-	else:
-		raise unsupportedAlgorithm
-
-def decompress_data(data, algorithm=1):
-	if type(data)!=bytes:
-		data=data.encode()
-	if algorithm==1:
-		return zlib.decompress(data)
-	elif algorithm==2:
-		return lzma.decompress(data)
-	elif algorithm == 3:
-		return bz2.decompress(data)
-	else:
-		raise unsupportedAlgorithm
