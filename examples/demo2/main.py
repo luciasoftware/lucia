@@ -15,7 +15,7 @@
 # this is a simple testing game, used to show the features of lucia.
 # Add this repository's lucia package to the PYTHON PATH, so this example can find the lucia module.
 import sys
-sys.path.append(".")
+sys.path.append("../..")
 import time
 
 print("Importing lucia")
@@ -31,16 +31,10 @@ test = lucia.show_window()
 while 1:
 	time.sleep(0.005)
 	lucia.process_events()
-	if lucia.key_pressed(lucia.SDLK_a):
-		lucia.output.speak("a is pressed")
-	if lucia.key_down(lucia.SDLK_s):
-		lucia.output.speak("s is being held down")
-	time.sleep(0.05)
 	if lucia.key_pressed(pygame.K_a):
 		lucia.output.speak("a is pressed")
 	if lucia.key_down(pygame.K_s):
-		#lucia.output.speak("s is being held down")
-		print("LOL")
+		lucia.output.speak("s held down")
 	if lucia.key_pressed(pygame.K_ESCAPE):
 		lucia.quit()
 		sys.exit()
