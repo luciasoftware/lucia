@@ -12,24 +12,24 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
-#constants
-#compression
-ZLIB = 1
-LZMA = 2
-BZ2 = 3
-import lzma
-import zlib
-import bz2
-from Cryptodome.Cipher import AES
-from Cryptodome.Hash import SHA1
-from Cryptodome.Hash import SHA256
-import pickle, sys, os, struct, base64
+"""Lucia's resource pack module
+
+This module will aid in the interaction with and creation of data files for storing game assets.
+A lucia resource file is a binary file format with the ability to have encryption and/or compression instituted on a per-file basis at creation time. Using the get method one may retrieve the contents of any file added to the pack, for example to be used in a memory load function of a sound system.
+"""
+
+import sys, os, struct
+
+class InvalidPackHeader(Exception):
+	"""raised when the packs header is invalid"""
+	pass
 
 class ResourceFileVersion:
-	"""The version should only change, if changes are introduced, that breaks backward compatibility"""
+	"""The version should only change if changes are introduced that breaks backwards compatibility"""
 	v1 = 1
 
 class ResourceFileItem(object):
+	"""Internal object representing an item in the pack."""
 	def __init__(self, name, content, compress, encrypt):
 		self.name = name
 		self.content = content
@@ -37,17 +37,31 @@ class ResourceFileItem(object):
 		self.encrypt = encrypt
 
 class ResourceFile:
-	def __init__(self, key, iv="1010102010101020", header="lucia", version=ResourceFileVersion.v1):
+	"""The resource file object
+	
+	You will interact with resource files through methods provided by this object. This object may have any number of instances, however only one instance should interact with a given file on the file system at a time.
+	"""
+	
+	def __init__(self, key, header=b'LURF', version=ResourceFileVersion.v1):
+		"""Instantiates a resource container.
+		
+		args:
+		    :param key: The encryption key to be used in this resource file.
+		    :param header (bytes, optional): The header to be used to designate this resource file. Defaults to b'LURF'
+		    :param version (int, optional): The version number to be written after the header. Defaults to 1.
+		"""
 		self.key = key
-		self.iv = iv
 		self.header = header
-		if isinstance(self.header, str):
-			self.header = self.header.encode()
 		self.header_length = len(self.header)
 		self.version = version
 		self.files = {}
 
 	def load(self, filename):
+		"""Opens a resource file to be read.
+		
+		This file will be checked for validity based on matching header, version, and a non-0 number of files. If one of these conditions fails, InvalidPackHeader will be raised. Otherwise this object will be loaded with the contents.
+		    :param filename: The file name to be read from the file system.
+		"""
 		f = open(filename, "rb")
 		test_header = f.read(self.header_length)
 		test_header = struct.unpack(str(self.header_length)+"s", test_header)[0]
@@ -68,16 +82,23 @@ class ResourceFile:
 			content_length = struct.unpack("1i", f.read(4))[0]
 			content_state = struct.unpack("2i", f.read(8))
 			content = f.read(content_length)
+			#if pack file specifies, decrypt/decompress the content.
 			if content_state[1]:
-				content = decrypt_data(content, self.key, self.iv)
+				content = data.decrypt(content, self.key)
 			if content_state[0]:
-				content = decompress_data(content)
+				content = data.decompress(content)
+			#create an item for this file
 			item = ResourceFileItem(name, content, content_state[0], content_state[1])
 			self.files[name] = item
 
 	def save(self, filename):
+		"""Saves data added to this object to a resource file.
+		
+		When creating a resource file, this is the final method you would call.
+		:param filename: The file name on disk to write to. Will be overwritten if already exists.
+		"""
 		f = open(filename, "wb")
-	# first write header
+		# first write header
 		f.write(struct.pack(str(self.header_length)+"s", self.header))
 		# then write the version byte
 		f.write(struct.pack("1i", self.version))
@@ -89,16 +110,23 @@ class ResourceFile:
 			f.write(item.name)
 			content = item.content
 			if item.compress:
-				content = compress_data(item.content)
+				content = data.decompress(item.content)
 			if item.encrypt:
-				content = encrypt_data(content, self.key, self.iv)
+				content = data.encrypt(content, self.key)
 			f.write(struct.pack("1i", len(content)))
 			f.write(struct.pack("2i", item.compress, item.encrypt))
 			f.write(content)
 		# and then close
 		f.close()
 
-	def add_file(self, name, compress=True, encrypt=True, internalname=None, ):
+	def add_file(self, name, compress=True, encrypt=True, internalname=None):
+		"""Adds a file on disk to the pack, optionally compressing and/or encrypting it.
+		
+		    :param name: The file name to read from.
+		    :param compress (boolean, optional): Whether compression should be applied to this file. Defaults to True.
+		    :param encrypt (boolean, optional): Whether encryption should be applied to this file. Defaults to True.
+		    :param internalname (optional): Internal file name to be used inside the pack. If None, the default, internal name will be same as name on disk.
+		"""
 		if os.path.exists(name) == False:
 			raise FileNotFoundError
 		f = open(name, "rb")
@@ -134,69 +162,3 @@ class ResourceFile:
 
 	def list(self):
 		return self.files.keys()
-
-
-# Internal stuff.
-class unsupportedAlgorithm(Exception):
-	"""raised when the user tries supplying an algorithm not specified in constants"""
-	pass
-
-class InvalidPackHeader(Exception):
-	"""raised when the packs header is invalid"""
-	pass
-
-class InvalidInitializationVector(Exception):
-	"""raised if the initialization vector, given to the encryption or decryption methods aren't 16 bytes long"""
-	pass
-
-
-def encrypt_data(data, key, iv):
-	if len(iv) != 16:
-		raise InvalidInitializationVector
-		return
-	try:
-		key = key.encode("utf-8")
-	except AttributeError:
-		pass
-	try:
-		data = data.encode("utf-8")
-	except AttributeError:
-		pass
-	encryptor = AES.new(SHA256.new(key).digest(), AES.MODE_CFB, iv.encode("utf-8"))
-	return encryptor.encrypt(data)
-
-def decrypt_data(data, key,iv):
-	if len(iv) != 16:
-		raise InvalidInitializationVector
-		return
-	try:
-			key = key.encode("utf-8")
-	except AttributeError:
-		pass
-	decryptor = AES.new(SHA256.new(key).digest(), AES.MODE_CFB, iv.encode("utf-8"))
-	decryptedData = decryptor.decrypt(data)
-	return decryptedData
-
-def compress_data(data, algorithm=1, compression_level=6):
-	if type(data)!=bytes:
-		data=data.encode()
-	if algorithm==1:
-		return zlib.compress(data, level=compression_level)
-	elif algorithm==2:
-		return lzma.compress(data, preset=compression_level)
-	elif algorithm == 3:
-		return bz2.compress(data, compresslevel=compression_level)
-	else:
-		raise unsupportedAlgorithm
-
-def decompress_data(data, algorithm=1):
-	if type(data)!=bytes:
-		data=data.encode()
-	if algorithm==1:
-		return zlib.decompress(data)
-	elif algorithm==2:
-		return lzma.decompress(data)
-	elif algorithm == 3:
-		return bz2.decompress(data)
-	else:
-		raise unsupportedAlgorithm

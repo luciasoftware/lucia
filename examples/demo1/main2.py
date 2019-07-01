@@ -32,5 +32,4 @@ menu = menu2.Menu(items=menuitems, title="test menu")
 result = menu.run()
 print(str(result))
 
-while lucia.running:
-	lucia.process_events()
+lucia.quit()

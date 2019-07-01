@@ -15,7 +15,7 @@
 # this is a simple testing game, used to show the features of lucia.
 # Add this repository's lucia package to the PYTHON PATH, so this example can find the lucia module.
 import sys
-sys.path.append(".")
+sys.path.append("../..")
 
 print("Importing lucia")
 import lucia
@@ -40,6 +40,4 @@ print(str(result))
 input = lucia.ui.VirtualInput("this is a test", True)
 result = input.run()
 print(result)
-
-while lucia.running:
-	lucia.process_events()
+lucia.quit()
