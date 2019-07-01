@@ -36,7 +36,7 @@ def getinput(title, message, multiline=False, value="", mode="plaintext"):
 	text=input.run()
 	return text
 
-class menuitem:
+class MenuItem:
 	def __init__(self, name, can_return=False, has_value=False, value="", value_mode="plaintext", can_be_toggled=False, toggle_value=False, can_activate=True, on_focus=None, event=None):
 		self.name=name
 		self.has_value=has_value
