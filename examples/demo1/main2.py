@@ -20,16 +20,20 @@ print("Importing lucia")
 import lucia
 
 print("Initializing lucia")
-lucia.initialize()
+lucia.initialize(audiobackend=lucia.AudioBackend.BASS)
 print("Showing the window")
 test = lucia.show_window()
 
 print("importing menu2")
 from lucia.ui import menu2
 print("Making menu")
-menuitems=[menu2.menuitem("hello"), menu2.menuitem("world", has_value=True), menu2.menuitem("this is a "), menu2.menuitem("test", can_be_toggled=True)]
-menu = menu2.Menu(items=menuitems, title="test menu")
+MenuItems=[menu2.MenuItem("hello"), menu2.MenuItem("world", has_value=True), menu2.MenuItem("this is a "), menu2.MenuItem("test", can_be_toggled=True), menu2.MenuItem("exit", True)]
+menu = menu2.Menu(items=MenuItems, title="test menu")
 result = menu.run()
-print(str(result))
+if result[0]['name']=="exit":
+	print(str(result))
+	lucia.quit()
+	exit()
 
-lucia.quit()
+
+
