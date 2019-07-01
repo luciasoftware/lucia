@@ -23,7 +23,7 @@ import lucia
 import pygame
 
 print("Initializing lucia")
-lucia.initialize()
+lucia.initialize(audiobackend=lucia.AudioBackend.BASS)
 
 print("Showing the window")
 test = lucia.show_window()
