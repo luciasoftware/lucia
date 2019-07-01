@@ -16,20 +16,18 @@
 # Add this repository's lucia package to the PYTHON PATH, so this example can find the lucia module.
 import sys
 sys.path.append(".")
-import wx
 print("Importing lucia")
 import lucia
 
 print("Initializing lucia")
 lucia.initialize()
-app=wx.App()
 print("Showing the window")
 test = lucia.show_window()
-app.MainLoop()
+
 print("importing menu2")
 from lucia.ui import menu2
 print("Making menu")
-menuitems=[menu2.menuitem("hello"), menu2.menuitem("world"), menu2.menuitem("this is a "), menu2.menuitem("test")]
+menuitems=[menu2.menuitem("hello"), menu2.menuitem("world", has_value=True), menu2.menuitem("this is a "), menu2.menuitem("test", can_be_toggled=True)]
 menu = menu2.Menu(items=menuitems, title="test menu")
 result = menu.run()
 print(str(result))
