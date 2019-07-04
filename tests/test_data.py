@@ -18,6 +18,3 @@ def test_encryption():
 	decrypted = data.decrypt(encrypted, key)
 	
 	assert original == decrypted
-
-test_compression()
-test_encryption()
