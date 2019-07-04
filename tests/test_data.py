@@ -11,7 +11,7 @@ def test_compression():
 	assert original == decompressed
 
 def test_encryption():
-	original = "This is a plain string, that will be encrypted and then decrypted - let's see how it goes."
+	original = b"This is a plain string, that will be encrypted and then decrypted - let's see how it goes."
 	key = "ThisIsMyVerySecretKey123456789"
 	
 	encrypted = data.encrypt(original, key)

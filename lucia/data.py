@@ -43,13 +43,11 @@ def encrypt(data, key):
 		data = data.encode("utf-8")
 	except AttributeError:
 		pass
-	iv = Random.new().read(AES.block_size)
 	#Hashing key with SHA256 entirely alleviates the need for any padding.
 	key = SHA256.new(key).digest()
-	#len(data) must be a factor of AES.block_size.
-	data = pad(data, AES.block_size)
-	encryptor = AES.new(key, AES.MODE_CFB, iv)
-	return encryptor.encrypt(data)+iv
+	encryptor = AES.new(key, AES.MODE_CFB, )
+	data = encryptor.encrypt(data)
+	return encryptor.iv+data
 
 def decrypt(data, key):
 	try:
@@ -58,11 +56,11 @@ def decrypt(data, key):
 		pass
 	#Hashing key with SHA256 entirely alleviates the need for any padding.
 	key = SHA256.new(key).digest()
-	iv = data[-AES.block_size:]
-	data = data[:AES.block_size]
+	iv = data[:16]
+	data = data[16:]
 	decryptor = AES.new(key, AES.MODE_CFB, iv)
 	decryptedData = decryptor.decrypt(data)
-	return unpad(decryptedData, AES.block_size)
+	return decryptedData
 
 def compress(data, algorithm=ZLIB, compression_level=6):
 	if not isinstance(data, bytes):
