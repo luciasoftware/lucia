@@ -19,6 +19,7 @@ A lucia resource file is a binary file format with the ability to have encryptio
 """
 
 import sys, os, struct
+from . import data
 
 class InvalidPackHeader(Exception):
 	"""raised when the packs header is invalid"""
@@ -48,7 +49,7 @@ class ResourceFile:
 		args:
 		    :param key: The encryption key to be used in this resource file.
 		    :param header (bytes, optional): The header to be used to designate this resource file. Defaults to b'LURF'
-		    :param version (int, optional): The version number to be written after the header. Defaults to 1.
+		    :param version (ResourceFileVersion, optional): The version number to be written after the header. Defaults to V1, DO NOT CHANGE THIS UNLESS YOU KNOW WHAT YOU'RE DOING.
 		"""
 		self.key = key
 		self.header = header
@@ -110,7 +111,7 @@ class ResourceFile:
 			f.write(item.name)
 			content = item.content
 			if item.compress:
-				content = data.decompress(item.content)
+				content = data.compress(item.content)
 			if item.encrypt:
 				content = data.encrypt(content, self.key)
 			f.write(struct.pack("1i", len(content)))

@@ -44,6 +44,7 @@ current_key_pressed = -1
 current_key_released = -1
 old_keys_held = []
 keys_held = []
+_resource_file = None
 
 class AudioBackendException(ValueError):
 	pass
@@ -76,6 +77,16 @@ def quit():
 	"""Shutdown lucia and close underlying engines freeing up system resources"""
 	audio_backend_class.quit()
 	pygame.quit()
+
+def get_global_resource_file():
+	return _resource_file
+
+def set_global_resource_file(handle):
+	if isinstance(handle, ResourceFile) == False:
+		raise ValueError("handle must be an instance of \"lucia.ResourceFile\".")
+	_resource_file = handle
+
+
 
 def show_window(title="LuciaGame", size=(640,480)):
 	"""Shows the main game window on the screen, this is most likely called at the start of a game"""
