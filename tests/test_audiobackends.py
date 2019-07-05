@@ -4,7 +4,7 @@ from . import util
 
 import lucia
 
-audio_file_path = os.path.join(os.getcwd(), "tests", "audio.ogg")
+audio_file_path = os.path.join(os.getcwd(), "audio.ogg")
 
 def test_bass():
 	lucia.initialize(audiobackend=lucia.AudioBackend.BASS)
