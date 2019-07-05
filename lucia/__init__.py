@@ -79,14 +79,14 @@ def quit():
 	pygame.quit()
 
 def get_global_resource_file():
+	global _resource_file
 	return _resource_file
 
-def set_global_resource_file(handle):
-	if isinstance(handle, ResourceFile) == False:
-		raise ValueError("handle must be an instance of \"lucia.ResourceFile\".")
-	_resource_file = handle
-
-
+def set_global_resource_file(file):
+	global _resource_file
+	if not isinstance(file, ResourceFile):
+		raise ValueError("\"file\" most be an instance of \"lucia.ResourceFile\".")
+	_resource_file = file
 
 def show_window(title="LuciaGame", size=(640,480)):
 	"""Shows the main game window on the screen, this is most likely called at the start of a game"""

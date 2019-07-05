@@ -12,6 +12,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 #Original code by Carter Tem
+import os
 import math
 import sound_lib
 from sound_lib import stream
@@ -25,6 +26,12 @@ class Sound(lucia.audio.Sound):
 	def load(self,filename=""):
 		if self.handle:
 			self.close()
+		if lucia.get_global_resource_file() is not None:
+			try:
+				filename = lucia.get_global_resource_file().get(filename)
+			except KeyError: # the file doesn't exist in the pack file.
+				if os.path.isfile(filename) == False:
+					return
 		if isinstance(filename, str):
 			self.handle =stream.FileStream(file=filename)
 		else:
@@ -32,14 +39,20 @@ class Sound(lucia.audio.Sound):
 		self.freq=self.handle.get_frequency()
 
 	def play(self):
+		if self.handle is None:
+			return
 		self.handle.looping=False
 		self.handle.play()
 
 	def play_wait(self):
+		if self.handle is None:
+			return
 		self.handle.looping=False
 		self.handle.play_blocking()
 
 	def play_looped(self):
+		if self.handle is None:
+			return
 		self.handle.looping=True
 		self.looping=True
 		self.handle.play()
@@ -53,9 +66,13 @@ class Sound(lucia.audio.Sound):
 		return self.handle
 
 	def pause(self):
+		if self.handle is None:
+			return
 		self.handle.pause()
 
 	def resume(self):
+		if self.handle is None:
+			return
 		self.handle.resume()
 
 	@property
