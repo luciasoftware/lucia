@@ -59,8 +59,8 @@ class VirtualInput():
 						self.text += " "
 						lucia.output.output("space") if self.password == False else lucia.output.output("hidden")
 					try:
-						if chr(event.key) in self.allowed_characters:
-							self.text += chr(event.key)
-							lucia.output.output(chr(event.key)) if self.password == False else lucia.output.output("hidden")
+						if event.unicode in self.allowed_characters:
+							self.text += event.unicode
+							lucia.output.output(event.unicode) if self.password == False else lucia.output.output("hidden")
 					except ValueError:
 						continue
