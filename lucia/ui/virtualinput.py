@@ -15,6 +15,7 @@
 import lucia
 import pygame
 import string
+import time
 
 WHITELIST_ALL = [i for i in string.printable if not i == "\r" or i == "\n"]
 WHITELIST_LETTERS = [i for i in string.ascii_letters]
@@ -40,6 +41,7 @@ class VirtualInput:
 	def run(self):
 		lucia.output.output(self.message)
 		while True:
+			time.sleep(0.001)
 			if callable(self.callback):
 				self.callback(self)
 			if self.input_break:
@@ -48,34 +50,34 @@ class VirtualInput:
 			for event in events:
 				if event.type == pygame.KEYDOWN:
 					if event.key in (pygame.K_DOWN, pygame.K_UP):
-						lucia.output.output(self.text) if self.password == False else lucia.output.output(
-							f"{len(self.text)} hidden"
-						)
+						self._output_char(self.text, True)
 						continue
 					if event.key == pygame.K_BACKSPACE:
 						if len(self.text) == 0:
 							continue
 						last = self.text[-1]
 						self.text = self.text[:-1]
-						lucia.output.output(
-							last + " deleted"
-						) if self.password == False else lucia.output.output(
-							"hidden deleted"
-						)
+						self._output_char(last)
+						continue
 					if event.key == pygame.K_RETURN:
 						return self.text
 					if event.key == pygame.K_SPACE:
 						self.text += " "
-						lucia.output.output("space") if self.password == False else lucia.output.output(
-							"hidden"
-						)
+						self._output_char("space")
+						continue
 					try:
 						if event.unicode in self.allowed_characters:
 							self.text += event.unicode
-							lucia.output.output(
-								event.unicode
-							) if self.password == False else lucia.output.output(
-								"hidden"
-							)
+							self._output_char(event.unicode)
 					except ValueError:
 						continue
+
+	def _output_char(self, char, speak_number=False):
+		to_speak = ""
+		if self.password:
+			to_speak += "Hidden"
+			if speak_number:
+				to_speak += f" {len(self.text)} characters"
+		else:
+			to_speak += char
+		lucia.output.output(to_speak)
