@@ -20,22 +20,27 @@ class Timer:
 	"""
 
 	def __init__(self):
-		self.inittime = int(round(time.time() * 1000))
+		self.inittime = time.time()
 
+	@property
 	def elapsed(self):
 		"""Returns the exact elapsed time since this timer was created or last restarted.
 		"""
-		return int(round(time.time() * 1000)) - self.inittime
+		return self._ms(time.time() - self.inittime)
+
+	@elapsed.setter
+	def elapsed(self, amount):
+		"""Forces the timer to a specific time.
+		
+		Args:
+			amount (int): The time elapsed (in millis)
+		"""
+		self.inittime = time.time() - (amount / 1000)
 
 	def restart(self):
 		"""Restarts the timer, and set it's elapsed time to 0.
 		"""
-		self.inittime = int(round(time.time() * 1000))
+		self.__init__()
 
-	def force(self, amount):
-		"""Sets the timer to a specific time.
-		
-		Args:
-			amount (int): The time to set to this timer (in millis)
-		"""
-		self.inittime = amount - ((int(round(time.time())) * 1000) - self.inittime)
+	def _ms(self, t):
+		return int(round(t*1000))
