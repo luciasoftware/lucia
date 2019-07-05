@@ -16,35 +16,37 @@ import sys
 import platform
 import os
 import io
-if platform.system()=='Windows':
+
+if platform.system() == "Windows":
 	from win32api import *
 	from win32con import *
 	from win32event import *
 else:
 	from fcntl import *
 
+
 class InstanceChecker:
 	def __init__(self, f):
-		self.running=False
-		if platform.system()=='Windows':
-			self.mtx=CreateMutex(None, True, f)
-			if GetLastError()==183: #ERROR_ALREADY_EXISTS
-				self.running=True
+		self.running = False
+		if platform.system() == "Windows":
+			self.mtx = CreateMutex(None, True, f)
+			if GetLastError() == 183:  # ERROR_ALREADY_EXISTS
+				self.running = True
 		else:
-			self.fp=open(f, "w")
+			self.fp = open(f, "w")
 			try:
-				lockf(self.fp, LOCK_EX|LOCK_NB)
+				lockf(self.fp, LOCK_EX | LOCK_NB)
 			except IOError:
-				self.running=True
-	
+				self.running = True
+
 	def __del__(self):
-		if platform.system()=='Windows':
+		if platform.system() == "Windows":
 			CloseHandle(self.mtx)
 		else:
 			self.f.close()
-	
+
 	def is_running(self):
 		return self.running
-	
+
 	def __bool__(self):
 		return self.running

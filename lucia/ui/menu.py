@@ -16,8 +16,11 @@ import lucia
 import pygame
 import time
 
-class Menu():
-	def __init__(self, scroll_sound="", enter_sound="", open_sound="", border_sound="", music=""):
+
+class Menu:
+	def __init__(
+		self, scroll_sound="", enter_sound="", open_sound="", border_sound="", music=""
+	):
 		"""audiogame virtual menu
 		
 		This object functions as an audiogame menu, where up/down/enter can be used to interact and choose an option.
@@ -45,7 +48,7 @@ class Menu():
 		except:
 			pass
 		try:
-			self.scroll_sound .load(scroll_sound)
+			self.scroll_sound.load(scroll_sound)
 		except:
 			pass
 		try:
@@ -119,12 +122,12 @@ class Menu():
 					pass
 				try:
 					self.music.stop()
-				except: # thrown if no music was specified.
+				except:  # thrown if no music was specified.
 					pass
 				return "-1"
 			if lucia.key_pressed(pygame.K_DOWN):
-				if self.count < len(self.items)-1:
-					self.count = self.count+1
+				if self.count < len(self.items) - 1:
+					self.count = self.count + 1
 					try:
 						self.scroll_sound.play()
 					except:
@@ -137,7 +140,7 @@ class Menu():
 				self.speechMethod.speak(list(self.items)[self.count], self.shouldInterrupt)
 			if lucia.key_pressed(pygame.K_UP):
 				if self.count > 0:
-					self.count = self.count-1
+					self.count = self.count - 1
 					try:
 						self.scroll_sound.play()
 					except:
@@ -156,9 +159,10 @@ class Menu():
 				self.running = False
 				try:
 					self.music.stop()
-				except: # thrown if no music was selected
+				except:  # thrown if no music was selected
 					pass
 		return self.items[list(self.items)[self.count]]
+
 
 class YesNoMenu(Menu):
 	def __init__(*args):

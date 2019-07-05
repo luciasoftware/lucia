@@ -24,15 +24,18 @@ from Cryptodome.Hash import SHA256
 from Cryptodome.Util.Padding import *
 from Cryptodome import Random
 
-#constants
-#compression
+# constants
+# compression
 ZLIB = 1
 LZMA = 2
-BZ2=3
+BZ2 = 3
+
 
 class unsupportedAlgorithm(Exception):
 	"""raised when the user tries supplying an algorithm not specified in constants"""
+
 	pass
+
 
 def encrypt(data, key):
 	try:
@@ -43,18 +46,19 @@ def encrypt(data, key):
 		data = data.encode("utf-8")
 	except AttributeError:
 		pass
-	#Hashing key with SHA256 entirely alleviates the need for any padding.
+	# Hashing key with SHA256 entirely alleviates the need for any padding.
 	key = SHA256.new(key).digest()
-	encryptor = AES.new(key, AES.MODE_CFB, )
+	encryptor = AES.new(key, AES.MODE_CFB)
 	data = encryptor.encrypt(data)
-	return encryptor.iv+data
+	return encryptor.iv + data
+
 
 def decrypt(data, key):
 	try:
-			key = key.encode("utf-8")
+		key = key.encode("utf-8")
 	except AttributeError:
 		pass
-	#Hashing key with SHA256 entirely alleviates the need for any padding.
+	# Hashing key with SHA256 entirely alleviates the need for any padding.
 	key = SHA256.new(key).digest()
 	iv = data[:16]
 	data = data[16:]
@@ -62,24 +66,26 @@ def decrypt(data, key):
 	decryptedData = decryptor.decrypt(data)
 	return decryptedData
 
+
 def compress(data, algorithm=ZLIB, compression_level=6):
 	if not isinstance(data, bytes):
-		data=data.encode()
-	if algorithm==ZLIB:
+		data = data.encode()
+	if algorithm == ZLIB:
 		return zlib.compress(data, level=compression_level)
-	elif algorithm==LZMA:
+	elif algorithm == LZMA:
 		return lzma.compress(data, preset=compression_level)
 	elif algorithm == BZ2:
 		return bz2.compress(data, compresslevel=compression_level)
 	else:
 		raise unsupportedAlgorithm
 
+
 def decompress(data, algorithm=ZLIB):
 	if not isinstance(data, bytes):
-		data=data.encode()
-	if algorithm==ZLIB:
+		data = data.encode()
+	if algorithm == ZLIB:
 		return zlib.decompress(data)
-	elif algorithm==LZMA:
+	elif algorithm == LZMA:
 		return lzma.decompress(data)
 	elif algorithm == BZ2:
 		return bz2.decompress(data)

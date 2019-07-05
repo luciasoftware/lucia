@@ -20,9 +20,12 @@ In addition, this part of lucia also contains must keyboard functions.
 
 import os
 import platform
+
 os_bit, os_name = platform.architecture()
-os.environ["PYAL_DLL_PATH"] = os.path.join(os.path.dirname(os.path.realpath(__file__)), "lib", os_bit)
-os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+os.environ["PYAL_DLL_PATH"] = os.path.join(
+	os.path.dirname(os.path.realpath(__file__)), "lib", os_bit
+)
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
 
 import sys
 import pygame
@@ -46,13 +49,16 @@ old_keys_held = []
 keys_held = []
 _resource_file = None
 
+
 class AudioBackendException(ValueError):
 	pass
 
-class AudioBackend():
+
+class AudioBackend:
 	OPENAL = 0
 	BASS = 1
 	FMOD = 2
+
 
 def initialize(audiobackend=AudioBackend.OPENAL):
 	"""Initialize lucia and the underlying graphic, audio, interface engines"""
@@ -61,11 +67,13 @@ def initialize(audiobackend=AudioBackend.OPENAL):
 	pygame.init()
 	if audiobackend == AudioBackend.OPENAL:
 		from .audio import openal as backend_openal
+
 		audio_backend_class = backend_openal.OpenALAudioBackend()
 		audio_backend_class.initialize()
 		audio_backend = backend_openal
 	if audiobackend == AudioBackend.BASS:
 		from .audio import bass as backend_bass
+
 		audio_backend_class = backend_bass.BassAudioBackend()
 		audio_backend_class.initialize()
 		audio_backend = backend_bass
@@ -73,27 +81,32 @@ def initialize(audiobackend=AudioBackend.OPENAL):
 		raise AudioBackendException("FMOD backend not implemented yet.")
 	running = True
 
+
 def quit():
 	"""Shutdown lucia and close underlying engines freeing up system resources"""
 	audio_backend_class.quit()
 	pygame.quit()
 
+
 def get_global_resource_file():
 	global _resource_file
 	return _resource_file
 
+
 def set_global_resource_file(file):
 	global _resource_file
 	if not isinstance(file, ResourceFile):
-		raise ValueError("\"file\" most be an instance of \"lucia.ResourceFile\".")
+		raise ValueError('"file" most be an instance of "lucia.ResourceFile".')
 	_resource_file = file
 
-def show_window(title="LuciaGame", size=(640,480)):
+
+def show_window(title="LuciaGame", size=(640, 480)):
 	"""Shows the main game window on the screen, this is most likely called at the start of a game"""
 	global window
 	window = pygame.display.set_mode(size)
 	pygame.display.set_caption(title)
 	return window
+
 
 def process_events():
 	"""This processes events for the window
@@ -114,13 +127,14 @@ def process_events():
 		keys_held = ()
 		keys_held = pygame.key.get_pressed()
 		if event.type == pygame.KEYDOWN:
-			if len(old_keys_held)>0 and old_keys_held[event.key] == False:
+			if len(old_keys_held) > 0 and old_keys_held[event.key] == False:
 				current_key_pressed = event.key
-		if event.type == pygame.KEYUP :
+		if event.type == pygame.KEYUP:
 			current_key_released = event.key
 		pygame.display.update()
 		audio_backend_class.update_audio_system()
 	return events
+
 
 def key_pressed(key_code):
 	"""Checks if a key was pressed down this frame (single key press)
@@ -131,6 +145,7 @@ def key_pressed(key_code):
 	global current_key_pressed
 	return current_key_pressed == key_code
 
+
 def key_released(key_code):
 	"""Checks if a key was released down this frame (single key release)
 	* key_code: pygame.K_ key code
@@ -140,6 +155,7 @@ def key_released(key_code):
 	global current_key_released
 	return current_key_released == key_code
 
+
 def key_down(key_code):
 	"""Checks if a key is beeing held down.
 	* key_code: a pygame.K_ key code
@@ -148,6 +164,7 @@ def key_down(key_code):
 	"""
 	global keys_held
 	return keys_held[key_code]
+
 
 def key_up(key_code):
 	"""Check if a key isn't beeing held down (ie if it's not pressed and held)

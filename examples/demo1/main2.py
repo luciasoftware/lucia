@@ -15,6 +15,7 @@
 # this is a simple testing game, used to show the features of lucia.
 # Add this repository's lucia package to the PYTHON PATH, so this example can find the lucia module.
 import sys
+
 sys.path.append(".")
 print("Importing lucia")
 import lucia
@@ -26,14 +27,18 @@ test = lucia.show_window()
 
 print("importing menu2")
 from lucia.ui import menu2
+
 print("Making menu")
-MenuItems=[menu2.MenuItem("hello"), menu2.MenuItem("world", has_value=True), menu2.MenuItem("this is a "), menu2.MenuItem("test", can_be_toggled=True), menu2.MenuItem("exit", True)]
+MenuItems = [
+	menu2.MenuItem("hello"),
+	menu2.MenuItem("world", has_value=True),
+	menu2.MenuItem("this is a "),
+	menu2.MenuItem("test", can_be_toggled=True),
+	menu2.MenuItem("exit", True),
+]
 menu = menu2.Menu(items=MenuItems, title="test menu")
 result = menu.run()
-if result[0]['name']=="exit":
+if result[0]["name"] == "exit":
 	print(str(result))
 	lucia.quit()
 	exit()
-
-
-

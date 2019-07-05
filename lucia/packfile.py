@@ -21,29 +21,36 @@ A lucia resource file is a binary file format with the ability to have encryptio
 import sys, os, struct
 from . import data
 
+
 class InvalidPackHeader(Exception):
 	"""raised when the packs header is invalid"""
+
 	pass
+
 
 class ResourceFileVersion:
 	"""The version should only change if changes are introduced that breaks backwards compatibility"""
+
 	v1 = 1
+
 
 class ResourceFileItem(object):
 	"""Internal object representing an item in the pack."""
+
 	def __init__(self, name, content, compress, encrypt):
 		self.name = name
 		self.content = content
 		self.compress = compress
 		self.encrypt = encrypt
 
+
 class ResourceFile:
 	"""The resource file object
 	
 	You will interact with resource files through methods provided by this object. This object may have any number of instances, however only one instance should interact with a given file on the file system at a time.
 	"""
-	
-	def __init__(self, key, header=b'LURF', version=ResourceFileVersion.v1):
+
+	def __init__(self, key, header=b"LURF", version=ResourceFileVersion.v1):
 		"""Instantiates a resource container.
 		
 		args:
@@ -65,7 +72,7 @@ class ResourceFile:
 		"""
 		f = open(filename, "rb")
 		test_header = f.read(self.header_length)
-		test_header = struct.unpack(str(self.header_length)+"s", test_header)[0]
+		test_header = struct.unpack(str(self.header_length) + "s", test_header)[0]
 		test_version = f.read(4)
 		test_version = struct.unpack("1i", test_version)[0]
 		amount_of_files = f.read(4)
@@ -83,12 +90,12 @@ class ResourceFile:
 			content_length = struct.unpack("1i", f.read(4))[0]
 			content_state = struct.unpack("2i", f.read(8))
 			content = f.read(content_length)
-			#if pack file specifies, decrypt/decompress the content.
+			# if pack file specifies, decrypt/decompress the content.
 			if content_state[1]:
 				content = data.decrypt(content, self.key)
 			if content_state[0]:
 				content = data.decompress(content)
-			#create an item for this file
+			# create an item for this file
 			item = ResourceFileItem(name, content, content_state[0], content_state[1])
 			self.files[name] = item
 
@@ -100,7 +107,7 @@ class ResourceFile:
 		"""
 		f = open(filename, "wb")
 		# first write header
-		f.write(struct.pack(str(self.header_length)+"s", self.header))
+		f.write(struct.pack(str(self.header_length) + "s", self.header))
 		# then write the version byte
 		f.write(struct.pack("1i", self.version))
 		# Write how many files are in the pack
@@ -141,9 +148,9 @@ class ResourceFile:
 		self.files[name] = item
 
 	def add_memory(self, name, content, compress=True, encrypt=True):
-		if isinstance(name,str):
+		if isinstance(name, str):
 			name = name.encode()
-		if isinstance(content,str):
+		if isinstance(content, str):
 			content = content.encode()
 		item = ResourceFileItem(name, content, compress, encrypt)
 		self.files[name] = item
@@ -152,7 +159,7 @@ class ResourceFile:
 		if isinstance(name, str):
 			name = name.encode()
 		val = self.files[name]
-		if isinstance(val,ResourceFileItem):
+		if isinstance(val, ResourceFileItem):
 			return val.content
 		return None
 

@@ -18,24 +18,29 @@ from .soundpool import *
 
 from sound_lib import output
 
-generic_output = None # used for sounds objects.
+generic_output = None  # used for sounds objects.
+
 
 class BassAudioBackend(lucia.audio.AudioBackend):
 	def initialize(self):
 		global generic_output
-		generic_output = output.Output() # initializing default output because the 3d one doesnt work.
+		generic_output = (
+			output.Output()
+		)  # initializing default output because the 3d one doesnt work.
 		generic_output.start()
-	
+
 	def quit(self):
 		global generic_output
 		generic_output.stop()
 		generic_output = None
-	
+
 	def is_hrtf_compatible(self):
 		return False
-	
+
 	def enable_hrtf(self, should_enable):
-		raise lucia.audio.BackActionNotSupported("ENabling HRTF back wide is not available with the Bass backend")
-	
+		raise lucia.audio.BackActionNotSupported(
+			"ENabling HRTF back wide is not available with the Bass backend"
+		)
+
 	def update_audio_system(self):
 		pass

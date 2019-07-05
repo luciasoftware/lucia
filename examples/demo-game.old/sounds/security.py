@@ -12,14 +12,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
-#constants
-#compression
-ZLIB=1
-LZMA=2
+# constants
+# compression
+ZLIB = 1
+LZMA = 2
+
 
 class unsupportedAlgorithm(Exception):
 	"""raised when the user tries supplying an algorithm not specified in constants"""
+
 	pass
+
 
 # Changes this for more security
 # Note: If you change this, please note that it must be 16 characters long.
@@ -48,30 +51,31 @@ def encrypt_data(key, data):
 
 def decrypt_data(key, data):
 	try:
-			key = key.encode("utf-8")
+		key = key.encode("utf-8")
 	except AttributeError:
 		pass
 	decryptor = AES.new(SHA256.new(key).digest(), AES.MODE_CFB, iv.encode("utf-8"))
 	decryptedData = decryptor.decrypt(data)
 	return decryptedData
 
+
 def compress_data(data, algorithm=1, compression_level=6):
-	if type(data)!=bytes:
-		data=data.encode()
-	if algorithm==1:
+	if type(data) != bytes:
+		data = data.encode()
+	if algorithm == 1:
 		return zlib.compress(data)
-	elif algorithm==2:
+	elif algorithm == 2:
 		return lzma.compress(data, preset=compression_level)
 	else:
 		raise unsupportedAlgorithm
 
+
 def decompress_data(data, algorithm=1):
-	if type(data)!=bytes:
-		data=data.encode()
-	if algorithm==1:
+	if type(data) != bytes:
+		data = data.encode()
+	if algorithm == 1:
 		return zlib.decompress(data)
-	elif algorithm==2:
+	elif algorithm == 2:
 		return lzma.decompress(data)
 	else:
 		raise unsupportedAlgorithm
-

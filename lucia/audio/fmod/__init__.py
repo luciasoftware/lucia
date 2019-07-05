@@ -17,22 +17,25 @@ import pyfmode
 
 system = None
 
+
 class FMODAudioBackend(lucia.audio.AudioBackend):
 	def initialize(self):
 		global system
 		system = pyfmodex.System()
 		system.init()
-	
+
 	def quit(self):
 		global system
 		system.close()
-	
+
 	def is_hrtf_compatible(self):
 		return False
-	
+
 	def enable_hrtf(self, should_enable):
-		raise lucia.audio.BackActionNotSupported("ENabling HRTF back wide is not available with the FMOD backend")
-	
+		raise lucia.audio.BackActionNotSupported(
+			"ENabling HRTF back wide is not available with the FMOD backend"
+		)
+
 	def update_audio_system(self):
 		global system
 		system.update()

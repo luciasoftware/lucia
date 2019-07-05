@@ -15,4 +15,5 @@
 # this is a simple testing game, used to show the features of lucia.
 # Add this repository's lucia package to the PYTHON PATH, so this example can find the lucia module.
 import sys
+
 sys.path.insert(0, "../../")

@@ -14,21 +14,23 @@
 
 import time
 
-class Timer():
+
+class Timer:
 	"""A timer class, to track time mesured in millis
 	"""
+
 	def __init__(self):
-		self.inittime=int(round(time.time() * 1000))
+		self.inittime = int(round(time.time() * 1000))
 
 	def elapsed(self):
 		"""Returns the exact elapsed time since this timer was created or last restarted.
 		"""
-		return int(round(time.time() * 1000))-self.inittime
+		return int(round(time.time() * 1000)) - self.inittime
 
 	def restart(self):
 		"""Restarts the timer, and set it's elapsed time to 0.
 		"""
-		self.inittime=int(round(time.time() * 1000))
+		self.inittime = int(round(time.time() * 1000))
 
 	def force(self, amount):
 		"""Sets the timer to a specific time.
@@ -36,4 +38,4 @@ class Timer():
 		Args:
 			amount (int): The time to set to this timer (in millis)
 		"""
-		self.inittime=(amount-((int(round(time.time()))*1000)-self.inittime))
+		self.inittime = amount - ((int(round(time.time())) * 1000) - self.inittime)

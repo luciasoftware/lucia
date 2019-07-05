@@ -19,7 +19,8 @@ excluded_file_types = (".py", ".pyc", ".log", ".dll", ".dat")
 import pickle, sys, os
 from security import *
 
-class ResourceManager():
+
+class ResourceManager:
 	def __init__(self):
 		self.data = {}
 
@@ -56,7 +57,7 @@ class ResourceManager():
 		tmpData = pickle.dumps(saveData)
 		encryptedData = encrypt_data(password, tmpData)
 		f = open(file, "wb")
-		f.write(	encryptedData)
+		f.write(encryptedData)
 		f.close()
 
 
@@ -66,27 +67,29 @@ if __name__ == "__main__":
 		print("Usage: " + sys.argv[0] + " key file")
 		print("")
 		print("key - required - encryption key to use.")
-		print("file - optional - The filename to write the encrypted data to (default \"resources.dat\")")
+		print(
+			'file - optional - The filename to write the encrypted data to (default "resources.dat")'
+		)
 		sys.exit()
-	
+
 	pwd = sys.argv[1]
 	resourceFile = "resources.dat"
 	if len(sys.argv) == 3:
 		resourceFile = sys.argv[2]
-	
+
 	print("Starting")
 	print("Key: " + pwd)
 	print("Resource File: " + resourceFile)
 	print("")
-	
+
 	storedFiles = {}
 	key = pwd
-	
+
 	print("Reading files from system. Please wait!")
 	for path, subdirs, files in os.walk(os.getcwd()):
 		for name in files:
 			p = os.path.join(path, name)
-			niceName = p[1+len(os.getcwd()):].replace("\\", "/")
+			niceName = p[1 + len(os.getcwd()) :].replace("\\", "/")
 			if niceName.lower().endswith(excluded_file_types):
 				print("Skipping " + niceName + ".")
 				continue
@@ -96,14 +99,14 @@ if __name__ == "__main__":
 			f.close()
 			storedFiles[niceName] = compress_data(data)
 			del data
-	
+
 	print("Converting data.")
 	tmpData = pickle.dumps(storedFiles)
 	print("Encrypting data...")
 	encryptedData = encrypt_data(key, tmpData)
 	print("Writing data to disk...")
 	f = open(resourceFile, "wb")
-	f.write(	encryptedData)
+	f.write(encryptedData)
 	f.close()
 	print("Done")
 	print("Running checks on generated resources file.")
@@ -121,5 +124,7 @@ if __name__ == "__main__":
 	if len(testData) == len(storedFiles):
 		print("Passed byte matcher.")
 	else:
-		print("Warning: Bytematching failed. This can happen if you have non-audio files in your resources file.")
+		print(
+			"Warning: Bytematching failed. This can happen if you have non-audio files in your resources file."
+		)
 	print("Done")
