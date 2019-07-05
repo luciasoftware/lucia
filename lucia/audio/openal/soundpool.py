@@ -79,7 +79,10 @@ class SoundPool(lucia.audio.SoundPool):
 
 	def play_stationary(self, soundfile, looping =False):
 		source = audio.SoundSource()
-		source.queue(lucia.audio_backend._get_audio_data(soundfile))
+		data = lucia.audio_backend._get_audio_data(soundfile)
+		if data is None:
+			return source
+		source.queue(data)
 		self.world.play(source)
 		self.world.update()
 		self.sources.append(source)
@@ -93,12 +96,16 @@ class SoundPool(lucia.audio.SoundPool):
 
 	def play_3d(self, soundfile, x, y, z, looping = False, pitch=1.0, volume=1.0, rolloff_factor=0.5):
 		source = audio.SoundSource(1.0, pitch, (x,z,-y))
-		source.queue(lucia.audio_backend._get_audio_data(soundfile))
+		data = lucia.audio_backend._get_audio_data(soundfile)
+		if data is None:
+			return source
+		source.queue(data)
 		source.looping = looping
 		self.world.play(source)
 		self.world.update()
 		self.sources.append(source)
 		return source
+
 	def update_sound_position(self, source, x, y, z):
 		source.position=(x, z, -y)
 
