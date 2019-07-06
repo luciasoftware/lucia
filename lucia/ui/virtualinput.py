@@ -37,6 +37,8 @@ class VirtualInput:
 		# set by the callback and used to break out of the input loop at any given time
 		self.input_break = False
 		self.allowed_characters = whitelist
+		#cursor
+		self.charindex=0
 
 	def run(self):
 		lucia.output.output(self.message)
@@ -52,22 +54,47 @@ class VirtualInput:
 					if event.key in (pygame.K_DOWN, pygame.K_UP):
 						self._output_char(self.text, True)
 						continue
+					if event.key == pygame.K_LEFT and len(self.text)>0:
+						if self.charindex > 0:
+							self.charindex-=1
+						elif self.charindex <= 0:
+							self.charindex=0
+						self._output_char(self.text[self.charindex])
+						continue
+					if event.key == pygame.K_RIGHT and len(self.text)>0:
+						if self.charindex < len(self.text):
+							self.charindex+=1
+							if self.charindex >= len(self.text):
+								self.charindex=len(self.text)
+								#using the default speaking function, to prevent from saying hidden instead of blank when in a password field.
+								lucia.output.speak("blank")
+							elif self.charindex <= len(self.text)-1:
+								self._output_char(self.text[self.charindex])
+						continue
 					if event.key == pygame.K_BACKSPACE:
-						if len(self.text) == 0:
+						if len(self.text) == 0 or self.charindex <= 0:
 							continue
-						last = self.text[-1]
-						self.text = self.text[:-1]
-						self._output_char(last)
+						what = self.text[self.charindex-1]
+						temp=""
+						if self.charindex < len(self.text):
+							temp=self.text[:self.charindex-1]+self.text[self.charindex:]
+						elif self.charindex == len(self.text):
+							temp=self.text[:self.charindex-1]
+						self.text=temp
+						self.charindex-=1
+						self._output_char(what)
 						continue
 					if event.key == pygame.K_RETURN:
 						return self.text
 					if event.key == pygame.K_SPACE:
 						self.text += " "
-						self._output_char("space")
+						self.charindex=len(self.text)
+						self._output_char(" ")
 						continue
 					try:
 						if event.unicode in self.allowed_characters:
 							self.text += event.unicode
+							self.charindex=len(self.text)
 							self._output_char(event.unicode)
 					except ValueError:
 						continue
@@ -79,5 +106,8 @@ class VirtualInput:
 			if speak_number:
 				to_speak += f" {len(self.text)} characters"
 		else:
-			to_speak += char
+			if char == " ":
+				to_speak += "space"
+			else:
+				to_speak += char
 		lucia.output.output(to_speak)
