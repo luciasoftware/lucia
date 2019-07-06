@@ -103,7 +103,8 @@ class ResourceFile:
 		"""Saves data added to this object to a resource file.
 		
 		When creating a resource file, this is the final method you would call.
-		:param filename: The file name on disk to write to. Will be overwritten if already exists.
+		args:
+		    :param filename: The file name on disk to write to. Will be overwritten if already exists.
 		"""
 		f = open(filename, "wb")
 		# first write header
@@ -130,6 +131,7 @@ class ResourceFile:
 	def add_file(self, name, compress=True, encrypt=True, internalname=None):
 		"""Adds a file on disk to the pack, optionally compressing and/or encrypting it.
 		
+		args:
 		    :param name: The file name to read from.
 		    :param compress (boolean, optional): Whether compression should be applied to this file. Defaults to True.
 		    :param encrypt (boolean, optional): Whether encryption should be applied to this file. Defaults to True.
@@ -143,13 +145,13 @@ class ResourceFile:
 		if internalname is not None:
 			name = internalname
 		if isinstance(name, str):
-			name = name.encode()
+			name = name.encode('utf-8')
 		item = ResourceFileItem(name, content, compress, encrypt)
 		self.files[name] = item
 
 	def add_memory(self, name, content, compress=True, encrypt=True):
 		if isinstance(name, str):
-			name = name.encode()
+			name = name.encode('utf-8')
 		if isinstance(content, str):
 			content = content.encode()
 		item = ResourceFileItem(name, content, compress, encrypt)
@@ -157,7 +159,7 @@ class ResourceFile:
 
 	def get(self, name):
 		if isinstance(name, str):
-			name = name.encode()
+			name = name.encode('utf-8')
 		val = self.files[name]
 		if isinstance(val, ResourceFileItem):
 			return val.content
@@ -165,7 +167,7 @@ class ResourceFile:
 
 	def exist(self, name):
 		if isinstance(name, str):
-			name = name.encode()
+			name = name.encode('utf-8')
 		return name in self.files.keys()
 
 	def list(self):
