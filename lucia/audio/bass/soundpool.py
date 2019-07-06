@@ -61,7 +61,7 @@ class SoundPoolItem:
 					return
 				if self.handle.handle.position > 0:
 					self.handle.handle.position = self.start_offset
-				self.update_listener_position(listener_x, listener_y, listener_z, rotation)
+				self.update_listener_position(listener_x, listener_y, listener_z, radians(rotation))
 				if not self.paused:
 					self.handle.play_looped()
 				return
@@ -204,6 +204,7 @@ class SoundPool(lucia.audio.SoundPool):
 		self.last_listener_x = 0
 		self.last_listener_y = 0
 		self.last_listener_z = 0
+		self.last_rotation=0
 		self.clean_frequency = 3
 
 	def play_stationary(self, filename, looping=False, persistent=False):
