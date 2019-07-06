@@ -37,6 +37,7 @@ class Menu:
 		self.running = False
 		self.items = {}
 		self.shouldInterrupt = True
+		self.callback = None
 		self.enter_sound = lucia.audio_backend.Sound()
 		self.scroll_sound = lucia.audio_backend.Sound()
 		self.open_sound = lucia.audio_backend.Sound()
@@ -64,6 +65,16 @@ class Menu:
 		except:
 			pass
 		self.add_speech_method(lucia.output)
+
+	def set_callback(self, callback):
+		"""Sets the menus callback. The callback will be called every iteration of the loop.
+		
+		args:
+		    :param callback (obj): The method to use as callback. This method should be either a module or a class and provide the necessary output functions, see lucia.output for an example.
+		"""
+		if callable(callback) == False:
+			raise ValueError("Callback most be a function.")
+		self.callback = callback
 
 	def add_speech_method(self, method, shouldInterrupt=True):
 		"""selects the speech method and interrupt flag
@@ -114,6 +125,8 @@ class Menu:
 			self.speechMethod.speak(intro, interrupt)
 		while self.running and lucia.running:
 			lucia.process_events()
+			if callable(self.callback):
+				self.callback(self)
 			time.sleep(0.005)
 			if lucia.key_pressed(pygame.K_ESCAPE):
 				try:
