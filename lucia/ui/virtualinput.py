@@ -70,6 +70,8 @@ class VirtualInput:
 								lucia.output.speak("blank")
 							elif self.charindex <= len(self.text)-1:
 								self._output_char(self.text[self.charindex])
+						else:
+							lucia.output.speak("blank")
 						continue
 					if event.key == pygame.K_BACKSPACE:
 						if len(self.text) == 0 or self.charindex <= 0:
@@ -87,14 +89,22 @@ class VirtualInput:
 					if event.key == pygame.K_RETURN:
 						return self.text
 					if event.key == pygame.K_SPACE:
-						self.text += " "
-						self.charindex=len(self.text)
+						if self.charindex < len(self.text):
+							self.text = self.text[:self.charindex] + " " + self.text[self.charindex:]
+							self.charindex += 1
+						elif self.charindex == len(self.text):
+							self.text += " "
+							self.charindex+=1
 						self._output_char(" ")
 						continue
 					try:
 						if event.unicode in self.allowed_characters:
-							self.text += event.unicode
-							self.charindex=len(self.text)
+							if self.charindex < len(self.text):
+								self.text = self.text[:self.charindex] + event.unicode + self.text[self.charindex:]
+								self.charindex += 1
+							elif self.charindex == len(self.text):
+								self.text += event.unicode
+								self.charindex+=1
 							self._output_char(event.unicode)
 					except ValueError:
 						continue
