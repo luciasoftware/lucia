@@ -12,7 +12,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
-"""enhanced menu for advance uses. Make sure you create wx.App and call the menu before creating any menus with this module. See examples/demmo1/main2.py if you need an idea how this module is used"""
+"""advance menu for advance use
+
+this menu module provides highly flexible menu items with different events and an advance menu handling"""
 
 import sys
 import time
@@ -49,6 +51,7 @@ class MenuItem:
 		can_be_toggled=False,
 		toggle_value=False,
 		can_activate=True,
+		item_function=None,
 		on_focus=None,
 		event=None,
 	):
@@ -60,12 +63,10 @@ class MenuItem:
 		self.toggle_value = toggle_value
 		self.can_return = can_return
 		self.can_activate = can_activate
-		self.on_focus = (
-			on_focus
-		)  # Make sure this is a function. This event is called whenever the focus is on this menu item
-		self.event = (
-			event
-		)  # This is usually an integer. See the events section of this file. Set this to any of the events in the events section.
+		self.item_function=item_function #this should be a function. It is called when the item is clicked. If the item is able to return and the event property isn't set to CANCELEVENT, instead of breaking out of the loop, just a function gets called. If the event property is set to CANCELEVENT the function gets called, but it'll break out of the loop too. This way you can make virtual submenus too except that you can switch between parent and child menus with left and right
+		self.on_focus = on_focus #a function that is called whenever the focus is on this item
+		self.event = event #Usually an integer. See the events section
+
 
 
 class Menu:
@@ -92,15 +93,12 @@ class Menu:
 		self.items = items
 		self.title = title
 		self.fpscap = fpscap
-		self.on_index_change = (
-			on_index_change
-		)  # make sure this is a function. It is called whenever the index of a menu is changed. The index change happens whenever user cycles between menu items.
-		self.callback = (
-			callback_function
-		)  # This should be a function. This function is called within the menu loop
+		self.on_index_change = on_index_change # make sure this is a function. It is called whenever the index of a menu is changed. The index change happens whenever user cycles between menu items.
+		self.callback = callback_function # This should be a function. This function is called within the menu loop
 		self.pool = lucia.audio_backend.SoundPool()
 
 	def run(self):
+		"""when this function is called, menu loop starts. If the user make the menu return such as pressing enter on an item that has can_return attribute set to true the loop ends and it usually returns results as a list of dictionaries"""
 		try:
 			lucia.output.speak(self.title)
 			return self.loop()
@@ -109,7 +107,7 @@ class Menu:
 
 	def loop(self):
 		while 1:
-			time.sleep(0.005)
+			time.sleep(0.001)
 			try:
 				lucia.process_events()
 				if callable(self.callback):
@@ -120,7 +118,10 @@ class Menu:
 							source = self.pool.play_stationary(self.entersound)
 						list_values = []
 						if self.items[self.itempos].event == CANCELEVENT:
+							if callable(self.items[self.itempos].item_function):
+								self.items[self.itempos].item_function()
 							return list_values
+						#returns results as a list of dictionaries. The currently focused item returns as the first item in the list
 						for x in self.items:
 							if x.name != self.items[self.itempos].name:
 								list_values.append(
@@ -134,7 +135,10 @@ class Menu:
 								"toggle_value": self.items[self.itempos].toggle_value,
 							},
 						)
-						return list_values
+						if callable(self.items[self.itempos].item_function):
+							self.items[self.itempos].item_function()
+						else:
+							return list_values
 				elif lucia.key_pressed(pygame.K_UP):
 					if self.itempos > 0:
 						self.itempos -= 1
