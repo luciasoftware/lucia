@@ -1,17 +1,6 @@
-# Copyright (C) 2018		LuciaSoftware and it's contributors.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as published by
-# the Free Software Foundation, version 3 of the License.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.		See the
-# GNU Lesser General Public License for more details.
-#
-# You should have received a copy of the GNU Lesser General Public License
-# along with this program.		If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
+#credit to user amerikranian on audio games forum for coding about 90% of the following code <https://forum.audiogames.net/user/19855>
 # Credit to Carter Tem who wrote the fixed sound positioning functions and the actual sound class.
+#Lucia Contributers only made changes that were required to make this code compatible with lucia. As said above, about 90 % of the code is done by user amerikranian on audio games forum <https://forum.audiogames.net/user/19855/>
 import lucia
 from . import sound, sound_positioning
 from math import radians
