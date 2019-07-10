@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>lucia.ui package &#8212; Lucia 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="lucia-ui-package">
+<h1>lucia.ui package<a class="headerlink" href="#lucia-ui-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-lucia.ui.menu">
+<span id="lucia-ui-menu-module"></span><h2>lucia.ui.menu module<a class="headerlink" href="#module-lucia.ui.menu" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lucia.ui.menu.Menu">
+<em class="property">class </em><code class="descclassname">lucia.ui.menu.</code><code class="descname">Menu</code><span class="sig-paren">(</span><em>scroll_sound=''</em>, <em>enter_sound=''</em>, <em>open_sound=''</em>, <em>border_sound=''</em>, <em>music=''</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.ui.menu.Menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="lucia.ui.menu.Menu.add_item_tts">
+<code class="descname">add_item_tts</code><span class="sig-paren">(</span><em>item</em>, <em>internal_name=''</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.ui.menu.Menu.add_item_tts" title="Permalink to this definition">¶</a></dt>
+<dd><p>adds a spoken item to the menu.</p>
+<p>:param : param item (str): The text of the item to be added. This is the text you will here when you come across it in the menu.
+:param : param internal_name (str, optional): The internal name of this item. when you retrieve the selected item by name this will be returned. Defaults to the spoken text of the item.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lucia.ui.menu.Menu.add_speech_method">
+<code class="descname">add_speech_method</code><span class="sig-paren">(</span><em>method</em>, <em>shouldInterrupt=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.ui.menu.Menu.add_speech_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>selects the speech method and interrupt flag</p>
+<p>:param : param method (obj): The method to use. This method should be either a module or a class and provide the necessary output functions, see lucia.output for an example.
+:param : param shouldInterrupt (bool, optional): determines if this speech method should interrupt already existing speech when speaking something new. Default is True.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lucia.ui.menu.Menu.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>intro='select an option'</em>, <em>interrupt=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.ui.menu.Menu.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>presents this menu to the user.</p>
+<p>This function blocks until the menu is closed, either by selecting an item or pressing escape.
+Available controls are up/down arrows, enter, and escape. Wrapping is not supported.</p>
+<p>:param : param intro (str, optional): The text that will be spoken when the menu is presented, this will occur at the same time as the open sound. Default is ‘select an option’
+:param : param interrupt (bool, optional): Determines if speech is interrupted when it is queued to be spoken. For your sanity, this should always be True. Defaults to True.</p>
+<p>returns:
+str if an option was selected, containing the option’s internal name. -1 if escape was pressed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="lucia.ui.menu.Menu.set_callback">
+<code class="descname">set_callback</code><span class="sig-paren">(</span><em>callback</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.ui.menu.Menu.set_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the menus callback. The callback will be called every iteration of the loop.</p>
+<p>:param : param callback (obj): The method to use as callback. This method should be either a module or a class and provide the necessary output functions, see lucia.output for an example.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lucia.ui.menu.YesNoMenu">
+<em class="property">class </em><code class="descclassname">lucia.ui.menu.</code><code class="descname">YesNoMenu</code><a class="headerlink" href="#lucia.ui.menu.YesNoMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lucia.ui.menu.Menu" title="lucia.ui.menu.Menu"><code class="xref py py-class docutils literal notranslate"><span class="pre">lucia.ui.menu.Menu</span></code></a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-lucia.ui.menu2">
+<span id="lucia-ui-menu2-module"></span><h2>lucia.ui.menu2 module<a class="headerlink" href="#module-lucia.ui.menu2" title="Permalink to this headline">¶</a></h2>
+<p>advance menu for advance use</p>
+<p>this menu module provides highly flexible menu items with different events and an advance menu handling</p>
+<dl class="class">
+<dt id="lucia.ui.menu2.Menu">
+<em class="property">class </em><code class="descclassname">lucia.ui.menu2.</code><code class="descname">Menu</code><span class="sig-paren">(</span><em>items</em>, <em>clicksound=''</em>, <em>edgesound=''</em>, <em>wrapsound=''</em>, <em>entersound=''</em>, <em>opensound=''</em>, <em>itempos=0</em>, <em>title='menu'</em>, <em>fpscap=120</em>, <em>on_index_change=None</em>, <em>callback_function=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.ui.menu2.Menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="lucia.ui.menu2.Menu.loop">
+<code class="descname">loop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.ui.menu2.Menu.loop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.ui.menu2.Menu.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.ui.menu2.Menu.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>when this function is called, menu loop starts. If the user make the menu return such as pressing enter on an item that has can_return attribute set to true the loop ends and it usually returns results as a list of dictionaries</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lucia.ui.menu2.MenuItem">
+<em class="property">class </em><code class="descclassname">lucia.ui.menu2.</code><code class="descname">MenuItem</code><span class="sig-paren">(</span><em>name</em>, <em>can_return=False</em>, <em>has_value=False</em>, <em>value=''</em>, <em>value_mode='plaintext'</em>, <em>can_be_toggled=False</em>, <em>toggle_value=False</em>, <em>can_activate=True</em>, <em>item_function=None</em>, <em>on_focus=None</em>, <em>event=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.ui.menu2.MenuItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lucia.ui.menu2.getinput">
+<code class="descclassname">lucia.ui.menu2.</code><code class="descname">getinput</code><span class="sig-paren">(</span><em>title</em>, <em>message</em>, <em>multiline=False</em>, <em>value=''</em>, <em>mode='plaintext'</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.ui.menu2.getinput" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-lucia.ui.virtualinput">
+<span id="lucia-ui-virtualinput-module"></span><h2>lucia.ui.virtualinput module<a class="headerlink" href="#module-lucia.ui.virtualinput" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lucia.ui.virtualinput.VirtualInput">
+<em class="property">class </em><code class="descclassname">lucia.ui.virtualinput.</code><code class="descname">VirtualInput</code><span class="sig-paren">(</span><em>message='', password=False, whitelist=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '!', '&quot;', '#', '$', '%', '&amp;', &quot;'&quot;, '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '&lt;', '=', '&gt;', '?', '&#64;', '[', '\', ']', '^', '_', '`', '{', '|', '}', '~', ' ', 't', 'n', 'x0b', 'x0c'], value='', callback=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.ui.virtualinput.VirtualInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="lucia.ui.virtualinput.VirtualInput.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.ui.virtualinput.VirtualInput.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lucia.ui">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-lucia.ui" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Lucia</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, LuciaSoftware.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/lucia.ui.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

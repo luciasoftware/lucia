@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>lucia.audio package &#8212; Lucia 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="lucia.audio.bass package" href="lucia.audio.bass.html" />
+    <link rel="prev" title="lucia package" href="lucia.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="lucia-audio-package">
+<h1>lucia.audio package<a class="headerlink" href="#lucia-audio-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lucia.audio.bass.html">lucia.audio.bass package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lucia.audio.bass.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.audio.bass.html#module-lucia.audio.bass.sound">lucia.audio.bass.sound module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.audio.bass.html#module-lucia.audio.bass.sound_positioning">lucia.audio.bass.sound_positioning module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.audio.bass.html#module-lucia.audio.bass.soundpool">lucia.audio.bass.soundpool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.audio.bass.html#module-lucia.audio.bass">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lucia.audio.fmod.html">lucia.audio.fmod package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lucia.audio.fmod.html#module-contents">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lucia.audio.openal.html">lucia.audio.openal package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lucia.audio.openal.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.audio.openal.html#module-lucia.audio.openal.loaders">lucia.audio.openal.loaders module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.audio.openal.html#module-lucia.audio.openal.sound">lucia.audio.openal.sound module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.audio.openal.html#module-lucia.audio.openal.soundpool">lucia.audio.openal.soundpool module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.audio.openal.html#module-lucia.audio.openal">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-lucia.audio.backend">
+<span id="lucia-audio-backend-module"></span><h2>lucia.audio.backend module<a class="headerlink" href="#module-lucia.audio.backend" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lucia.audio.backend.AudioBackend">
+<em class="property">class </em><code class="descclassname">lucia.audio.backend.</code><code class="descname">AudioBackend</code><a class="headerlink" href="#lucia.audio.backend.AudioBackend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<dl class="method">
+<dt id="lucia.audio.backend.AudioBackend.enable_hrtf">
+<code class="descname">enable_hrtf</code><span class="sig-paren">(</span><em>should_enable</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.backend.AudioBackend.enable_hrtf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.backend.AudioBackend.initialize">
+<code class="descname">initialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.backend.AudioBackend.initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.backend.AudioBackend.is_hrtf_compatible">
+<code class="descname">is_hrtf_compatible</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.backend.AudioBackend.is_hrtf_compatible" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.backend.AudioBackend.quit">
+<code class="descname">quit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.backend.AudioBackend.quit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.backend.AudioBackend.update_audio_system">
+<code class="descname">update_audio_system</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.backend.AudioBackend.update_audio_system" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="lucia.audio.backend.BackActionNotSupported">
+<em class="property">exception </em><code class="descclassname">lucia.audio.backend.</code><code class="descname">BackActionNotSupported</code><a class="headerlink" href="#lucia.audio.backend.BackActionNotSupported" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-lucia.audio.sound">
+<span id="lucia-audio-sound-module"></span><h2>lucia.audio.sound module<a class="headerlink" href="#module-lucia.audio.sound" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lucia.audio.sound.Sound">
+<em class="property">class </em><code class="descclassname">lucia.audio.sound.</code><code class="descname">Sound</code><a class="headerlink" href="#lucia.audio.sound.Sound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<dl class="method">
+<dt id="lucia.audio.sound.Sound.get_source_object">
+<code class="descname">get_source_object</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.sound.Sound.get_source_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.sound.Sound.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.sound.Sound.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.sound.Sound.pause">
+<code class="descname">pause</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.sound.Sound.pause" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.sound.Sound.play">
+<code class="descname">play</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.sound.Sound.play" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.sound.Sound.resume">
+<code class="descname">resume</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.sound.Sound.resume" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lucia.audio.soundpool">
+<span id="lucia-audio-soundpool-module"></span><h2>lucia.audio.soundpool module<a class="headerlink" href="#module-lucia.audio.soundpool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lucia.audio.soundpool.SoundPool">
+<em class="property">class </em><code class="descclassname">lucia.audio.soundpool.</code><code class="descname">SoundPool</code><a class="headerlink" href="#lucia.audio.soundpool.SoundPool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<dl class="method">
+<dt id="lucia.audio.soundpool.SoundPool.get_source_object">
+<code class="descname">get_source_object</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.soundpool.SoundPool.get_source_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.soundpool.SoundPool.play_1d">
+<code class="descname">play_1d</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.soundpool.SoundPool.play_1d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.soundpool.SoundPool.play_2d">
+<code class="descname">play_2d</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.soundpool.SoundPool.play_2d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.soundpool.SoundPool.play_3d">
+<code class="descname">play_3d</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.soundpool.SoundPool.play_3d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.soundpool.SoundPool.play_stationary">
+<code class="descname">play_stationary</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.soundpool.SoundPool.play_stationary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.soundpool.SoundPool.update_audio_system">
+<code class="descname">update_audio_system</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.soundpool.SoundPool.update_audio_system" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.soundpool.SoundPool.update_listener_1d">
+<code class="descname">update_listener_1d</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.soundpool.SoundPool.update_listener_1d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.soundpool.SoundPool.update_listener_2d">
+<code class="descname">update_listener_2d</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.soundpool.SoundPool.update_listener_2d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.soundpool.SoundPool.update_listener_3d">
+<code class="descname">update_listener_3d</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.soundpool.SoundPool.update_listener_3d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lucia.audio">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-lucia.audio" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Lucia</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="lucia.html">lucia package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="lucia.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">lucia.audio package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lucia.audio.backend">lucia.audio.backend module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lucia.audio.sound">lucia.audio.sound module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lucia.audio.soundpool">lucia.audio.soundpool module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lucia.audio">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lucia.ui.html">lucia.ui package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lucia.utils.html">lucia.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.html#module-lucia.data">lucia.data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.html#module-lucia.output">lucia.output module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.html#module-lucia.packfile">lucia.packfile module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.html#module-lucia">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="lucia.html">lucia package</a><ul>
+      <li>Previous: <a href="lucia.html" title="previous chapter">lucia package</a></li>
+      <li>Next: <a href="lucia.audio.bass.html" title="next chapter">lucia.audio.bass package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, LuciaSoftware.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/lucia.audio.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

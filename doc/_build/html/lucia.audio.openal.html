@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>lucia.audio.openal package &#8212; Lucia 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="lucia-audio-openal-package">
+<h1>lucia.audio.openal package<a class="headerlink" href="#lucia-audio-openal-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-lucia.audio.openal.loaders">
+<span id="lucia-audio-openal-loaders-module"></span><h2>lucia.audio.openal.loaders module<a class="headerlink" href="#module-lucia.audio.openal.loaders" title="Permalink to this headline">¶</a></h2>
+<p>Utility functions for loading sounds.</p>
+<dl class="function">
+<dt id="lucia.audio.openal.loaders.load_file">
+<code class="descclassname">lucia.audio.openal.loaders.</code><code class="descname">load_file</code><span class="sig-paren">(</span><em>fname</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.loaders.load_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads an audio file into a SoundData object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lucia.audio.openal.loaders.load_ogg_file">
+<code class="descclassname">lucia.audio.openal.loaders.</code><code class="descname">load_ogg_file</code><span class="sig-paren">(</span><em>fname</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.loaders.load_ogg_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a ogg encoded audio file converts it to wav and returns a SoundData object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lucia.audio.openal.loaders.load_wav_file">
+<code class="descclassname">lucia.audio.openal.loaders.</code><code class="descname">load_wav_file</code><span class="sig-paren">(</span><em>fname</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.loaders.load_wav_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a WAV encoded audio file into a SoundData object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lucia.audio.openal.loaders.load_wav_file_mem">
+<code class="descclassname">lucia.audio.openal.loaders.</code><code class="descname">load_wav_file_mem</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.loaders.load_wav_file_mem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads WAV encoded audio data into a SoundData object.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-lucia.audio.openal.sound">
+<span id="lucia-audio-openal-sound-module"></span><h2>lucia.audio.openal.sound module<a class="headerlink" href="#module-lucia.audio.openal.sound" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lucia.audio.openal.sound.Sound">
+<em class="property">class </em><code class="descclassname">lucia.audio.openal.sound.</code><code class="descname">Sound</code><span class="sig-paren">(</span><em>soundfile=''</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.sound.Sound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="lucia.audio.html#lucia.audio.sound.Sound" title="lucia.audio.sound.Sound"><code class="xref py py-class docutils literal notranslate"><span class="pre">lucia.audio.sound.Sound</span></code></a></p>
+<dl class="method">
+<dt id="lucia.audio.openal.sound.Sound.get_source_object">
+<code class="descname">get_source_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.sound.Sound.get_source_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.sound.Sound.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>soundfile</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.sound.Sound.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.sound.Sound.pause">
+<code class="descname">pause</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.sound.Sound.pause" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.sound.Sound.play">
+<code class="descname">play</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.sound.Sound.play" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.sound.Sound.resume">
+<code class="descname">resume</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.sound.Sound.resume" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.sound.Sound.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.sound.Sound.stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lucia.audio.openal.soundpool">
+<span id="lucia-audio-openal-soundpool-module"></span><h2>lucia.audio.openal.soundpool module<a class="headerlink" href="#module-lucia.audio.openal.soundpool" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lucia.audio.openal.soundpool.SoundPool">
+<em class="property">class </em><code class="descclassname">lucia.audio.openal.soundpool.</code><code class="descname">SoundPool</code><span class="sig-paren">(</span><em>rolloff_factor=0.5</em>, <em>max_distance=10</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.soundpool.SoundPool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="lucia.audio.html#lucia.audio.soundpool.SoundPool" title="lucia.audio.soundpool.SoundPool"><code class="xref py py-class docutils literal notranslate"><span class="pre">lucia.audio.soundpool.SoundPool</span></code></a></p>
+<dl class="method">
+<dt id="lucia.audio.openal.soundpool.SoundPool.is_hrtf_enabled">
+<code class="descname">is_hrtf_enabled</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.soundpool.SoundPool.is_hrtf_enabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.soundpool.SoundPool.pause_all">
+<code class="descname">pause_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.soundpool.SoundPool.pause_all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.soundpool.SoundPool.play_1d">
+<code class="descname">play_1d</code><span class="sig-paren">(</span><em>soundfile</em>, <em>x</em>, <em>looping=False</em>, <em>rolloff_factor=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.soundpool.SoundPool.play_1d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.soundpool.SoundPool.play_2d">
+<code class="descname">play_2d</code><span class="sig-paren">(</span><em>soundfile</em>, <em>x</em>, <em>y</em>, <em>looping=False</em>, <em>rolloff_factor=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.soundpool.SoundPool.play_2d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.soundpool.SoundPool.play_3d">
+<code class="descname">play_3d</code><span class="sig-paren">(</span><em>soundfile</em>, <em>x</em>, <em>y</em>, <em>z</em>, <em>looping=False</em>, <em>pitch=1.0</em>, <em>volume=1.0</em>, <em>rolloff_factor=0.5</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.soundpool.SoundPool.play_3d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.soundpool.SoundPool.play_stationary">
+<code class="descname">play_stationary</code><span class="sig-paren">(</span><em>soundfile</em>, <em>looping=False</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.soundpool.SoundPool.play_stationary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.soundpool.SoundPool.resume_all">
+<code class="descname">resume_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.soundpool.SoundPool.resume_all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.soundpool.SoundPool.set_hrtf">
+<code class="descname">set_hrtf</code><span class="sig-paren">(</span><em>num</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.soundpool.SoundPool.set_hrtf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.soundpool.SoundPool.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.soundpool.SoundPool.stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.soundpool.SoundPool.update_audio_system">
+<code class="descname">update_audio_system</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.soundpool.SoundPool.update_audio_system" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.soundpool.SoundPool.update_listener1d">
+<code class="descname">update_listener1d</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.soundpool.SoundPool.update_listener1d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.soundpool.SoundPool.update_listener2d">
+<code class="descname">update_listener2d</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.soundpool.SoundPool.update_listener2d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.soundpool.SoundPool.update_listener3d">
+<code class="descname">update_listener3d</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>z</em>, <em>direction=90</em>, <em>zdirection=0</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.soundpool.SoundPool.update_listener3d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.soundpool.SoundPool.update_sound_position">
+<code class="descname">update_sound_position</code><span class="sig-paren">(</span><em>source</em>, <em>x</em>, <em>y</em>, <em>z</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.soundpool.SoundPool.update_sound_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lucia.audio.openal">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-lucia.audio.openal" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lucia.audio.openal.OpenALAudioBackend">
+<em class="property">class </em><code class="descclassname">lucia.audio.openal.</code><code class="descname">OpenALAudioBackend</code><a class="headerlink" href="#lucia.audio.openal.OpenALAudioBackend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="lucia.audio.html#lucia.audio.backend.AudioBackend" title="lucia.audio.backend.AudioBackend"><code class="xref py py-class docutils literal notranslate"><span class="pre">lucia.audio.backend.AudioBackend</span></code></a></p>
+<dl class="method">
+<dt id="lucia.audio.openal.OpenALAudioBackend.enable_hrtf">
+<code class="descname">enable_hrtf</code><span class="sig-paren">(</span><em>should_enable</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.OpenALAudioBackend.enable_hrtf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.OpenALAudioBackend.initialize">
+<code class="descname">initialize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.OpenALAudioBackend.initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.OpenALAudioBackend.is_hrtf_compatible">
+<code class="descname">is_hrtf_compatible</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.OpenALAudioBackend.is_hrtf_compatible" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.OpenALAudioBackend.quit">
+<code class="descname">quit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.OpenALAudioBackend.quit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lucia.audio.openal.OpenALAudioBackend.update_audio_system">
+<code class="descname">update_audio_system</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lucia.audio.openal.OpenALAudioBackend.update_audio_system" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="lucia.audio.openal.SoundNotPlayingError">
+<em class="property">exception </em><code class="descclassname">lucia.audio.openal.</code><code class="descname">SoundNotPlayingError</code><a class="headerlink" href="#lucia.audio.openal.SoundNotPlayingError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="lucia.audio.openal.UnsupportedAudioFormatError">
+<em class="property">exception </em><code class="descclassname">lucia.audio.openal.</code><code class="descname">UnsupportedAudioFormatError</code><a class="headerlink" href="#lucia.audio.openal.UnsupportedAudioFormatError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Lucia</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, LuciaSoftware.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/lucia.audio.openal.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
