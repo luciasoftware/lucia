@@ -14,6 +14,8 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="lucia.utils package" href="lucia.utils.html" />
+    <link rel="prev" title="lucia.audio.openal package" href="lucia.audio.openal.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -41,20 +43,47 @@
 <dt id="lucia.ui.menu.Menu">
 <em class="property">class </em><code class="descclassname">lucia.ui.menu.</code><code class="descname">Menu</code><span class="sig-paren">(</span><em>scroll_sound=''</em>, <em>enter_sound=''</em>, <em>open_sound=''</em>, <em>border_sound=''</em>, <em>music=''</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.ui.menu.Menu" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>audiogame virtual menu</p>
+<p>This object functions as an audiogame menu, where up/down/enter can be used to interact and choose an option.
+Sounds such as the movement sound, selection sound, etc may be specified.
+This is an almost direct conversion of bgt’s dynamic_menu class, though it contains some enhancements found in other extensions such as m_pro.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scroll_sound</strong> (<em>str</em><em>, </em><em>optional</em>) – File name of the sound that will be played when the cursor moves within the menu because an arrow key was pressed.</p></li>
+<li><p><strong>enter_sound</strong> (<em>str</em><em>, </em><em>optional</em>) – File name of the sound that will be played when enter is pressed to choose an option.</p></li>
+<li><p><strong>open_sound</strong> (<em>str</em><em>, </em><em>optional</em>) – File name of the sound that will be played when the menu is presented to the user.</p></li>
+<li><p><strong>border_sound</strong> (<em>str</em><em>, </em><em>optional</em>) – File name of the sound played when you hit the edge of the menu when trying to move.</p></li>
+<li><p><strong>music</strong> (<em>str</em><em>, </em><em>optional</em>) – File name of the background music that will be played while this menu is running.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="method">
 <dt id="lucia.ui.menu.Menu.add_item_tts">
 <code class="descname">add_item_tts</code><span class="sig-paren">(</span><em>item</em>, <em>internal_name=''</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.ui.menu.Menu.add_item_tts" title="Permalink to this definition">¶</a></dt>
 <dd><p>adds a spoken item to the menu.</p>
-<p>:param : param item (str): The text of the item to be added. This is the text you will here when you come across it in the menu.
-:param : param internal_name (str, optional): The internal name of this item. when you retrieve the selected item by name this will be returned. Defaults to the spoken text of the item.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item</strong> (<em>str</em>) – The text of the item to be added. This is the text you will here when you come across it in the menu.</p></li>
+<li><p><strong>internal_name</strong> (<em>str</em><em>, </em><em>optional</em>) – The internal name of this item. when you retrieve the selected item by name this will be returned. Defaults to the spoken text of the item.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lucia.ui.menu.Menu.add_speech_method">
 <code class="descname">add_speech_method</code><span class="sig-paren">(</span><em>method</em>, <em>shouldInterrupt=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.ui.menu.Menu.add_speech_method" title="Permalink to this definition">¶</a></dt>
 <dd><p>selects the speech method and interrupt flag</p>
-<p>:param : param method (obj): The method to use. This method should be either a module or a class and provide the necessary output functions, see lucia.output for an example.
-:param : param shouldInterrupt (bool, optional): determines if this speech method should interrupt already existing speech when speaking something new. Default is True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<em>obj</em>) – The method to use. This method should be either a module or a class and provide the necessary output functions, see lucia.output for an example.</p></li>
+<li><p><strong>shouldInterrupt</strong> (<em>bool</em><em>, </em><em>optional</em>) – determines if this speech method should interrupt already existing speech when speaking something new. Default is True.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -63,17 +92,31 @@
 <dd><p>presents this menu to the user.</p>
 <p>This function blocks until the menu is closed, either by selecting an item or pressing escape.
 Available controls are up/down arrows, enter, and escape. Wrapping is not supported.</p>
-<p>:param : param intro (str, optional): The text that will be spoken when the menu is presented, this will occur at the same time as the open sound. Default is ‘select an option’
-:param : param interrupt (bool, optional): Determines if speech is interrupted when it is queued to be spoken. For your sanity, this should always be True. Defaults to True.</p>
-<p>returns:
-str if an option was selected, containing the option’s internal name. -1 if escape was pressed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>intro</strong> (<em>str</em><em>, </em><em>optional</em>) – The text that will be spoken when the menu is presented, this will occur at the same time as the open sound. Default is ‘select an option’</p></li>
+<li><p><strong>interrupt</strong> (<em>bool</em><em>, </em><em>optional</em>) – Determines if speech is interrupted when it is queued to be spoken. For your sanity, this should always be True. Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>str if an option was selected, containing the option’s internal name. -1 if escape was pressed.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lucia.ui.menu.Menu.set_callback">
 <code class="descname">set_callback</code><span class="sig-paren">(</span><em>callback</em><span class="sig-paren">)</span><a class="headerlink" href="#lucia.ui.menu.Menu.set_callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the menus callback. The callback will be called every iteration of the loop.</p>
-<p>:param : param callback (obj): The method to use as callback. This method should be either a module or a class and provide the necessary output functions, see lucia.output for an example.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> (<em>obj</em>) – The method to use as callback. This method should be either a module or a class and provide the necessary output functions, see lucia.output for an example.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError if callback is not callable</strong> – </p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -154,11 +197,38 @@ str if an option was selected, containing the option’s internal name. -1 if es
 
 
 <h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="lucia.html">lucia package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="lucia.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="lucia.audio.html">lucia.audio package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">lucia.ui package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lucia.ui.menu">lucia.ui.menu module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lucia.ui.menu2">lucia.ui.menu2 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lucia.ui.virtualinput">lucia.ui.virtualinput module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lucia.ui">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lucia.utils.html">lucia.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.html#module-lucia.data">lucia.data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.html#module-lucia.output">lucia.output module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.html#module-lucia.packfile">lucia.packfile module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lucia.html#module-lucia">Module contents</a></li>
+</ul>
+</li>
+</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="lucia.html">lucia package</a><ul>
+      <li>Previous: <a href="lucia.audio.openal.html" title="previous chapter">lucia.audio.openal package</a></li>
+      <li>Next: <a href="lucia.utils.html" title="next chapter">lucia.utils package</a></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>

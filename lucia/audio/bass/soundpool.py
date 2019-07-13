@@ -1,6 +1,6 @@
 #credit to user amerikranian on audio games forum for coding about 90% of the following code <https://forum.audiogames.net/user/19855>
 # Credit to Carter Tem who wrote the fixed sound positioning functions and the actual sound class.
-#Lucia Contributers only made changes that were required to make this code compatible with lucia. As said above, about 90 % of the code is done by user amerikranian on audio games forum <https://forum.audiogames.net/user/19855/>
+#Lucia Contributors only made changes that were required to make this code compatible with lucia. As said above, about 90 % of the code is done by user amerikranian on audio games forum <https://forum.audiogames.net/user/19855/>
 import lucia
 from . import sound, sound_positioning
 from math import radians

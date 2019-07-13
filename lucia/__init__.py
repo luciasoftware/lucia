@@ -15,7 +15,7 @@
 """The main Lucia module
 
 The functions here are responsible for initializing and quitting lucia, showing the game window, handle global events and so on.
-In addition, this part of lucia also contains must keyboard functions.
+In addition, this part of lucia also contains most keyboard functions.
 """
 
 import os
@@ -62,7 +62,6 @@ class AudioBackend:
 
 def initialize(audiobackend=AudioBackend.OPENAL):
 	"""Initialize lucia and the underlying graphic, audio, keyboard, interface engines"""
-	"""Initialize the underlying engines"""
 	global audio_backend, audio_backend_class, running
 	pygame.init()
 	# Set the pygame constants in lucia's namespace.
@@ -98,7 +97,7 @@ def get_global_resource_file():
 def set_global_resource_file(file):
 	global _resource_file
 	if not isinstance(file, ResourceFile):
-		raise ValueError('"file" most be an instance of "lucia.ResourceFile".')
+		raise ValueError('"file" must be an instance of "lucia.ResourceFile".')
 	_resource_file = file
 
 
@@ -140,7 +139,7 @@ def process_events():
 
 def key_pressed(key_code):
 	"""Checks if a key was pressed down this frame (single key press)
-	* key_code: a pygame.K_ key code
+	* key_code: A pygame.K_ key code
 	
 	returns: True if the specified key kode was pressed, False otherwise.
 	"""
@@ -150,7 +149,7 @@ def key_pressed(key_code):
 
 def key_released(key_code):
 	"""Checks if a key was released down this frame (single key release)
-	* key_code: pygame.K_ key code
+	* key_code: A pygame.K_ key code
 	
 	returns: True if the specified key kode was released, False otherwise.
 	"""
@@ -160,7 +159,7 @@ def key_released(key_code):
 
 def key_down(key_code):
 	"""Checks if a key is beeing held down.
-	* key_code: a pygame.K_ key code
+	* key_code: A pygame.K_ key code
 	
 	returns: True if the specified key kode is beeing held down, False otherwise.
 	"""
@@ -170,7 +169,7 @@ def key_down(key_code):
 
 def key_up(key_code):
 	"""Check if a key isn't beeing held down (ie if it's not pressed and held)
-	key_code : An pygame.K_ key code
+	* key_code : A pygame.K_ key code
 	
 	returns: True if key is not held down, False otherwise
 	"""

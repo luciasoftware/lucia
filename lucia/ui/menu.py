@@ -17,22 +17,22 @@ import time
 
 
 class Menu:
+	"""audiogame virtual menu
+	
+	This object functions as an audiogame menu, where up/down/enter can be used to interact and choose an option.
+	Sounds such as the movement sound, selection sound, etc may be specified.
+	This is an almost direct conversion of bgt's dynamic_menu class, though it contains some enhancements found in other extensions such as m_pro.
+	
+	args:
+	    scroll_sound (str, optional): File name of the sound that will be played when the cursor moves within the menu because an arrow key was pressed.
+	    enter_sound (str, optional): File name of the sound that will be played when enter is pressed to choose an option.
+	    open_sound (str, optional): File name of the sound that will be played when the menu is presented to the user.
+	    border_sound (str, optional): File name of the sound played when you hit the edge of the menu when trying to move.
+	    music (str, optional): File name of the background music that will be played while this menu is running.
+	"""
 	def __init__(
 		self, scroll_sound="", enter_sound="", open_sound="", border_sound="", music=""
 	):
-		"""audiogame virtual menu
-		
-		This object functions as an audiogame menu, where up/down/enter can be used to interact and choose an option.
-		Sounds such as the movement sound, selection sound, etc may be specified.
-		This is an almost direct conversion of bgt's dynamic_menu class, though it contains some enhancements found in other extensions such as m_pro.
-		
-		args:
-		    scroll_sound (str, optional): File name of the sound that will be played when the cursor moves within the menu because an arrow key was pressed.
-		    enter_sound (str, optional): File name of the sound that will be played when enter is pressed to choose an option.
-		    open_sound (str, optional): File name of the sound that will be played when the menu is presented to the user.
-		    border_sound (str, optional): File name of the sound played when you hit the edge of the menu when trying to move.
-		    music (str, optional): File name of the background music that will be played while this menu is running.
-		"""
 		self.running = False
 		self.items = {}
 		self.shouldInterrupt = True
@@ -179,15 +179,15 @@ class Menu:
 
 
 class YesNoMenu(Menu):
+	"""A yes/no menu
+	
+	This simply takes a menu and initializes it with options of Yes and No, you would then have to call run and get the return.
+	The internal names of the items are lower case.
+	
+	args:
+	args (tuple): Set of arguments to pass to Menu.__init__
+	"""
 	def __init__(*args):
-		"""A yes/no menu
-		
-		This simply takes a menu and initializes it with options of Yes and No, you would then have to call run and get the return.
-		The internal names of the items are lower case.
-		
-		args:
-		    args (tuple): Set of arguments to pass to menu.__init__
-		"""
-		Menu.__init__(args)
+		super().__init__(args)
 		self.add_item_tts("Yes", "yes")
 		self.add_item_tts("No", "No")

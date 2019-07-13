@@ -39,7 +39,7 @@ class BassAudioBackend(lucia.audio.AudioBackend):
 
 	def enable_hrtf(self, should_enable):
 		raise lucia.audio.BackActionNotSupported(
-			"ENabling HRTF back wide is not available with the Bass backend"
+			"Enabling HRTF is not available with the Bass backend"
 		)
 
 	def update_audio_system(self):
