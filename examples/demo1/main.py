@@ -49,4 +49,11 @@ password = lucia.ui.VirtualInput("Enter a password", True)
 result = password.run()
 print(f"password: {result}")
 
+while True:
+	lucia.process_events()
+	if lucia.key_pressed(lucia.K_a):
+		lucia.output.output("Hey.")
+	if lucia.key_pressed(lucia.K_q):
+		break
+
 lucia.quit()
