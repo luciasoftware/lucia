@@ -13,7 +13,6 @@
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
 import lucia
-import pygame
 import time
 
 
@@ -130,7 +129,7 @@ class Menu:
 			if callable(self.callback):
 				self.callback(self)
 			time.sleep(0.005)
-			if lucia.key_pressed(pygame.K_ESCAPE):
+			if lucia.key_pressed(lucia.K_ESCAPE):
 				try:
 					self.enter_sound.play()
 				except:
@@ -140,7 +139,7 @@ class Menu:
 				except:  # thrown if no music was specified.
 					pass
 				return "-1"
-			if lucia.key_pressed(pygame.K_DOWN):
+			if lucia.key_pressed(lucia.K_DOWN):
 				if self.count < len(self.items) - 1:
 					self.count = self.count + 1
 					try:
@@ -153,7 +152,7 @@ class Menu:
 					except:
 						pass
 				self.speechMethod.speak(list(self.items)[self.count], self.shouldInterrupt)
-			if lucia.key_pressed(pygame.K_UP):
+			if lucia.key_pressed(lucia.K_UP):
 				if self.count > 0:
 					self.count = self.count - 1
 					try:
@@ -166,7 +165,7 @@ class Menu:
 					except:
 						pass
 				self.speechMethod.speak(list(self.items)[self.count], self.shouldInterrupt)
-			if lucia.key_pressed(pygame.K_RETURN):
+			if lucia.key_pressed(lucia.K_RETURN):
 				try:
 					self.enter_sound.play()
 				except:

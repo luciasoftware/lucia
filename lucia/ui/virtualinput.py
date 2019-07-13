@@ -51,25 +51,25 @@ class VirtualInput:
 			events = lucia.process_events()
 			for event in events:
 				if event.type == pygame.KEYDOWN:
-					if event.key == pygame.K_UP:
+					if event.key == lucia.K_UP:
 						self.charindex = 0
 						self._output_char(self.text, True)
-					elif event.key == pygame.K_DOWN:
+					elif event.key == lucia.K_DOWN:
 						self.charindex = len(self.text)
 						self._output_char(self.text, True)
-					elif event.key == pygame.K_HOME:
+					elif event.key == lucia.K_HOME:
 						self.charindex = 0
 						self._output_char(self.text[0])
-					elif event.key == pygame.K_END:
+					elif event.key == lucia.K_END:
 						self.charindex = len(self.text)
 						lucia.output.speak("Blank")
-					elif event.key == pygame.K_LEFT and len(self.text)>0:
+					elif event.key == lucia.K_LEFT and len(self.text)>0:
 						if self.charindex > 0:
 							self.charindex-=1
 						elif self.charindex <= 0:
 							self.charindex=0
 						self._output_char(self.text[self.charindex])
-					elif event.key == pygame.K_RIGHT and len(self.text)>0:
+					elif event.key == lucia.K_RIGHT and len(self.text)>0:
 						if self.charindex < len(self.text):
 							self.charindex+=1
 							if self.charindex >= len(self.text):
@@ -80,7 +80,7 @@ class VirtualInput:
 								self._output_char(self.text[self.charindex])
 						else:
 							lucia.output.speak("blank")
-					elif event.key == pygame.K_BACKSPACE:
+					elif event.key == lucia.K_BACKSPACE:
 						if len(self.text) == 0 or self.charindex <= 0:
 							continue
 						what = self.text[self.charindex-1]
@@ -92,9 +92,9 @@ class VirtualInput:
 						self.text=temp
 						self.charindex-=1
 						self._output_char(what)
-					elif event.key == pygame.K_RETURN:
+					elif event.key == lucia.K_RETURN:
 						return self.text
-					elif event.key == pygame.K_SPACE:
+					elif event.key == lucia.K_SPACE:
 						if self.charindex < len(self.text):
 							self.text = self.text[:self.charindex] + " " + self.text[self.charindex:]
 							self.charindex += 1

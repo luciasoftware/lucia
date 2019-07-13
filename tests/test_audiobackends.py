@@ -4,13 +4,14 @@ from . import util
 
 import lucia
 
-audio_file_path = os.path.join(os.getcwd(), "audio.ogg")
+audio_file_path = os.path.join(os.getcwd(), "tests", "audio.ogg")
 
 
 def test_bass():
 	lucia.initialize(audiobackend=lucia.AudioBackend.BASS)
 	assert lucia.running == True
-
+	
+	print(f"Playing sound {audio_file_path}.")
 	testsound = lucia.audio_backend.Sound()
 	testsound.load(audio_file_path)
 	testsound.play()

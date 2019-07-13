@@ -20,7 +20,6 @@ import sys
 import time
 
 import lucia
-import pygame
 from lucia.ui.virtualinput import *
 
 # Events
@@ -112,7 +111,7 @@ class Menu:
 				lucia.process_events()
 				if callable(self.callback):
 					self.callback()
-				if lucia.key_pressed(pygame.K_RETURN):
+				if lucia.key_pressed(lucia.K_RETURN):
 					if self.items[self.itempos].can_return:
 						if self.entersound != "":
 							source = self.pool.play_stationary(self.entersound)
@@ -139,7 +138,7 @@ class Menu:
 							self.items[self.itempos].item_function()
 						else:
 							return list_values
-				elif lucia.key_pressed(pygame.K_UP):
+				elif lucia.key_pressed(lucia.K_UP):
 					if self.itempos > 0:
 						self.itempos -= 1
 						if self.clicksound != "":
@@ -191,7 +190,7 @@ class Menu:
 								speakstr
 								+ ". Press left shift or right shift to change this item's value. Press space to toggle on or off"
 							)
-				elif lucia.key_pressed(pygame.K_DOWN):
+				elif lucia.key_pressed(lucia.K_DOWN):
 					if self.itempos < len(self.items) - 1:
 						self.itempos += 1
 						if self.clicksound != "":
@@ -243,7 +242,7 @@ class Menu:
 								speakstr
 								+ ". Press left shift or right shift to change this item's value. Press space to toggle on or off"
 							)
-				elif lucia.key_pressed(pygame.K_SPACE):
+				elif lucia.key_pressed(lucia.K_SPACE):
 					if self.itempos > -1 and self.itempos < len(self.items):
 						if self.items[self.itempos].can_be_toggled:
 							if self.entersound != "":
@@ -254,7 +253,7 @@ class Menu:
 							else:
 								lucia.output.speak("on")
 								self.items[self.itempos].toggle_value = True
-				elif lucia.key_down(pygame.K_LSHIFT) or lucia.key_down(pygame.K_RSHIFT):
+				elif lucia.key_down(lucia.K_LSHIFT) or lucia.key_down(lucia.K_RSHIFT):
 					if self.items[self.itempos].has_value == True:
 						self.items[self.itempos].value = getinput(
 							"change value",
