@@ -1,0 +1,18 @@
+site_name: Lucia
+site_author: LuciaSoftware
+copyright: © LuciaSoftware 2019
+repo_url: https://github.com/LuciaSoftware/lucia
+nav:
+    - 'Introduction': 'index.md'
+    - 'CLI-Utilities': 'cli.md'
+markdown_extensions:
+  - extra
+  - footnotes
+  - nl2br
+  - sane_lists
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: true
+      
+ 

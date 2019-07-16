@@ -13,7 +13,8 @@ In addition lucia should be cross platform, At Least on windows and mac.
 * lucia/interface - things that pop onto the screen (like menus, edit fields and dialogs).
 * lucia/utils - things coded into the engine, but not necessarily required in any game.
 And in addition
-* docs - documentation for lucia (auto generated)
+* doc - documentation for lucia (auto generated)
+* web - The advanced documentation and use cases for lucia.
 * tests - tests for lucia.
 
 
@@ -44,6 +45,20 @@ after go into the "docs" folder and run:
 > $ cd docs
 
 > $ ./make.bat
+
+#### Generating the advanced documentation and use cases (web):
+To generate the web documentation (the one found in "web") you first need to install mkdocs.
+> $ pip install mkdocs
+
+after go into the "web" folder and run:
+> $ cd web
+
+> $ mkdocs build
+
+Alternatively, you can also view a local demo of the docs by executing the following command:
+
+> $ mkdocs serve
+
 
 ### Contributing
 Everyone is welcome to help improve Lucia, to start look at the opened issues, and go from there.
