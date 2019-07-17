@@ -35,9 +35,9 @@ def get_list_of_files(dirName):
 			allFiles.append(fullPath)
 	return allFiles
 
-def main():
+def real_main():
 	if len(sys.argv) != 3:
-		print(f"Usage: python -m lucia-cli.packer name encryptionkey")
+		print(f"Usage: lucia.packer name encryptionkey")
 		sys.exit()
 	
 	packfilename = sys.argv[1]
@@ -63,9 +63,13 @@ def clean():
 		os.remove(os.path.join(os.getcwd(), packfilename))
 		print("Cleanup done.")
 
-if __name__ == "__main__":
+def main():
 	try:
-		main()
+		real_main()
 	except KeyboardInterrupt:
 		print("Aborted by user. Cleaning up.")
 		clean()
+
+
+if __name__ == "__main__":
+	main()

@@ -34,6 +34,11 @@ url='http://github.com/LuciaSoftware/lucia',
 author='Lucia Software',
 license='LGPL',
 packages=lucia_packages,
+entry_points="""
+[console_scripts]
+lucia.packer=lucia.cli.packer:main
+lucia=lucia.cli:main
+""",
 setup_requires=["pytest-runner"],
 tests_require=["pytest"] + dependencies,
 install_requires=dependencies,

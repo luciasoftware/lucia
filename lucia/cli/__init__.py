@@ -16,3 +16,10 @@
 
 This module contains various command line utilities, that assist in creating a game with the lucia engine.
 """
+
+def main():
+	print("Lucia CLI utilities:")
+	print("")
+	print("Available CLI Utilities.")
+	print("NAME -------- Description --------")
+	print("lucia.packer - An utility that aid in creating pack files that stores audio and textual data for a game.")
