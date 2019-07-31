@@ -60,7 +60,7 @@ class AudioBackend:
 	FMOD = 2
 
 
-def initialize(audiobackend=AudioBackend.OPENAL):
+def initialize(audiobackend=AudioBackend.BASS):
 	"""Initialize lucia and the underlying graphic, audio, keyboard, interface engines"""
 	global audio_backend, audio_backend_class, running
 	pygame.init()
