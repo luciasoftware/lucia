@@ -565,7 +565,7 @@ class SoundPool(lucia.audio.SoundPool):
 			self.last_rotation,
 			self.max_distance,
 		)
-		if s.handle != None and not self.items[s].handle.is_playing:
+		if s.handle != None and not s.handle.handle.is_playing:
 			if s.looping:
 				s.handle.play_looped()
 			else:
