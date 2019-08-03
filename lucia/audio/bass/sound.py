@@ -49,7 +49,12 @@ class Sound(lucia.audio.Sound):
 		if not self.is_active:
 			return False
 		self.handle.looping = False
-		return bool(self.handle.play_blocking())
+		#return bool(self.handle.play_blocking())
+		# We can't block, we need to make a hack, to keep the ui responsive
+		result = bool(self.handle.play())
+		while self.handle.is_playing:
+			lucia.process_events()
+		return result
 
 	def play_looped(self):
 		if not self.is_active:
