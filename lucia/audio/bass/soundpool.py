@@ -525,7 +525,7 @@ class SoundPool(lucia.audio.SoundPool):
 	def sound_is_active(self, s):
 		if s.looping == False and s.handle == None:
 			return False
-		if s.looping == False and not s.handle.is_playing:
+		if s.looping == False and not s.handle.handle.is_playing:
 			return False
 		return True
 
