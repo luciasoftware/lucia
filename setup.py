@@ -3,6 +3,7 @@
 # Note2: When adding extra dependencies to lucia, remember to add them below (and their source link, if they aren't available on pypi).
 
 from setuptools import setup, find_packages
+import platform
 
 def readme():
 	with open('README.md') as f:
