@@ -33,6 +33,15 @@ class ResourceFileVersion:
 
 	v1 = 1
 
+class LoadPolicy():
+	"""The load policy used when loading in data from a resource file
+	
+	LOAD_ALL loads everything into ram.
+	LOAD_INDEX only load in the filenames and where they are located on disk.
+	"""
+	
+	LOAD_ALL = 1
+	LOAD_INDEX = 2
 
 class ResourceFileItem(object):
 	"""Internal object representing an item in the pack."""
@@ -63,14 +72,20 @@ class ResourceFile:
 		self.header_length = len(self.header)
 		self.version = version
 		self.files = {}
+		self.load_policy = LoadPolicy.LOAD_ALL
+		self.index = {} # only used if load policy is LOAD_INDEX
+		self.fileno = None
 
-	def load(self, filename):
+	def load(self, filename, policy=LoadPolicy.LOAD_ALL):
 		"""Opens a resource file to be read.
 		
 		This file will be checked for validity based on matching header, version, and a non-0 number of files. If one of these conditions fails, InvalidPackHeader will be raised. Otherwise this object will be loaded with the contents.
 		    :param filename: The file name to be read from the file system.
+		    :param policy (optional): The load policy to use, defaults to LoadPolicy.LOAD_ALL
 		"""
+		self.load_policy = policy
 		f = open(filename, "rb")
+		self.fileno = f
 		test_header = f.read(self.header_length)
 		test_header = struct.unpack(str(self.header_length) + "s", test_header)[0]
 		test_version = f.read(4)
@@ -89,15 +104,22 @@ class ResourceFile:
 			name = f.read(name_length)
 			content_length = struct.unpack("1i", f.read(4))[0]
 			content_state = struct.unpack("2i", f.read(8))
-			content = f.read(content_length)
-			# if pack file specifies, decrypt/decompress the content.
-			if content_state[1]:
+			if self.load_policy == LoadPolicy.LOAD_ALL:
+				self.files[name] = self._resolve_filedata(f, name, content_length, content_state)
+			if self.load_policy == LoadPolicy.LOAD_INDEX:
+				self.index[name] = (content_length, content_state, f.tell())
+
+	def _resolve_filedata(self, f, name, content_length, content_state, teller=-1):
+		if teller >= 0:
+			f.seek(teller)
+		content = f.read(content_length)
+		# if pack file specifies, decrypt/decompress the content.
+		if content_state[1]:
 				content = data.decrypt(content, self.key)
-			if content_state[0]:
-				content = data.decompress(content)
-			# create an item for this file
-			item = ResourceFileItem(name, content, content_state[0], content_state[1])
-			self.files[name] = item
+		if content_state[0]:
+			content = data.decompress(content)
+		# create an item for this file
+		return ResourceFileItem(name, content, content_state[0], content_state[1])
 
 	def save(self, filename):
 		"""Saves data added to this object to a resource file.
@@ -160,15 +182,26 @@ class ResourceFile:
 	def get(self, name):
 		if isinstance(name, str):
 			name = name.encode('utf-8')
-		val = self.files[name]
-		if isinstance(val, ResourceFileItem):
-			return val.content
+		if self.load_plicy == LoadPolicy.LOAD_ALL:
+			val = self.files[name]
+			if isinstance(val, ResourceFileItem):
+				return val.content
+		if self.load_policy == LoadPolicy.LOAD_INDEX:
+			val = self.index[name]
+			if isinstance(val, tuple):
+				return self._resolve_filedata(self.fileno, name, *val).content
 		return None
 
 	def exist(self, name):
 		if isinstance(name, str):
 			name = name.encode('utf-8')
-		return name in self.files.keys()
+		if self.load_policy == LoadPolicy.LOAD_ALL:
+			return name in self.files.keys()
+		if self.load_policy == LoadPolicy.LOAD_INDEX:
+			return name in self.index.keys()
 
 	def list(self):
-		return self.files.keys()
+		if self.load_policy == LoadPolicy.LOAD_ALL:
+			return self.files.keys()
+		if self.load_policy == LoadPolicy.LOAD_INDEX:
+			return self.index.keys()
