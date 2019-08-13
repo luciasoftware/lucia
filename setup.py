@@ -9,18 +9,22 @@ def readme():
 		return f.read()
 
 dependencies =[
-'pypiwin32',
 'pygame',
 'pycryptodomex',
 'pysoundfile',
 'numpy',
-'PyAl',
 'pyfmodex',
 'platform_utils',
 'libloader',
 'sound_lib',
 'accessible_output2',
 ]
+
+if platform.system/() == "Darwin":
+	dependencies.append("appscript")
+
+if platform.system/() == "Windows":
+	dependencies.append("pypiwin32")
 
 lucia_packages = find_packages(".")
 

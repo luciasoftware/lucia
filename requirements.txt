@@ -1,4 +1,3 @@
-pypiwin32
 pygame
 pycryptodomex
 pysoundfile
