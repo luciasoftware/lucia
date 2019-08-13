@@ -21,10 +21,10 @@ dependencies =[
 'accessible_output2',
 ]
 
-if platform.system/() == "Darwin":
+if platform.system() == "Darwin":
 	dependencies.append("appscript")
 
-if platform.system/() == "Windows":
+if platform.system() == "Windows":
 	dependencies.append("pypiwin32")
 
 lucia_packages = find_packages(".")
