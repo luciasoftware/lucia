@@ -108,6 +108,7 @@ class ResourceFile:
 				self.files[name] = self._resolve_filedata(f, name, content_length, content_state)
 			if self.load_policy == LoadPolicy.LOAD_INDEX:
 				self.index[name] = (content_length, content_state, f.tell())
+				f.seek(content_length, 1)
 
 	def _resolve_filedata(self, f, name, content_length, content_state, teller=-1):
 		if teller >= 0:
@@ -182,7 +183,7 @@ class ResourceFile:
 	def get(self, name):
 		if isinstance(name, str):
 			name = name.encode('utf-8')
-		if self.load_plicy == LoadPolicy.LOAD_ALL:
+		if self.load_policy == LoadPolicy.LOAD_ALL:
 			val = self.files[name]
 			if isinstance(val, ResourceFileItem):
 				return val.content
