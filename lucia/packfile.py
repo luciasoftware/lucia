@@ -84,7 +84,7 @@ class ResourceFile:
 		    :param policy (optional): The load policy to use, defaults to LoadPolicy.LOAD_ALL
 		"""
 		self.load_policy = policy
-		f = open(filename, "rb")
+		f = open(self._respath(filename), "rb")
 		self.fileno = f
 		test_header = f.read(self.header_length)
 		test_header = struct.unpack(str(self.header_length) + "s", test_header)[0]
@@ -129,7 +129,7 @@ class ResourceFile:
 		args:
 		    :param filename: The file name on disk to write to. Will be overwritten if already exists.
 		"""
-		f = open(filename, "wb")
+		f = open(self._respath(filename), "wb")
 		# first write header
 		f.write(struct.pack(str(self.header_length) + "s", self.header))
 		# then write the version byte
@@ -181,6 +181,14 @@ class ResourceFile:
 		self.files[name] = item
 
 	def get(self, name):
+		"""[summary]
+		
+		Args:
+			name ([str]): The key to lookup in the data file
+		
+		Returns:
+			bytes or none: Returns the found result, or none if nothing with the specified key was found.
+		"""
 		if isinstance(name, str):
 			name = name.encode('utf-8')
 		if self.load_policy == LoadPolicy.LOAD_ALL:
@@ -192,6 +200,24 @@ class ResourceFile:
 			if isinstance(val, tuple):
 				return self._resolve_filedata(self.fileno, name, *val).content
 		return None
+
+	def get_int(self, name):
+		result = self.get(name)
+		if result is not None:
+			result = int(result)
+		return result
+
+	def get_boolean(self, name):
+		result = self.get(name)
+		if result is not None:
+			result = result == True
+		return result
+
+	def get_string(self, name):
+		result = self.get(name)
+		if result is not None:
+			result = str(result)
+		return result
 
 	def exist(self, name):
 		if isinstance(name, str):
@@ -206,3 +232,7 @@ class ResourceFile:
 			return self.files.keys()
 		if self.load_policy == LoadPolicy.LOAD_INDEX:
 			return self.index.keys()
+
+	def _respath(self, filename="."):
+		f=getattr(sys, "_MEIPASS", os.getcwd())
+		return os.path.join(f, filename)
