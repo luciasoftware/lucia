@@ -12,9 +12,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
-"""advance menu for advance use
+"""advanced menu for advanced use
 
-this menu module provides highly flexible menu items with different events and an advance menu handling"""
+this menu module provides highly flexible menu items with different events and an advanced menu handling"""
 
 import sys
 import time

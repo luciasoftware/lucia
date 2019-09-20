@@ -26,6 +26,13 @@ else:
 
 
 class InstanceChecker:
+	"""An instance checker
+	
+	This is similar to bgt's instance object, to make sure a game can be running only once.
+	
+	args:
+	    f (str): The name to be registered as a mutex.
+	"""
 	def __init__(self, f):
 		self.running = False
 		if platform.system() == "Windows":
@@ -46,6 +53,11 @@ class InstanceChecker:
 			self.f.close()
 
 	def is_running(self):
+		"""check if another instance is already running
+		
+		returns:
+		    True if this instance is already registered, false otherwise.
+		"""
 		return self.running
 
 	def __bool__(self):
