@@ -32,7 +32,7 @@ import pygame
 from pygame.locals import *
 
 # import subpackages..
-from . import audio, ui, utils
+from . import audio, ui
 
 # import submodules
 from .output import *

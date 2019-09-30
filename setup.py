@@ -1,7 +1,3 @@
-# Note: this setup file isn't made to publish on pypi yet
-# Note: To make it ready for official publishing, continue guide at: https://python-packaging.readthedocs.io/en/latest/metadata.html
-# Note2: When adding extra dependencies to lucia, remember to add them below (and their source link, if they aren't available on pypi).
-
 from setuptools import setup, find_packages
 import platform
 
@@ -32,10 +28,12 @@ lucia_packages = find_packages(".")
 
 setup(
 name='lucia',
-version='0.0.1',
+version='1.0.0',
 description='A cross platform, feature rich audio game engine written in Python.',
 long_description=readme(),
+long_description_content_type="text/markdown",
 url='http://github.com/LuciaSoftware/lucia',
+keywords=("audiogame bgt lucia python python3 luciasoftware"),
 author='Lucia Software',
 license='LGPL',
 packages=lucia_packages,
@@ -55,5 +53,21 @@ install_requires=dependencies,
 'https://github.com/Accessiware/accessible_output2/tarball/master#egg=accessible_output2',
 ],
 include_package_data=True,
-zip_safe=False
+zip_safe=False,
+classifiers=[
+"Development Status :: 4 - Beta",
+'Environment :: MacOS X',
+'Environment :: Win32 (MS Windows)',
+"Environment :: Console",
+"Intended Audience :: Developers",
+"License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+'Topic :: Games/Entertainment',
+'Topic :: Software Development :: Libraries :: Python Modules',
+'Operating System :: MacOS :: MacOS X',
+'Operating System :: Microsoft :: Windows',
+"Programming Language :: Python :: 3.4",
+"Programming Language :: Python :: 3.5",
+"Programming Language :: Python :: 3.6",
+"Programming Language :: Python :: 3.7",
+],
 )
