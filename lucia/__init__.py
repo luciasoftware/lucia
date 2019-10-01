@@ -122,6 +122,8 @@ def process_events():
 	for event in events:
 		if event.type == QUIT:
 			running = False
+			quit()
+			sys.exit(0)
 			break
 		# update key state here
 		keys_held = ()
@@ -143,6 +145,8 @@ def process_events():
 			current_key_released = event.key
 	if altkey and f4key:
 		running = False
+		quit()
+		sys.exit()
 	pygame.display.update()
 	audio_backend_class.update_audio_system()
 	return events
