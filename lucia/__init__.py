@@ -48,6 +48,8 @@ current_key_released = -1
 old_keys_held = []
 keys_held = []
 _resource_file = None
+f4key = False
+altkey = False
 
 
 class AudioBackendException(ValueError):
@@ -112,7 +114,7 @@ def show_window(title="LuciaGame", size=(640, 480)):
 def process_events():
 	"""This processes events for the window
 	This should be called in any loop, to insure that the window and application stays responsive"""
-	global current_key_pressed, current_key_released, old_keys_held, keys_held, running, window, audio_backend
+	global current_key_pressed, current_key_released, old_keys_held, keys_held, running, window, audio_backend, altkey, f4key
 	current_key_pressed = -1
 	current_key_released = -1
 	old_keys_held = keys_held
@@ -120,20 +122,29 @@ def process_events():
 	for event in events:
 		if event.type == QUIT:
 			running = False
-			# for now just exit, in future call registered quit listeners.
-			quit()
-			sys.exit(0)
 			break
 		# update key state here
 		keys_held = ()
 		keys_held = pygame.key.get_pressed()
 		if event.type == pygame.KEYDOWN:
+			if platform.system() == "Windows": # check for alt f4
+				if event.key==pygame.K_RALT or event.key==pygame.K_LALT:
+					altkey=True
+				elif event.key==pygame.K_F4:
+					f4key=True
 			if len(old_keys_held) > 0 and old_keys_held[event.key] == False:
 				current_key_pressed = event.key
 		if event.type == pygame.KEYUP:
+			if platform.system() == "Windows": # check for alt f4
+				if event.key==pygame.K_RALT or event.key==pygame.K_LALT:
+					altkey=False
+				elif event.key==pygame.K_F4:
+					f4key=False
 			current_key_released = event.key
-		pygame.display.update()
-		audio_backend_class.update_audio_system()
+	if altkey and f4key:
+		running = False
+	pygame.display.update()
+	audio_backend_class.update_audio_system()
 	return events
 
 
