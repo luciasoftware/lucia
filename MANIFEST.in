@@ -1,5 +1,6 @@
 include README.md
 include LICENSE
+recursive-include tests *.*
 recursive-include lucia/lib *.*
 recursive-include examples *.*
 recursive-include doc *.*

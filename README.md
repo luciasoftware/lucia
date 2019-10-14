@@ -50,9 +50,9 @@ To generate Lucia's documentation, you first need to install Sphinx
 pip install Sphinx
 ```
 
-after go into the "docs" folder:
+after go into the "doc" folder:
 ```
-cd docs
+cd doc
 ```
 
 And run:
