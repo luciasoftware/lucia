@@ -1,3 +1,4 @@
+# note> This example needs an @audio.ogg@ file placed in the same directory to run.
 import sys, os
 
 sys.path.append(".")
@@ -15,7 +16,7 @@ player = lucia.utils.rotation.Vector()
 direction = 0
 
 s = pool.play_3d(
-	os.path.join(os.getcwd(), "youtube2.ogg"), 5, 5, 0, 10, 10, 0, looping=True
+	os.path.join(os.getcwd(), "audio.ogg"), 5, 5, 0, 10, 10, 0, looping=True
 )
 
 while True:

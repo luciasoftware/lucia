@@ -63,7 +63,7 @@ def move(coords, deg, zdeg=0.0,factor=1.0):
 	returns:
 	    a transformed vector
 	"""
-	x, y, z = coords.coords
+	x, y, z = coords
 	if deg >= 360:
 		deg = deg - 360
 	r = Vector()

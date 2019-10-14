@@ -4,9 +4,9 @@ sys.path.append(".")
 
 import time
 import lucia
-import pygame
+import lucia.utils
 
-lucia.initialize(audiobackend=lucia.AudioBackend.BASS)
+lucia.initialize()
 r=lucia.ResourceFile("test")
 r.load("sound/sound.pak")
 lucia.set_global_resource_file(r)
@@ -22,26 +22,26 @@ s = pool.play_3d(
 
 while True:
 	lucia.process_events()
-	if lucia.key_pressed(pygame.K_LEFT):
+	if lucia.key_pressed(lucia.K_LEFT):
 		direction = direction - 10
-	if lucia.key_pressed(pygame.K_RIGHT):
+	if lucia.key_pressed(lucia.K_RIGHT):
 		direction = direction + 10
-	if lucia.key_pressed(pygame.K_w):
+	if lucia.key_pressed(lucia.K_w):
 		player = lucia.utils.rotation.move((player.x, player.y, player.z), direction)
-	if lucia.key_pressed(pygame.K_a):
+	if lucia.key_pressed(lucia.K_a):
 		player = lucia.utils.rotation.move((player.x, player.y, player.z), direction - 90)
-	if lucia.key_pressed(pygame.K_s):
+	if lucia.key_pressed(lucia.K_s):
 		player = lucia.utils.rotation.move((player.x, player.y, player.z), direction + 180)
-	if lucia.key_pressed(pygame.K_d):
+	if lucia.key_pressed(lucia.K_d):
 		player = lucia.utils.rotation.move((player.x, player.y, player.z), direction + 90)
-	if lucia.key_pressed(pygame.K_q):
+	if lucia.key_pressed(lucia.K_q):
 		lucia.quit()
 		exit()
-	if lucia.key_pressed(pygame.K_c):
+	if lucia.key_pressed(lucia.K_c):
 		lucia.output.output(
 			f"Cors {round(player.x,0)}, {round(player.y,0)}, {round(player.z,0)}"
 		)
-	if lucia.key_pressed(pygame.K_x):
+	if lucia.key_pressed(lucia.K_x):
 		lucia.output.output(f"facing {direction}")
 	time.sleep(0.005)
 	pool.update_listener_3d(
