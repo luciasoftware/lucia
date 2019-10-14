@@ -23,10 +23,13 @@ class Sound(lucia.audio.Sound):
 			except KeyError:  # the file doesn't exist in the pack file.
 				if os.path.isfile(filename) == False:
 					return False
-		if isinstance(filename, str): # Asume path on disk.
-			self.handle = stream.FileStream(file=filename)
-		else: # binary data.
-			self.handle = stream.FileStream(mem=True, file=filename, length=len(filename))
+		try:
+			if isinstance(filename, str): # Asume path on disk.
+				self.handle = stream.FileStream(file=filename)
+			else: # binary data.
+				self.handle = stream.FileStream(mem=True, file=filename, length=len(filename))
+		except sound_lib.main.BassError:
+			return False
 		self.freq = self.handle.get_frequency()
 		return self.is_active
 
