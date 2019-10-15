@@ -3,6 +3,7 @@ import sys, os
 
 sys.path.append(".")
 
+from math import radians
 import time
 import lucia
 import pygame
@@ -22,9 +23,9 @@ s = pool.play_3d(
 while True:
 	lucia.process_events()
 	if lucia.key_pressed(pygame.K_LEFT):
-		direction = direction - 10
+		direction = lucia.utils.rotation.turnleft(direction, 10)
 	if lucia.key_pressed(pygame.K_RIGHT):
-		direction = direction + 10
+		direction = lucia.utils.rotation.turnright(direction, 10)
 	if lucia.key_pressed(pygame.K_w):
 		player = lucia.utils.rotation.move((player.x, player.y, player.z), direction)
 	if lucia.key_pressed(pygame.K_a):
@@ -33,6 +34,7 @@ while True:
 		player = lucia.utils.rotation.move((player.x, player.y, player.z), direction + 180)
 	if lucia.key_pressed(pygame.K_d):
 		player = lucia.utils.rotation.move((player.x, player.y, player.z), direction + 90)
+
 	if lucia.key_pressed(pygame.K_q):
 		lucia.quit()
 		exit()
@@ -42,7 +44,5 @@ while True:
 		)
 	if lucia.key_pressed(pygame.K_x):
 		lucia.output.output(f"facing {direction}")
+	pool.update_listener_3d(player.x, player.y, player.z, direction)
 	time.sleep(0.005)
-	pool.update_listener_3d(
-		round(player.x, 0), round(player.y, 0), round(player.z, 0), direction
-	)
