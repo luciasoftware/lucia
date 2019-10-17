@@ -17,6 +17,9 @@ _west = 270
 _southwest = 225
 _south = 180
 _southeast = 135
+#Should only be used for moving upwards on the z axes, has not been tested with right handed coordinate system yet
+_straight_up = 90
+_straight_down = -90
 
 # Coordinate systems
 left_handed=0
@@ -52,7 +55,7 @@ class Vector:
 		return tuple([round(self.x), round(self.y), round(self.z)])
 
 class LeftHanded:
-	def move(coords, deg, pitch=0.0,factor=1.0):
+	def move(coords, deg, m_dir, zdeg = 0.0, pitch=0.0,factor=1.0):
 		"""moves a vector in a given direction by a scale factor of factor
 		
 		Takes a vector as input, applies the translation, and returns a vector as output. Probably best done as player.coords=move(player.coords,player.facing) or something similar.
@@ -60,7 +63,9 @@ class LeftHanded:
 		
 		args:
 				coords (tuple or list): The current point in 3-space you wish to move.
-				deg (float): The direction you wish to move. In this degree system east is 0, north is 90, west is 180 and south is 270.
+				deg (float): The current facing of an object
+				m_dir (float): The direction you wish to move. In this degree system east is 0, north is 90, west is 180 and south is 270.
+				zdeg (Float, optional): The current z angle of an object
 				pitch (float, optional): The vertical degrees you wish to move. Defaults to 0, no vertical movement.
 				factor (float, optional): The scale factor you wish to move by. Passing 1 is equivalent to one unit move in any direction, but for warping in a particular direction you can pass a higher factor. Defaults to 1.
 		
@@ -68,12 +73,13 @@ class LeftHanded:
 				a transformed vector
 		"""
 		x, y, z = coords
+		deg += m_dir
 		if deg >= 360:
 			deg = deg - 360
 		r = Vector()
 		r.x = x + factor*sin(radians(deg))
 		r.y = y + factor*cos(radians(deg))
-		r.z = z + factor*sin(radians(pitch))
+		r.z = z + factor*sin(radians(pitch + zdeg))
 		return r
 	def calculate_angle(x1, y1, x2, y2, deg):
 		"""given two points, returns the angle of the second one relative to the first.
@@ -112,7 +118,7 @@ class LeftHanded:
 		return fdeg
 
 class RightHanded:
-	def move(coords, deg, pitch=0.0,factor=1.0):
+	def move(coords, deg, m_dir, zdeg = 0.0, pitch=0.0,factor=1.0):
 		"""moves a vector in a given direction by a scale factor of factor
 		
 		Takes a vector as input, applies the translation, and returns a vector as output. Probably best done as player.coords=move(player.coords,player.facing) or something similar.
@@ -120,7 +126,9 @@ class RightHanded:
 		
 		args:
 				coords (tuple or list): The current point in 3-space you wish to move.
-				deg (float): The direction you wish to move. In this degree system east is 0, north is 90, west is 180 and south is 270.
+				deg (Float): The current facing of an object
+				m_dir (float): The direction you wish to move. In this degree system east is 0, north is 90, west is 180 and south is 270.
+				zdeg (Float, optional): The current z angle of an object
 				pitch (float, optional): The vertical degrees you wish to move. Defaults to 0, no vertical movement.
 				factor (float, optional): The scale factor you wish to move by. Passing 1 is equivalent to one unit move in any direction, but for warping in a particular direction you can pass a higher factor. Defaults to 1.
 		
@@ -128,12 +136,13 @@ class RightHanded:
 				a transformed vector
 		"""
 		x, y, z = coords
+		deg += m_dir
 		if deg >= 360:
 			deg = deg - 360
 		r = Vector()
 		r.x = x + factor*sin(radians(deg))
 		r.y = y + factor*sin(radians(pitch))
-		r.z = z + factor*cos(radians(deg))
+		r.z = z + factor*cos(radians(pitch + zdeg))
 		if z < 0:
 			r.z=abs(r.z)
 		else:
