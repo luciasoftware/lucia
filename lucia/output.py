@@ -12,7 +12,17 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
-from accessible_output2.outputs.auto import *
+import platform
+import os
+
+# import ao2, check for Runtime Error (missing espeak binaries on ReadTheDocs).
+try:
+	from accessible_output2.outputs.auto import *
+except RuntimeError:
+	if platform.system() == "Linux" and "readthedocs.org" in os.getcwd():
+		pass
+	else:
+		raise
 
 output = Auto()
 """

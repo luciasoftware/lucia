@@ -13,7 +13,7 @@ In addition lucia should be cross platform, At Least on windows and mac.
 * lucia/interface - things that pop onto the screen (like menus, edit fields and dialogs).
 * lucia/utils - things coded into the engine, but not necessarily required in every game.
 And in addition
-* doc - documentation for lucia (auto generated)
+* docs - documentation for lucia (auto generated)
 * examples - Examples that showcases different things that can be done with lucia.
 * web - The advanced documentation and use cases for lucia.
 * tests - tests for lucia.
@@ -50,9 +50,9 @@ To generate Lucia's documentation, you first need to install Sphinx
 pip install Sphinx
 ```
 
-after go into the "doc" folder:
+after go into the "docs" folder:
 ```
-cd doc
+cd docs
 ```
 
 And run:
