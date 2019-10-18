@@ -28,7 +28,7 @@ WHITELIST_NEGFLOATDIGITS = WHITELIST_FLOATDIGITS + ["-"]
 
 class VirtualInput:
 	def __init__(
-		self, message="", password=False, whitelist=WHITELIST_ALL, value="", callback=None
+		self, message="", password=False, whitelist=WHITELIST_ALL, value="", callback=None, hidden_message = "Hidden"
 	):
 		self.text = value
 		self.message = message
@@ -39,6 +39,7 @@ class VirtualInput:
 		self.allowed_characters = whitelist
 		#cursor
 		self.charindex=0
+		self.password_message = hidden_message
 
 	def run(self):
 		lucia.output.output(self.message)
@@ -118,7 +119,7 @@ class VirtualInput:
 	def _output_char(self, char, speak_number=False):
 		to_speak = ""
 		if self.password:
-			to_speak += "Hidden"
+			to_speak += self.password_message
 			if speak_number:
 				to_speak += f" {len(self.text)} characters"
 		else:
