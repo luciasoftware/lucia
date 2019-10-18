@@ -1,5 +1,8 @@
 # lucia
-An audio game engine written in python
+
+[![Build Status](https://travis-ci.com/luciasoftware/lucia.svg?branch=master)](https://travis-ci.com/luciasoftware/lucia)
+
+### An audio game engine written in python
 
 ### Goals:
 The goal of lucia is to change the audio game creation method from the now old and no longer maintained bgt, to python.
