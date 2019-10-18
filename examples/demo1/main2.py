@@ -33,7 +33,7 @@ MenuItems = [
 	menu2.MenuItem("hello"),
 	menu2.MenuItem("world", has_value=True),
 	menu2.MenuItem("this is a "),
-	menu2.MenuItem("test", can_be_toggled=True),
+	menu2.MenuItem("test", can_be_toggled=True, toggle_switch_value="Press space bar to switch", on_value="enable", off_value="disable"),
 	menu2.MenuItem("exit", True),
 ]
 menu = menu2.Menu(items=MenuItems, title="test menu")
