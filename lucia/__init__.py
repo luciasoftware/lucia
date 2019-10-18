@@ -22,7 +22,7 @@ import os
 import platform
 
 os_bit, os_name = platform.architecture()
-os.environ["PYAL_DLL_PATH"] = os.path.join(
+_OPENAL_DLL_PATH = os.path.join(
 	os.path.dirname(os.path.realpath(__file__)), "lib", os_bit
 )
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
@@ -69,6 +69,9 @@ def initialize(audiobackend=AudioBackend.BASS):
 	# Set the pygame constants in lucia's namespace.
 	from pygame import locals
 	if audiobackend == AudioBackend.OPENAL:
+		# we will append the absolute path of the openal lib directory
+		# so that the libraries can be properly found and loaded
+		os.environ["path"] += ";"+_OPENAL_DLL_PATH
 		from .audio import openal as backend_openal
 
 		audio_backend_class = backend_openal.OpenALAudioBackend()
