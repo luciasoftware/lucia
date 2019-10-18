@@ -75,7 +75,7 @@ class VirtualInput:
 							self.charindex+=1
 							if self.charindex >= len(self.text):
 								self.charindex=len(self.text)
-								#using the default speaking function, to prevent from saying hidden instead of blank when in a password field.
+								#using the default speaking function, to prevent from saying the hidden_message instead of blank when in a password field.
 								lucia.output.speak("blank")
 							elif self.charindex <= len(self.text)-1:
 								self._output_char(self.text[self.charindex])

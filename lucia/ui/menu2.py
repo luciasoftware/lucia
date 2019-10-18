@@ -49,12 +49,13 @@ class MenuItem:
 		value_mode="plaintext",
 		can_be_toggled=False,
 		toggle_value=False,
+		toggle_switch_value = "Press space to switch it",
 		can_activate=True,
 		item_function=None,
 		on_focus=None,
 		event=None,
-		on_value = "On. "
-		off_value = "Off. "
+		on_value = "On. ",
+		off_value = "Off. ",
 	):
 		self.name = name
 		self.has_value = has_value
@@ -69,6 +70,7 @@ class MenuItem:
 		self.event = event #Usually an integer. See the events section
 		self.on_value = on_value
 		self.off_value = off_value
+		self.toggle_item_message=toggle_switch_value
 
 
 
@@ -86,7 +88,6 @@ class Menu:
 		fpscap=120,
 		on_index_change=None,
 		callback_function=None,
-		toggling_item_values = "Press space to switch it",
 	):
 		self.clicksound = clicksound
 		self.edgesound = edgesound
@@ -100,7 +101,7 @@ class Menu:
 		self.on_index_change = on_index_change # make sure this is a function. It is called whenever the index of a menu is changed. The index change happens whenever user cycles between menu items.
 		self.callback = callback_function # This should be a function. This function is called within the menu loop
 		self.pool = lucia.audio_backend.SoundPool()
-		self.toggle_item_message = toggling_item_values
+
 
 	def run(self):
 		"""when this function is called, menu loop starts. If the user make the menu return such as pressing enter on an item that has can_return attribute set to true the loop ends and it usually returns results as a list of dictionaries"""
@@ -174,11 +175,11 @@ class Menu:
 						):
 							if self.items[self.itempos].toggle_value == True:
 								lucia.output.speak(
-									self.items[self.itempos].name + ": " + self.items[itempos].on_value + " " + self.toggle_item_message + " " + self.items[itempos].off_value
+									self.items[self.itempos].name + ": " + self.items[self.itempos].on_value + " " + self.items[self.itempos].toggle_item_message + " " + self.items[self.itempos].off_value
 								)
 							else:
 								lucia.output.speak(
-									self.items[self.itempos].name + ": " + self.items[itempos].off_value + " " + self.toggle_item_message + " " + self.items[itempos].on_value
+									self.items[self.itempos].name + ": " + self.items[self.itempos].off_value + " " + self.items[self.itempos].toggle_item_message + " " + self.items[self.itempos].on_value
 								)
 						elif (
 							self.items[self.itempos].has_value and self.items[self.itempos].can_be_toggled
@@ -189,12 +190,12 @@ class Menu:
 								+ str(self.items[self.itempos].value)
 							)
 							if self.items[self.itempos].toggle_value == True:
-								speakstr += ". Switch: On"
+								speakstr += ". Switch: "+self.items[self.itempos].on_value
 							else:
-								speakstr += ". Switch: Off"
+								speakstr += ". Switch: "+self.items[self.itempos].off_value
 							lucia.output.speak(
 								speakstr
-								+ ". Press left shift or right shift to change this item's value. Press space to toggle on or off"
+								+ ". Press left shift or right shift to change this item's value. "+self.items[self.itempos].toggle_item_message
 							)
 				elif lucia.key_pressed(lucia.K_DOWN):
 					if self.itempos < len(self.items) - 1:
@@ -226,11 +227,11 @@ class Menu:
 						):
 							if self.items[self.itempos].toggle_value == True:
 								lucia.output.speak(
-									self.items[self.itempos].name + ": On. Press space to switch off"
+									self.items[self.itempos].name + ": " + self.items[self.itempos].on_value + " " + self.items[self.itempos].toggle_item_message + " " + self.items[self.itempos].off_value
 								)
 							else:
 								lucia.output.speak(
-									self.items[self.itempos].name + ": Off. Press space to switch on"
+									self.items[self.itempos].name + ": " + self.items[self.itempos].off_value + " " + self.items[self.itempos].toggle_item_message + " " + self.items[self.itempos].on_value
 								)
 						elif (
 							self.items[self.itempos].has_value and self.items[self.itempos].can_be_toggled
@@ -241,12 +242,12 @@ class Menu:
 								+ str(self.items[self.itempos].value)
 							)
 							if self.items[self.itempos].toggle_value == True:
-								speakstr += ". Switch: On"
+								speakstr += ". Switch: "+self.items[self.itempos].on_value
 							else:
-								speakstr += ". Switch: Off"
+								speakstr += ". Switch: "+self.items[self.itempos].off_value
 							lucia.output.speak(
 								speakstr
-								+ ". Press left shift or right shift to change this item's value. Press space to toggle on or off"
+								+ ". Press left shift or right shift to change this item's value. "+self.items[self.itempos].toggle_item_message
 							)
 				elif lucia.key_pressed(lucia.K_SPACE):
 					if self.itempos > -1 and self.itempos < len(self.items):
@@ -254,10 +255,10 @@ class Menu:
 							if self.entersound != "":
 								entersound = self.pool.play_stationary(self.entersound)
 							if self.items[self.itempos].toggle_value == True:
-								lucia.output.speak(self.items[itempos.off_value)
+								lucia.output.speak(self.items[self.itempos].off_value)
 								self.items[self.itempos].toggle_value = False
 							else:
-								lucia.output.speak(self.items[itempos].on_value)
+								lucia.output.speak(self.items[self.itempos].on_value)
 								self.items[self.itempos].toggle_value = True
 				elif lucia.key_down(lucia.K_LSHIFT) or lucia.key_down(lucia.K_RSHIFT):
 					if self.items[self.itempos].has_value == True:
