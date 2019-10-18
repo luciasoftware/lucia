@@ -50,7 +50,6 @@ class MenuItem:
 		can_be_toggled=False,
 		toggle_value=False,
 		toggle_switch_value = "Press space to switch it",
-		can_activate=True,
 		item_function=None,
 		on_focus=None,
 		event=None,
