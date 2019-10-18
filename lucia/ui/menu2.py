@@ -112,7 +112,7 @@ class Menu:
 
 	def loop(self):
 		while 1:
-			time.sleep(0.001)
+			time.sleep(0.005)
 			try:
 				lucia.process_events()
 				if callable(self.callback):
