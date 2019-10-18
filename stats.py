@@ -1,5 +1,6 @@
-#simple utility script to verify the existence of Lucia's license header in all files offiliated with the project
-#an addition, lines and size is counted for an overall summary
+# original author: Carter Temm https://www.github.com/cartertemm
+# simple utility script to verify the existence of Lucia's license header in all files offiliated with the project
+# an addition, lines and size is counted for an overall summary
 
 header_text="""# Copyright (C) 2018  LuciaSoftware and it's contributors.
 #
