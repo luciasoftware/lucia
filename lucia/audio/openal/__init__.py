@@ -55,22 +55,20 @@ class UnsupportedAudioFormatError(Exception):
 	pass
 
 
-def _get_audio_data(soundfile):
-	if self.handle:
-		self.close()
+def _get_audio_data(filename):
 	if lucia.get_global_resource_file() is not None:
 		try:
 			filename = lucia.get_global_resource_file().get(filename)
 		except KeyError:
 			if os.path.isfile(filename) == False:
 				return None
-	if isinstance(soundfile, str):
-		data = load_file(soundfile)
+	if isinstance(filename, str):
+		data = load_file(filename)
 	else:
 		try:
-			data = load_wav_file(io.BytesIO(soundfile))
+			data = load_wav_file(io.BytesIO(filename))
 		except wave.Error:
-			data = load_ogg_file(io.BytesIO(soundfile))
+			data = load_ogg_file(io.BytesIO(filename))
 		except:
 			raise UnsupportedAudioFormatError()
 	return data
