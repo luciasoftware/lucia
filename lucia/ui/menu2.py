@@ -63,7 +63,6 @@ class MenuItem:
 		self.can_be_toggled = can_be_toggled
 		self.toggle_value = toggle_value
 		self.can_return = can_return
-		self.can_activate = can_activate
 		self.item_function=item_function #this should be a function. It is called when the item is clicked. If the item is able to return and the event property isn't set to CANCELEVENT, instead of breaking out of the loop, just a function gets called. If the event property is set to CANCELEVENT the function gets called, but it'll break out of the loop too. This way you can make virtual submenus too except that you can switch between parent and child menus with left and right
 		self.on_focus = on_focus #a function that is called whenever the focus is on this item
 		self.event = event #Usually an integer. See the events section
