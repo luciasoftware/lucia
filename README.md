@@ -92,11 +92,13 @@ mkdocs serve
 
 
 ### Contributing
-Everyone is welcome to help improve Lucia, to start look at the opened issues, and go from there.
-If you feel lucia is missing something, do open an issue and we'll take it from there.
+
+Everyone is welcome to help improve Lucia. start [here](https://github.com/luciasoftware/lucia/blob/master/contributing.md)
+
 
 
 ### License:
+
 Copyright (C) 2019  LuciaSoftware and it's contributors.
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
