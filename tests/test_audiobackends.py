@@ -2,11 +2,13 @@ import os
 
 from . import util
 
+import pytest
 import lucia
 
 audio_file_path = os.path.join(os.getcwd(), "tests", "audio.ogg")
 
 
+@pytest.mark.skip()
 def test_bass():
 	lucia.initialize(audiobackend=lucia.AudioBackend.BASS)
 	assert lucia.running == True
