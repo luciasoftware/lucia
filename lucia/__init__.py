@@ -71,7 +71,7 @@ def initialize(audiobackend=AudioBackend.BASS):
 	if audiobackend == AudioBackend.OPENAL:
 		# we will append the absolute path of the openal lib directory
 		# so that the libraries can be properly found and loaded
-		os.environ["path"] += ";"+_OPENAL_DLL_PATH
+		os.environ["PATH"] += ";"+_OPENAL_DLL_PATH
 		from .audio import openal as backend_openal
 
 		audio_backend_class = backend_openal.OpenALAudioBackend()
