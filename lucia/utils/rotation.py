@@ -76,6 +76,9 @@ class LeftHanded:
 		r.x = x + steplength*sin(radians(deg))
 		r.y = y + steplength*cos(radians(deg))
 		r.z = z + factor*sin(radians(pitch))
+		r.x=round(r.x, 2)
+		r.y=round(r.y, 2)
+		r.z=round(r.z, 2)
 		return r
 	def calculate_angle(x1, y1, x2, y2, deg):
 		"""given two points, returns the angle of the second one relative to the first.
@@ -139,6 +142,9 @@ class RightHanded:
 			r.z=abs(r.z)
 		else:
 			r.z=-r.z
+		r.x=round(r.x, 2)
+		r.y=round(r.y, 2)
+		r.z=round(r.z, 2)
 		return r
 	def calculate_angle(x1, z1, x2, z2, deg):
 		"""given two points, returns the angle of the second one relative to the first.
