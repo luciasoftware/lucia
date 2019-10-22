@@ -6,7 +6,7 @@
 This is modeled on the bgt rotation class from Sam Tupy. Input and output are in degrees.
 """
 import lucia
-from math import pi, sin, cos, atan, radians, degrees, sqrt
+from math import pi, sin, cos, atan2, radians, degrees, sqrt
 
 # Directions.
 _east = 90
@@ -71,14 +71,11 @@ class LeftHanded:
 				a transformed vector
 		"""
 		x, y, z = coords
-		steplength=factor*cos(pitch*3.14/180)
+		steplength=factor*cos(radians(pitch))
 		r = Vector()
 		r.x = x + steplength*sin(radians(deg))
 		r.y = y + steplength*cos(radians(deg))
 		r.z = z + factor*sin(radians(pitch))
-		r.x=round(r.x, 2)
-		r.y=round(r.y, 2)
-		r.z=round(r.z, 2)
 		return r
 	def calculate_angle(x1, y1, x2, y2, deg):
 		"""given two points, returns the angle of the second one relative to the first.
@@ -102,7 +99,7 @@ class LeftHanded:
 		if x==0:
 			if y >= 0: return 0
 			if y < 0: return 180
-		rad = atan(y / x)
+		rad = atan2(y, x)
 		arc_tan = degrees(rad)
 		fdeg = 0
 		if x < 0:
@@ -133,7 +130,7 @@ class RightHanded:
 				a transformed vector
 		"""
 		x, y, z = coords
-		steplength=factor*cos(pitch*3.14/180)
+		steplength=factor*cos(radians(pitch))
 		r = Vector()
 		r.x = x + steplength*sin(radians(deg))
 		r.y = y + factor*sin(radians(pitch))
@@ -142,9 +139,6 @@ class RightHanded:
 			r.z=abs(r.z)
 		else:
 			r.z=-r.z
-		r.x=round(r.x, 2)
-		r.y=round(r.y, 2)
-		r.z=round(r.z, 2)
 		return r
 	def calculate_angle(x1, z1, x2, z2, deg):
 		"""given two points, returns the angle of the second one relative to the first.
@@ -168,7 +162,7 @@ class RightHanded:
 		if x==0:
 			if z > 0: return 180
 			if z <= 0: return 0
-		rad = atan(z / x)
+		rad = atan2(z, x)
 		arc_tan = degrees(rad)
 		fdeg = 0
 		if x < 0:
