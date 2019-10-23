@@ -6,7 +6,7 @@
 This is modeled on the bgt rotation class from Sam Tupy. Input and output are in degrees.
 """
 import lucia
-from math import pi, sin, cos, atan, radians, degrees, sqrt
+from math import pi, sin, cos, atan2, radians, degrees, sqrt
 
 # Directions.
 _east = 90
@@ -55,7 +55,7 @@ class Vector:
 		return tuple([round(self.x), round(self.y), round(self.z)])
 
 class LeftHanded:
-	def move(coords, deg, m_dir, zdeg = 0.0, pitch=0.0,factor=1.0):
+	def move(coords, deg, pitch=0.0,factor=1.0):
 		"""moves a vector in a given direction by a scale factor of factor
 		
 		Takes a vector as input, applies the translation, and returns a vector as output. Probably best done as player.coords=move(player.coords,player.facing) or something similar.
@@ -64,8 +64,6 @@ class LeftHanded:
 		args:
 				coords (tuple or list): The current point in 3-space you wish to move.
 				deg (float): The current facing of an object
-				m_dir (float): The direction you wish to move. In this degree system east is 0, north is 90, west is 180 and south is 270.
-				zdeg (Float, optional): The current z angle of an object
 				pitch (float, optional): The vertical degrees you wish to move. Defaults to 0, no vertical movement.
 				factor (float, optional): The scale factor you wish to move by. Passing 1 is equivalent to one unit move in any direction, but for warping in a particular direction you can pass a higher factor. Defaults to 1.
 		
@@ -73,18 +71,12 @@ class LeftHanded:
 				a transformed vector
 		"""
 		x, y, z = coords
-		deg = deg + m_dir
-		zdeg = pitch + zdeg
-		if deg >= 360:
-			deg = deg - 360
-		if zdeg >= 360:
-			zdeg = zdeg - 360
+		steplength=factor*cos(radians(pitch))
 		r = Vector()
-		r.x = x + factor*sin(radians(deg))
-		r.y = y + factor*cos(radians(deg))
-		r.z = z + factor*sin(radians(zdeg))
+		r.x = x + steplength*sin(radians(deg))
+		r.y = y + steplength*cos(radians(deg))
+		r.z = z + factor*sin(radians(pitch))
 		return r
-
 	def calculate_angle(x1, y1, x2, y2, deg):
 		"""given two points, returns the angle of the second one relative to the first.
 		
@@ -107,7 +99,7 @@ class LeftHanded:
 		if x==0:
 			if y >= 0: return 0
 			if y < 0: return 180
-		rad = atan(y / x)
+		rad = atan2(y, x)
 		arc_tan = degrees(rad)
 		fdeg = 0
 		if x < 0:
@@ -122,7 +114,7 @@ class LeftHanded:
 		return fdeg
 
 class RightHanded:
-	def move(coords, deg, m_dir, zdeg = 0.0, pitch=0.0,factor=1.0):
+	def move(coords, deg, pitch=0.0,factor=1.0):
 		"""moves a vector in a given direction by a scale factor of factor
 		
 		Takes a vector as input, applies the translation, and returns a vector as output. Probably best done as player.coords=move(player.coords,player.facing) or something similar.
@@ -131,8 +123,6 @@ class RightHanded:
 		args:
 				coords (tuple or list): The current point in 3-space you wish to move.
 				deg (Float): The current facing of an object
-				m_dir (float): The direction you wish to move. In this degree system east is 0, north is 90, west is 180 and south is 270.
-				zdeg (Float, optional): The current z angle of an object
 				pitch (float, optional): The vertical degrees you wish to move. Defaults to 0, no vertical movement.
 				factor (float, optional): The scale factor you wish to move by. Passing 1 is equivalent to one unit move in any direction, but for warping in a particular direction you can pass a higher factor. Defaults to 1.
 		
@@ -140,15 +130,11 @@ class RightHanded:
 				a transformed vector
 		"""
 		x, y, z = coords
-		deg += m_dir
-		if deg >= 360:
-			deg = deg - 360
-		if zdeg >= 360:
-			zdeg = zdeg - 360
+		steplength=factor*cos(radians(pitch))
 		r = Vector()
-		r.x = x + factor*sin(radians(deg))
+		r.x = x + steplength*sin(radians(deg))
 		r.y = y + factor*sin(radians(pitch))
-		r.z = z + factor*cos(radians(pitch + zdeg))
+		r.z = z + steplength*cos(radians(deg))
 		if z < 0:
 			r.z=abs(r.z)
 		else:
@@ -176,7 +162,7 @@ class RightHanded:
 		if x==0:
 			if z > 0: return 180
 			if z <= 0: return 0
-		rad = atan(z / x)
+		rad = atan2(z, x)
 		arc_tan = degrees(rad)
 		fdeg = 0
 		if x < 0:
@@ -250,30 +236,10 @@ def get_2d_distance(x1, y1, x2, y2):
 	y = get_1d_distance(y1, y2)
 	return sqrt(x * x + y * y)
 
+
 def get_3d_distance(x1, y1, z1, x2, y2, z2):
 	"""returns the pythagorean distance between two points in 3-space."""
 	x = get_1d_distance(x1, x2)
 	y = get_1d_distance(y1, y2)
 	z = get_1d_distance(z1, z2)
 	return sqrt(x * x + y * y + z * z)
-
-def get_1d_vector_distance(v1, v2):
-	"""Returns 1d distance between the 2 vectors.
-	Note: This function assumes that the 2 vectors passed to it are created using the vector class found at the beginning of this file"""
-	c1 = v1.coords
-	c2 = v2.coords
-	return get_1d_distance(c1[0], c2[0])
-
-def get_2d_vector_distance(v1, v2):
-	"""Returns 2d distance between the 2 vectors.
-	Note: This function assumes that the 2 vectors passed to it are created using the vector class found at the beginning of this file"""
-	c1 = v1.coords
-	c2 = v2.coords
-	return get_2d_distance(c1[0], c1[1], c2[0], c2[1])
-
-def get_3d_vector_distance(v1, v2):
-	"""Returns 3d distance between the 2 vectors.
-	Note: This function assumes that the 2 vectors passed to it are created using the vector class found at the beginning of this file"""
-	c1 = v1.coords
-	c2 = v2.coords
-	return get_3d_distance(c1[0], c1[1], c1[2], c2[0], c2[1], c2[2])
