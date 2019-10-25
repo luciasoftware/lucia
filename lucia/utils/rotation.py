@@ -178,49 +178,30 @@ class RightHanded:
 
 
 def getdir(facing):
-	if facing <= _north and facing > _northeast:
-		return _north
-	if facing <= _northeast and facing > _east:
-		return _northeast
-	if facing == 0 or facing > 315:
-		return _east
-	if facing <= _southeast and facing > _south:
-		return _southeast
-	if facing <= _south and facing > _southwest:
-		return _south
-	if facing <= _southwest and facing > _west:
-		return _southwest
-	if facing <= _west and facing > _northwest:
-		return _west
-	if facing <= _northwest and facing > _north:
-		return _northwest
+	if facing >= _north and facing < _northeast: return _north
+	elif facing >= _northeast and facing < _east: return _northeast
+	elif facing >= _east and facing < _southeast: return _east
+	elif facing >= _southeast and facing < _south: return _southeast
+	elif facing >= _south and facing < _southwest: return _south
+	elif facing >= _southwest and facing < _west: return _southwest
+	elif facing >= _west and facing < _northwest: return _west
+	elif facing >= _northwest and facing < 360: return _northwest
+	#Cannot compare _northwest and _north since north is 0. Must use 360 instead
 	return -1
 
-
-def snapleft(direction, inc=45):
-	d = direction - inc
-	if d >= 360:
-		d -= 360
-	return d
-
-
-def snapright(direction, inc=45):
+def snap(direction, inc=45):
 	d = direction + inc
 	if d < 0:
 		d += 360
+	elif d >= 360:
+		d -= 360
 	return d
 
-
-def turnleft(deg, inc=5):
-	deg -= inc
+def turn(deg, inc=5):
+	deg += inc
 	if deg < 0:
 		deg += 360
-	return deg
-
-
-def turnright(deg, inc=5):
-	deg += inc
-	if deg >= 360:
+	elif deg >= 360:
 		deg -= 360
 	return deg
 
