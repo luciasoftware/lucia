@@ -7,6 +7,7 @@ from math import radians
 import time
 import lucia
 import pygame
+import lucia.utils
 
 lucia.initialize(audiobackend=lucia.AudioBackend.BASS)
 

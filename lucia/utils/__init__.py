@@ -17,3 +17,4 @@ from .number_to_words import *
 from .instance_checker import *
 from .timer import *
 from . import rotation
+from .positionableobject import PositionableObject
