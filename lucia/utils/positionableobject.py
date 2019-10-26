@@ -2,7 +2,6 @@
 
 import sys, os
 import lucia
-import pygame
 
 class PositionableObject:
 	'''represents a positionable object'''
@@ -18,22 +17,22 @@ class PositionableObject:
 		self._angle = degrees
 		return self.direction_angle
 	#variables
-	_position = pygame.math.Vector3()
+	position = lucia.pygame.Vector3()
 	_angle = 0
-	direction = pygame.math.Vector3(0, 0, -1) # standard forward vector
+	direction = lucia.pygame.Vector3(0, 0, 1) # a vector pointing forward
 	#properties to determine the relative directions
 	@property
 	def forward(self):
-		return self.direction.rotate_y(180)
-	@property
-	def backward(self):
 		return self.direction
 	@property
+	def backward(self):
+		return self.direction.rotate_y(180)
+	@property
 	def right(self):
-		return self.direction.rotate_y(-90)
+		return self.direction.rotate_y(90)
 	@property
 	def left(self):
-		return self.direction.rotate_y(90)
+		return self.direction.rotate_y(-90)
 	#Translates the internal _angle to make it compatible with lucia
 	@property
 	def direction_angle(self):
