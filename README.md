@@ -10,18 +10,6 @@ Lucia should not act as a starting game, but as a base, that a high quality game
 In addition lucia should be cross platform, At Least on windows and mac.
 > Code / dependencies that doesn't meet these requirements cannot be a part of lucia.
 
-### Folder explenations:
-* Lucia - the main lucia engine.
-* lucia/audio - Audio handling.
-* lucia/interface - things that pop onto the screen (like menus, edit fields and dialogs).
-* lucia/utils - things coded into the engine, but not necessarily required in every game.
-And in addition
-* docs - documentation for lucia (auto generated)
-* examples - Examples that showcases different things that can be done with lucia.
-* web - The advanced documentation and use cases for lucia.
-* tests - tests for lucia.
-
-
 ### Installing lucia
 There's the to default ways to install lucia.
 Through pip
