@@ -2,8 +2,9 @@
 Pipfile.lock
 pipfile
 
-# MKDocs
-web/site/*
+# pydocsmd
+docs/site/*
+_build/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
