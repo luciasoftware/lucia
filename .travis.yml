@@ -8,7 +8,8 @@ matrix:
       before_install:
         - python3 --version
         - pip3 install -U pip
-        - pip3 install -r requirements.txt
+        - pip3 install pytest
+        - python3 setup.py develop
       script: python3 -m pytest
     - name: "Python 3.7.3 on macOS 10.14"
       os: osx
@@ -17,7 +18,8 @@ matrix:
       before_install:
         - python3 --version
         - pip3 install -U pip
-        - pip3 install -r requirements.txt
+        - pip3 install pytest
+        - python3 setup.py develop
       script: python3 -m pytest
     #  ====== WINDOWS =========
     - name: "Python 3.6.8 on Windows"
@@ -27,7 +29,9 @@ matrix:
         - choco install python --version 3.6.8
         - python --version
         - python -m pip install --upgrade pip
-        - pip3 install -r requirements.txt
+        - pip install pytest
+        - python setup.py develop
+      script: python -m pytest
       env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
     - name: "Python 3.7.4 on Windows"
       os: windows           # Windows 10.0.17134 N/A Build 17134
@@ -36,11 +40,7 @@ matrix:
         - choco install python --version 3.7.4
         - python --version
         - python -m pip install --upgrade pip
-        - pip3 install -r requirements.txt
+        - pip install pytest
+        - python setup.py develop
+      script: python -m pytest
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
-before_install:
-  - python --version
-  - pip install -U pip
-install:
-  - pip install -r requirements.txt
-script: pytest
