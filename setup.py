@@ -12,6 +12,7 @@ dependencies =[
 'numpy',
 'sound_lib',
 'accessible_output2',
+'bson',
 ]
 
 if platform.system() == "Darwin":
