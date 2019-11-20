@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>utils - Lucia Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "utils";
+    var mkdocs_page_input_path = "api\\lucia.utils.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Lucia Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../cli/">cli</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">api</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../lucia/">lucia</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../lucia.ui/">ui</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">utils</a>
+    <ul class="subnav">
+            
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Lucia Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>api &raquo;</li>
+        
+      
+    
+    <li>utils</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="lucia.utils">lucia.utils</h1>
+
+<h1 id="lucia.utils.instance_checker">lucia.utils.instance_checker</h1>
+
+<h2 id="lucia.utils.instance_checker.InstanceChecker">InstanceChecker</h2>
+
+<pre><code class="python">InstanceChecker(self, f)
+</code></pre>
+
+<p>An instance checker</p>
+<p>This is similar to bgt's instance object, to make sure a game can be running only once.</p>
+<p>args:
+    f (str): The name to be registered as a mutex.</p>
+<h3 id="lucia.utils.instance_checker.InstanceChecker.is_running">is_running</h3>
+
+<pre><code class="python">InstanceChecker.is_running(self)
+</code></pre>
+
+<p>check if another instance is already running</p>
+<p>returns:
+    True if this instance is already registered, false otherwise.</p>
+<h1 id="lucia.utils.network">lucia.utils.network</h1>
+
+<h1 id="lucia.utils.number_to_words">number_to_words</h1>
+
+<pre><code class="python">number_to_words(number, include_and=False)
+</code></pre>
+
+<p>returns a string representation for the given number
+<h1 id="lucia.utils.rotation">lucia.utils.rotation</h1></p>
+<p>Rotation class</p>
+<p>This is modeled on the bgt rotation class from Sam Tupy. Input and output are in degrees.</p>
+<h2 id="lucia.utils.rotation.Vector">Vector</h2>
+
+<pre><code class="python">Vector(self, x=0.0, y=0.0, z=0.0)
+</code></pre>
+
+<p>an object representing what bgt calls a vector</p>
+<p>This represents a point in 3-space, where positive x is right, positive y is forward, and positive z is up.
+The property coords can be used to get and set a tuple of the coordinates represented by this vector with no rounding applied.</p>
+<p>args:
+    x (float, optional): The starting x coordinate of this vector
+    y (float, optional): The starting y coordinate of this vector
+    z (float, optional): The starting z coordinate of this vector.</p>
+<h2 id="lucia.utils.rotation.move">move</h2>
+
+<pre><code class="python">move(coords, deg, pitch=0.0, factor=1.0)
+</code></pre>
+
+<p>moves a vector in a given direction by a scale factor of factor</p>
+<p>Takes a vector as input, applies the translation, and returns a vector as output. Probably best done as player.coords=move(player.coords,player.facing) or something similar.
+The scale factor is used if you wish to move more than 1 coordinate, otherwise you simply apply the unit circle.</p>
+<p>args:
+  coords (tuple or list): The current point in 3-space you wish to move.
+  deg (float): The current facing of an object
+  pitch (float, optional): The vertical degrees you wish to move. Defaults to 0, no vertical movement.
+  factor (float, optional): The scale factor you wish to move by. Passing 1 is equivalent to one unit move in any direction, but for warping in a particular direction you can pass a higher factor. Defaults to 1.</p>
+<p>returns:
+  a transformed vector</p>
+<h2 id="lucia.utils.rotation.calculate_angle">calculate_angle</h2>
+
+<pre><code class="python">calculate_angle(x1, y1, x2, y2, deg)
+</code></pre>
+
+<p>given two points, returns the angle of the second one relative to the first.</p>
+<p>This function is useful for reporting a direction of an object to a player, for example.
+In this example the 'origin' point would be the player and the 'distant' point would be the object the player is tracking.</p>
+<p>args:
+  x1 (float): The x coordinate of the origin point.
+  y1 (float): The y coordinate of the origin point.
+  x2 (float): The x coordinate of the distant point
+  y2 (float): The y coordinate of the distant point
+  deg (float): The absolute direction the origin point is facing, for offsets.</p>
+<p>returns:
+  an angle (in degrees) of the distant point relative to the origin point, shifted by the orientation of the origin.</p>
+<h2 id="lucia.utils.rotation.get_1d_distance">get_1d_distance</h2>
+
+<pre><code class="python">get_1d_distance(x1, x2)
+</code></pre>
+
+<p>returns the distance on a 1-dimensional plane from x1 to x2
+<h2 id="lucia.utils.rotation.get_2d_distance">get_2d_distance</h2></p>
+<pre><code class="python">get_2d_distance(x1, y1, x2, y2)
+</code></pre>
+
+<p>returns the pythagorean distance between two points on an x-y plane.
+<h2 id="lucia.utils.rotation.get_3d_distance">get_3d_distance</h2></p>
+<pre><code class="python">get_3d_distance(x1, y1, z1, x2, y2, z2)
+</code></pre>
+
+<p>returns the pythagorean distance between two points in 3-space.
+<h1 id="lucia.utils.timer">lucia.utils.timer</h1></p>
+<h2 id="lucia.utils.timer.Timer">Timer</h2>
+
+<pre><code class="python">Timer(self)
+</code></pre>
+
+<p>A timer class, to track time mesured in millis</p>
+<h3 id="lucia.utils.timer.Timer.elapsed">elapsed</h3>
+
+<p>Returns the exact elapsed time since this timer was created or last restarted.</p>
+<h3 id="lucia.utils.timer.Timer.restart">restart</h3>
+
+<pre><code class="python">Timer.restart(self)
+</code></pre>
+
+<p>Restarts the timer, and set it's elapsed time to 0.</p>
+<h3 id="lucia.utils.timer.Timer.pause">pause</h3>
+
+<pre><code class="python">Timer.pause(self)
+</code></pre>
+
+<p>Pauses the timer at a certain position.
+<h3 id="lucia.utils.timer.Timer.resume">resume</h3></p>
+<pre><code class="python">Timer.resume(self)
+</code></pre>
+
+<p>Resumes the timer after being paused.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../lucia.ui/" class="btn btn-neutral" title="ui"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../lucia.ui/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

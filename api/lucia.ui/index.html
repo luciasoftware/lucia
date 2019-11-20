@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>ui - Lucia Documentation</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "ui";
+    var mkdocs_page_input_path = "api\\lucia.ui.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Lucia Documentation</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../../cli/">cli</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">api</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../lucia/">lucia</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">ui</a>
+    <ul class="subnav">
+            
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../lucia.utils/">utils</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Lucia Documentation</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>api &raquo;</li>
+        
+      
+    
+    <li>ui</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="lucia.ui">lucia.ui</h1>
+
+<h1 id="lucia.ui.menu">lucia.ui.menu</h1>
+
+<h2 id="lucia.ui.menu.Menu">Menu</h2>
+
+<pre><code class="python">Menu(self, scroll_sound='', enter_sound='', open_sound='', border_sound='', music='')
+</code></pre>
+
+<p>audiogame virtual menu</p>
+<p>This object functions as an audiogame menu, where up/down/enter can be used to interact and choose an option.
+Sounds such as the movement sound, selection sound, etc may be specified.
+This is an almost direct conversion of bgt's dynamic_menu class, though it contains some enhancements found in other extensions such as m_pro.</p>
+<p>args:
+    scroll_sound (str, optional): File name of the sound that will be played when the cursor moves within the menu because an arrow key was pressed.
+    enter_sound (str, optional): File name of the sound that will be played when enter is pressed to choose an option.
+    open_sound (str, optional): File name of the sound that will be played when the menu is presented to the user.
+    border_sound (str, optional): File name of the sound played when you hit the edge of the menu when trying to move.
+    music (str, optional): File name of the background music that will be played while this menu is running.</p>
+<h3 id="lucia.ui.menu.Menu.set_callback">set_callback</h3>
+
+<pre><code class="python">Menu.set_callback(self, callback)
+</code></pre>
+
+<p>Sets the menus callback. The callback will be called every iteration of the loop.</p>
+<p>args:
+    callback (obj): The method to use as callback. This method should be either a module or a class and provide the necessary output functions, see lucia.output for an example.
+raises:
+    ValueError if callback is not callable</p>
+<h3 id="lucia.ui.menu.Menu.add_speech_method">add_speech_method</h3>
+
+<pre><code class="python">Menu.add_speech_method(self, method, shouldInterrupt=True)
+</code></pre>
+
+<p>selects the speech method and interrupt flag</p>
+<p>args:
+    method (obj): The method to use. This method should be either a module or a class and provide the necessary output functions, see lucia.output for an example.
+    shouldInterrupt (bool, optional): determines if this speech method should interrupt already existing speech when speaking something new. Default is True.</p>
+<h3 id="lucia.ui.menu.Menu.add_item_tts">add_item_tts</h3>
+
+<pre><code class="python">Menu.add_item_tts(self, item, internal_name='')
+</code></pre>
+
+<p>adds a spoken item to the menu.</p>
+<p>args:
+    item (str): The text of the item to be added. This is the text you will here when you come across it in the menu.
+    internal_name (str, optional): The internal name of this item. when you retrieve the selected item by name this will be returned. Defaults to the spoken text of the item.</p>
+<h3 id="lucia.ui.menu.Menu.run">run</h3>
+
+<pre><code class="python">Menu.run(self, intro='select an option', interrupt=True)
+</code></pre>
+
+<p>presents this menu to the user.</p>
+<p>This function blocks until the menu is closed, either by selecting an item or pressing escape.
+Available controls are up/down arrows, enter, and escape. Wrapping is not supported.</p>
+<p>args:
+    intro (str, optional): The text that will be spoken when the menu is presented, this will occur at the same time as the open sound. Default is 'select an option'
+    interrupt (bool, optional): Determines if speech is interrupted when it is queued to be spoken. For your sanity, this should always be True. Defaults to True.</p>
+<p>returns:
+    str if an option was selected, containing the option's internal name. -1 if escape was pressed.</p>
+<h2 id="lucia.ui.menu.YesNoMenu">YesNoMenu</h2>
+
+<pre><code class="python">YesNoMenu(*args)
+</code></pre>
+
+<p>A yes/no menu</p>
+<p>This simply takes a menu and initializes it with options of Yes and No, you would then have to call run and get the return.
+The internal names of the items are lower case.</p>
+<p>args:
+args (tuple): Set of arguments to pass to Menu.<strong>init</strong></p>
+<h1 id="lucia.ui.menu2">lucia.ui.menu2</h1>
+
+<p>advanced menu for advanced use</p>
+<p>this menu module provides highly flexible menu items with different events and an advanced menu handling
+<h2 id="lucia.ui.menu2.Menu">Menu</h2></p>
+<pre><code class="python">Menu(self, items, clicksound='', edgesound='', wrapsound='', entersound='', opensound='', itempos=0, title='menu', fpscap=120, on_index_change=None, callback_function=None)
+</code></pre>
+
+<h3 id="lucia.ui.menu2.Menu.run">run</h3>
+
+<pre><code class="python">Menu.run(self)
+</code></pre>
+
+<p>when this function is called, menu loop starts. If the user make the menu return such as pressing enter on an item that has can_return attribute set to true the loop ends and it usually returns results as a list of dictionaries
+<h1 id="lucia.ui.virtualinput">lucia.ui.virtualinput</h1></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../lucia.utils/" class="btn btn-neutral float-right" title="utils">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../lucia/" class="btn btn-neutral" title="lucia"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../lucia/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../lucia.utils/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>
