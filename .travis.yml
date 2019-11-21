@@ -9,7 +9,7 @@ matrix:
         - python3 --version
         - pip3 install -U pip
         - pip3 install pytest
-        - python3 setup.py develop
+        - python3 setup.py install
       script: python3 -m pytest
     - name: "Python 3.7.3 on macOS 10.14"
       os: osx
@@ -19,7 +19,7 @@ matrix:
         - python3 --version
         - pip3 install -U pip
         - pip3 install pytest
-        - python3 setup.py develop
+        - python3 setup.py install
       script: python3 -m pytest
     #  ====== WINDOWS =========
     - name: "Python 3.6.8 on Windows"
@@ -30,7 +30,7 @@ matrix:
         - python --version
         - python -m pip install --upgrade pip
         - pip install pytest
-        - python setup.py develop
+        - python setup.py install
       script: python -m pytest
       env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
     - name: "Python 3.7.4 on Windows"
@@ -41,6 +41,6 @@ matrix:
         - python --version
         - python -m pip install --upgrade pip
         - pip install pytest
-        - python setup.py develop
+        - python setup.py install
       script: python -m pytest
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
