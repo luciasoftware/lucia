@@ -1,6 +1,7 @@
 from setuptools import setup, find_packages
 import platform
-
+import versioneer
+ 
 def readme():
 	with open('README.md') as f:
 		return f.read()
@@ -14,6 +15,7 @@ dependencies =[
 'pyal',
 'accessible_output2',
 'bson',
+'versioneer',
 ]
 
 if platform.system() == "Darwin":
@@ -28,7 +30,8 @@ lucia_packages = find_packages(".")
 
 setup(
 name='lucia',
-version='1.0.0',
+version=versioneer.get_version(),
+cmdclass=versioneer.get_cmdclass(),
 description='A cross platform, feature rich audio game engine written in Python.',
 long_description=readme(),
 long_description_content_type="text/markdown",
