@@ -6,6 +6,7 @@ sys.path.append(".")
 from math import radians
 import time
 import lucia
+import lucia.utils
 import pygame
 
 lucia.initialize(audiobackend=lucia.AudioBackend.BASS)

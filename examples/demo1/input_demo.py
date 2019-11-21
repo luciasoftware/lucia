@@ -2,6 +2,7 @@ import lucia
 
 lucia.initialize()
 lucia.show_window()
-result = lucia.ui.VirtualInput()
-result.run()
+test_input = lucia.ui.VirtualInput()
+result = test_input.run()
+print("You typed {}".format(result))
 lucia.quit()
