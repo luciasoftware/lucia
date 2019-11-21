@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 import platform
- import versioneer
+import versioneer
  
 def readme():
 	with open('README.md') as f:
