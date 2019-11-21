@@ -7,8 +7,8 @@ matrix:
       language: shell       # 'language: python' is an error on Travis CI macOS
       before_install:
         - python3 --version
-        - pip3 install -U pip
-        - pip3 install pytest
+        - pip3 install -U pip setuptools wheel
+        - pip3 install pytest appscript
         - python3 setup.py install
       script: python3 -m pytest
     - name: "Python 3.7.3 on macOS 10.14"
@@ -17,8 +17,8 @@ matrix:
       language: shell       # 'language: python' is an error on Travis CI macOS
       before_install:
         - python3 --version
-        - pip3 install -U pip
-        - pip3 install pytest
+        - pip3 install -U pip setuptools wheel
+        - pip3 install pytest appscript
         - python3 setup.py install
       script: python3 -m pytest
     #  ====== WINDOWS =========
