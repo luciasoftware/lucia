@@ -21,6 +21,7 @@ if platform.system() == "Darwin":
 
 if platform.system() == "Windows":
 	dependencies.append("pywin32")
+	dependencies.append("pypiwin32")
 
 lucia_packages = find_packages(".")
 
