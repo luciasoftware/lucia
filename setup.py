@@ -11,6 +11,7 @@ dependencies =[
 'pysoundfile',
 'numpy',
 'sound_lib',
+'pyal',
 'accessible_output2',
 'bson',
 ]
@@ -19,6 +20,7 @@ if platform.system() == "Darwin":
 	dependencies.append("appscript")
 
 if platform.system() == "Windows":
+	dependencies.append("pywin32")
 	dependencies.append("pypiwin32")
 
 lucia_packages = find_packages(".")
@@ -45,6 +47,8 @@ tests_require=["pytest"] + dependencies,
 install_requires=dependencies,
     dependency_links=[
 'https://github.com/NicklasMCHD/PyAL/tarball/master#egg=PyAL',
+'https://github.com/accessiware/platform_utils/tarball/master#egg=platform_utils',
+'https://github.com/accessiware/libloader/tarball/master#egg=libloader',
 ],
 include_package_data=True,
 zip_safe=False,
