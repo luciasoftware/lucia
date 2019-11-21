@@ -193,3 +193,7 @@ def key_up(key_code):
 	"""
 	global keys_held
 	return keys_held[key_code] == False
+
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions
