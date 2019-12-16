@@ -105,11 +105,12 @@ def set_global_resource_file(file):
 		raise ValueError('"file" must be an instance of "lucia.ResourceFile".')
 	_resource_file = file
 
-
-def show_window(title="LuciaGame", size=(640, 480)):
+def show_window(title="LuciaGame", size=(640,480), full_screen=False):
 	"""Shows the main game window on the screen, this is most likely called at the start of a game"""
 	global window
 	window = pygame.display.set_mode(size)
+	if full_screen == True:
+		pygame.display.toggle_fullscreen()
 	pygame.display.set_caption(title)
 	return window
 
