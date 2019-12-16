@@ -111,8 +111,6 @@ def show_window(title="LuciaGame", size=(640,480), full_screen=False):
 	window = pygame.display.set_mode(size)
 	if full_screen == True:
 		pygame.display.toggle_fullscreen()
-	else:
-		pass
 	pygame.display.set_caption(title)
 	return window
 
