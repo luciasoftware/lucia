@@ -86,6 +86,7 @@ class Menu:
 		fpscap=120,
 		on_index_change=None,
 		callback_function=None,
+		music="",
 	):
 		self.clicksound = clicksound
 		self.edgesound = edgesound
@@ -99,6 +100,10 @@ class Menu:
 		self.on_index_change = on_index_change # make sure this is a function. It is called whenever the index of a menu is changed. The index change happens whenever user cycles between menu items.
 		self.callback = callback_function # This should be a function. This function is called within the menu loop
 		self.pool = lucia.audio_backend.SoundPool()
+		# the music is different
+		self.music = lucia.audio_backend.Sound()
+		if music != "":
+			self.music.load(music)
 
 
 	def run(self):
@@ -110,6 +115,12 @@ class Menu:
 			lucia.output.speak(str(e))
 
 	def loop(self):
+		try:
+			self.music.play_looped()
+		except: # if no music set
+			pass
+		if self.opensound != "":
+			source = self.pool.play_stationary(self.opensound)
 		while 1:
 			time.sleep(0.005)
 			try:
