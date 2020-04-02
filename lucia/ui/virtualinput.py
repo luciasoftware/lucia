@@ -1,3 +1,20 @@
+# Copyright (C) 2018  LuciaSoftware and it's contributors.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, version 3 of the License.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
+
+"""A module providing the ability to prompt the user for varying input
+"""
+
 import lucia
 import string
 from lucia.utils import timer
@@ -47,17 +64,6 @@ class virtualInput:
 	def current_text(self, text):
 		self.current_string = current_text
 		self._cursor = max(0, len(self._current_string) - 1)
-
-	def toggle_character_repetition(self):
-		"""Toggles whether the user hears the characters being echoed back to them as they're typing
-		Return Value:
-			The new state of the setting (bool)
-		"""
-		if self.repeating_characters:
-			self.repeating_characters = False
-		else:
-			self.repeating_characters = True
-		return self.repeating_characters
 
 	def clear(self):
 		"""Resets the input. This can be called outside of the class, but run will also do this internally upon every call
@@ -171,15 +177,13 @@ class virtualInput:
 					if self.can_exit and event.key == lucia.K_RETURN:
 						return self.current_text
 					elif event.key == lucia.K_BACKSPACE: self.remove_character()
-					elif event.key == lucia.K_TAB: lucia.output.output(message)
+					elif event.key == lucia.K_TAB: lucia.output.output(self.current_string, True)
 					elif event.key == lucia.K_LEFT:
 						self.move_in_string(-1)
 						self.speak_character(self.get_character())
 					elif event.key == lucia.K_RIGHT:
 						self.move_in_string(1)
 						self.speak_character(self.get_character())
-					elif event.key == lucia.K_UP or event.key == lucia.K_DOWN:
-						lucia.output.output(self.current_string)
 					elif event.key == lucia.K_HOME:
 						self.snap_to_top()
 					elif event.key == lucia.K_END:
