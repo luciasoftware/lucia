@@ -48,6 +48,17 @@ class virtualInput:
 		self.current_string = current_text
 		self._cursor = max(0, len(self._current_string) - 1)
 
+	def toggle_character_repetition(self):
+		"""Toggles whether the user hears the characters being echoed back to them as they're typing
+		Return Value:
+			The new state of the setting (bool)
+		"""
+		if self.repeating_characters:
+			self.repeating_characters = False
+		else:
+			self.repeating_characters = True
+		return self.repeating_characters
+
 	def clear(self):
 		"""Resets the input. This can be called outside of the class, but run will also do this internally upon every call
 		"""
@@ -160,13 +171,15 @@ class virtualInput:
 					if self.can_exit and event.key == lucia.K_RETURN:
 						return self.current_text
 					elif event.key == lucia.K_BACKSPACE: self.remove_character()
-					elif event.key == lucia.K_TAB: lucia.output.output(self.current_string, True)
+					elif event.key == lucia.K_TAB: lucia.output.output(message)
 					elif event.key == lucia.K_LEFT:
 						self.move_in_string(-1)
 						self.speak_character(self.get_character())
 					elif event.key == lucia.K_RIGHT:
 						self.move_in_string(1)
 						self.speak_character(self.get_character())
+					elif event.key == lucia.K_UP or event.key == lucia.K_DOWN:
+						lucia.output.output(self.current_string)
 					elif event.key == lucia.K_HOME:
 						self.snap_to_top()
 					elif event.key == lucia.K_END:
