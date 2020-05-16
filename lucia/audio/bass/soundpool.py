@@ -7,9 +7,9 @@ from math import radians
 
 
 class SoundPoolItem:
-	def __init__(self, filename, **kwargbs):
+	def __init__(self, **kwargbs):
 		self.handle = sound.Sound()
-		self.filename = filename
+		self.filename = kwargbs.get("filename", "")
 		self.x = kwargbs.get("x", 0)
 		self.y = kwargbs.get("y", 0)
 		self.z = kwargbs.get("z", 0)
@@ -33,8 +33,8 @@ class SoundPoolItem:
 		self.persistent = kwargbs.get("persistent", False)
 		self.paused = kwargbs.get("paused", False)
 
-	def reset(self, pack="sounds/"):
-		self.__init__("")
+	def reset(self):
+		self.__init__()
 
 	def update(self, listener_x, listener_y, listener_z, rotation, max_distance):
 		if max_distance > 0 and self.looping:
@@ -45,8 +45,11 @@ class SoundPoolItem:
 			if total_distance <= max_distance and self.handle.handle == None:
 				try:
 					self.handle.load(self.filename)
+					#Logic fix, no looping or crashing of any sort will occur anymore
+					if not self.handle.handle:
+						self.__init__()
+						return
 				except:
-					pass
 					return
 				if self.handle.handle.position > 0:
 					self.handle.handle.position = self.start_offset
@@ -130,7 +133,6 @@ class SoundPoolItem:
 			self.start_pan,
 			self.start_volume,
 			self.start_pitch,
-			False,
 		)
 
 	def get_total_distance(self, listener_x, listener_y, listener_z):
@@ -414,7 +416,6 @@ class SoundPool(lucia.audio.SoundPool):
 		rotation=0,
 		looping=False,
 		persistent=False,
-		keep_pitch=False,
 	):
 		return self.play_extended_3d(
 			filename,
@@ -437,7 +438,6 @@ class SoundPool(lucia.audio.SoundPool):
 			0,
 			100,
 			persistent,
-			keep_pitch,
 		)
 
 	def play_extended_3d(
@@ -462,7 +462,6 @@ class SoundPool(lucia.audio.SoundPool):
 		start_volume,
 		start_pitch,
 		persistent,
-		keep_pitch,
 	):
 		self.clean_frequency -= 1
 		if self.clean_frequency <= 0:
