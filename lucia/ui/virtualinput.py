@@ -20,7 +20,7 @@ import string
 from lucia.utils import timer
 
 class VirtualInput:
-	def __init__(self, **kwargbs):
+	def __init__(self, **kwargs):
 		"""Initializes the virtual input:
 			Parameters:
 				initial_msg (str): The initial contents of the input string
