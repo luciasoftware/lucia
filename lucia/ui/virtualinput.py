@@ -52,7 +52,7 @@ class VirtualInput:
 		self.initial_key_repeating_time = kwargbs.get("repeat_first_ms", 500)
 		self.repeating_increment = kwargbs.get("repeat_second_ms", 50)
 
-	#Determines whether the run function should break out of it's loop
+  #Determines whether the run function should break out of it's loop
 	@property
 	def is_at_character_limit(self):
 		if self.should_break:
