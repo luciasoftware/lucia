@@ -165,6 +165,16 @@ def key_pressed(key_code):
 	return current_key_pressed == key_code
 
 
+def keys_pressed(key_codes):
+	"""Checks if any given key was pressed down this frame (single key press)
+	* key_codes: A list of pygame.K_ key codes
+	
+	returns: True if any of the specified key kodes were pressed, False otherwise.
+	"""
+	global current_key_pressed
+	return any(key_code == current_key_pressed for key_code in key_codes)
+
+
 def key_released(key_code):
 	"""Checks if a key was released down this frame (single key release)
 	* key_code: A pygame.K_ key code
@@ -173,6 +183,16 @@ def key_released(key_code):
 	"""
 	global current_key_released
 	return current_key_released == key_code
+
+
+def keys_released(key_codes):
+	"""Checks if any of the given keys were released down this frame (single key release)
+	* key_codes: A list of pygame.K_ key codes
+	
+	returns: True if any of the specified key kodes were released, False otherwise.
+	"""
+	global current_key_released
+	return any(key_code == current_key_released for key_code in key_codes)
 
 
 def key_down(key_code):
@@ -185,6 +205,16 @@ def key_down(key_code):
 	return keys_held[key_code]
 
 
+def keys_down(key_codes):
+	"""Checks if any of the given keys are beeing held down.
+	* key_codes: A list of pygame.K_ key codes
+	
+	returns: True if any of the specified key kodes are beeing held down, False otherwise.
+	"""
+	global keys_held
+	return any(keys_held[key_code] for key_code in key_codes)
+
+
 def key_up(key_code):
 	"""Check if a key isn't beeing held down (ie if it's not pressed and held)
 	* key_code : A pygame.K_ key code
@@ -193,6 +223,25 @@ def key_up(key_code):
 	"""
 	global keys_held
 	return keys_held[key_code] == False
+
+
+def keys_up(key_codes):
+	"""Check if any given key aren't beeing held down (ie if they are not pressed and held)
+	* key_codes : A list of pygame.K_ key codes
+	
+	returns: True if key is not held down, False otherwise
+	"""
+	global keys_held
+	return any(keys_held[key_code] == False for key_code in key_code)
+
+
+def get_key_mods(key_mod):
+	"""Checks if a given key modifier is being pressed
+	*key_mod: A valid modifier to check for. Valid modifiers are any variables in pygame.locals that begin with KMOD_
+	
+	Returns: True if the specified modifier is active, False otherwise
+	"""
+	return pygame.key.get_mods & key_mod
 
 from ._version import get_versions
 __version__ = get_versions()['version']

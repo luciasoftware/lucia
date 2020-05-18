@@ -19,37 +19,40 @@ import lucia
 import string
 from lucia.utils import timer
 
-class virtualInput:
-	def __init__(self, initial_msg = "", password = False, password_msg = "*", repeat_chars = True, repeat_keys = False, enter = True, msg_length = -1, repeat_first_ms = 500, repeat_second_ms = 50):
+class VirtualInput:
+	def __init__(self, **kwargs):
 		"""Initializes the virtual input:
-		Parameters:
-			initial_msg (str): The initial contents of the input string
-			password (bool): Dictates whether the characters will be spoken
-			password_msg (str): The string spoken should the input be hidden
-			repeat_chars (bool): Dictates whether the characters will be echoed back as the user types
-			repeat_keys (bool): Dictates whether the characters will be repeated after a certain length of time holding down the key
-			enter (bool): Determines if the user can press enter to exit the input
-			msg_length (int): Sets the maximum character limit one wishes to have in the string before returning
-			repeat_first_ms (int): Determines the first instance after which the user's keys will be automatically held. Best left at 500 so the user would have to trigger this event intentionally
-			repeat_second_ms (int): Time waited after the first event fires. I.e, assuming the first_ms = 500, the keys will first be repeated at 500, then 550, 600, etc.
+			Parameters:
+				initial_msg (str): The initial contents of the input string
+				password (bool): Dictates whether the characters will be spoken
+				password_msg (str): The string spoken should the input be hidden
+				repeat_chars (bool): Dictates whether the characters will be echoed back as the user types
+				repeat_keys (bool): Dictates whether the characters will be repeated after a certain length of time holding down the key
+				enter (bool): Determines if the user can press enter to exit the input
+				escape (bool): Determines whether the user can press escape to exit the input
+				msg_length (int): Sets the maximum character limit one wishes to have in the string before returning
+				repeat_first_ms (int): Determines the first instance after which the user's keys will be automatically held. Best left at 500 so the user would have to trigger this event intentionally
+				repeat_second_ms (int): Time waited after the first event fires. I.e, assuming the first_ms = 500, the keys will first be repeated at 500, then 550, 600, etc.
 		"""
-		self.current_string = initial_msg
+		self.current_string = kwargbs.get("initial_msg", "")
 		self._cursor = max(0, len(self.current_string) - 1)
-		self.hidden = password
-		self.password_message = password_msg
-		self.repeating_characters = repeat_chars
-		self.repeating_keys = repeat_keys
-		self.can_exit = enter
+		self.hidden = kwargbs.get("password", False)
+		self.password_message = kwargbs.get("password_msg", "*")
+		self.repeating_characters = kwargbs.get("repeat_chars", True)
+		self.repeating_keys = kwargbs.get("repeat_keys", False)
+		self.can_exit = kwargbs.get("enter", True)
+		#Escape will return an empty string regardless of what the user chose
+		self.can_escape = kwargbs.get("escape", True)
 		#Toggle this to true within your input callback to break out of input
 		self.should_break = False
 		self.whitelisted_characters = [a for a in string.printable]
-		self.maximum_message_length = msg_length
+		self.maximum_message_length = kwargbs.get("msg_length", -1)
 		self._key_times = {}
 		self.key_repeat_timer = timer.Timer()
-		self.initial_key_repeating_time = repeat_first_ms
-		self.repeating_increment = repeat_second_ms
+		self.initial_key_repeating_time = kwargbs.get("repeat_first_ms", 500)
+		self.repeating_increment = kwargbs.get("repeat_second_ms", 50)
 
-	#Determines whether the run function should break out of it's loop
+  #Determines whether the run function should break out of it's loop
 	@property
 	def is_at_character_limit(self):
 		if self.should_break:
@@ -176,6 +179,8 @@ class virtualInput:
 					if self.repeating_keys and event.key not in self._key_times: self._key_times[event.key] = [self.key_repeat_timer.elapsed + self.initial_key_repeating_time, event.unicode]
 					if self.can_exit and event.key == lucia.K_RETURN:
 						return self.current_text
+					elif self.can_escape and event.key == lucia.K_ESCAPE:
+						return ""
 					elif event.key == lucia.K_BACKSPACE: self.remove_character()
 					elif event.key == lucia.K_TAB: lucia.output.output(self.current_string, True)
 					elif event.key == lucia.K_LEFT:

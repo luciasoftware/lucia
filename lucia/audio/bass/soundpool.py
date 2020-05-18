@@ -7,34 +7,34 @@ from math import radians
 
 
 class SoundPoolItem:
-	def __init__(self, filename, **kwargbs):
+	def __init__(self, **kwargs):
 		self.handle = sound.Sound()
-		self.filename = filename
-		self.x = kwargbs.get("x", 0)
-		self.y = kwargbs.get("y", 0)
-		self.z = kwargbs.get("z", 0)
-		self.looping = kwargbs.get("looping", 0)
-		self.pan_step = kwargbs.get("pan_step", 0)
-		self.volume_step = kwargbs.get("volume_step", 0)
-		self.behind_pitch_decrease = kwargbs.get("behind_pitch_decrease", 0)
-		self.start_pan = kwargbs.get("start_pan", 0)
-		self.start_volume = kwargbs.get("start_volume", 0)
-		self.start_pitch = kwargbs.get("start_pitch", 0)
-		self.start_offset = kwargbs.get("start_offset", 0)
-		self.upper_range = kwargbs.get("upper_range", 0)
-		self.lower_range = kwargbs.get("lower_range", 0)
-		self.left_range = kwargbs.get("left_range", 0)
-		self.right_range = kwargbs.get("right_range", 0)
-		self.backward_range = kwargbs.get("backward_range", 0)
-		self.forward_range = kwargbs.get("forward_range", 0)
-		self.looping = kwargbs.get("looping", False)
-		self.is_3d = kwargbs.get("is_3d", False)
-		self.stationary = kwargbs.get("stationary", False)
-		self.persistent = kwargbs.get("persistent", False)
-		self.paused = kwargbs.get("paused", False)
+		self.filename = kwargs.get("filename", "")
+		self.x = kwargs.get("x", 0)
+		self.y = kwargs.get("y", 0)
+		self.z = kwargs.get("z", 0)
+		self.looping = kwargs.get("looping", 0)
+		self.pan_step = kwargs.get("pan_step", 0)
+		self.volume_step = kwargs.get("volume_step", 0)
+		self.behind_pitch_decrease = kwargs.get("behind_pitch_decrease", 0)
+		self.start_pan = kwargs.get("start_pan", 0)
+		self.start_volume = kwargs.get("start_volume", 0)
+		self.start_pitch = kwargs.get("start_pitch", 0)
+		self.start_offset = kwargs.get("start_offset", 0)
+		self.upper_range = kwargs.get("upper_range", 0)
+		self.lower_range = kwargs.get("lower_range", 0)
+		self.left_range = kwargs.get("left_range", 0)
+		self.right_range = kwargs.get("right_range", 0)
+		self.backward_range = kwargs.get("backward_range", 0)
+		self.forward_range = kwargs.get("forward_range", 0)
+		self.looping = kwargs.get("looping", False)
+		self.is_3d = kwargs.get("is_3d", False)
+		self.stationary = kwargs.get("stationary", False)
+		self.persistent = kwargs.get("persistent", False)
+		self.paused = kwargs.get("paused", False)
 
-	def reset(self, pack="sounds/"):
-		self.__init__("")
+	def reset(self):
+		self.__init__()
 
 	def update(self, listener_x, listener_y, listener_z, rotation, max_distance):
 		if max_distance > 0 and self.looping:
@@ -45,8 +45,11 @@ class SoundPoolItem:
 			if total_distance <= max_distance and self.handle.handle == None:
 				try:
 					self.handle.load(self.filename)
+					#Logic fix, no looping or crashing of any sort will occur anymore
+					if not self.handle.handle:
+						self.__init__()
+						return
 				except:
-					pass
 					return
 				if self.handle.handle.position > 0:
 					self.handle.handle.position = self.start_offset
@@ -130,7 +133,6 @@ class SoundPoolItem:
 			self.start_pan,
 			self.start_volume,
 			self.start_pitch,
-			False,
 		)
 
 	def get_total_distance(self, listener_x, listener_y, listener_z):
@@ -414,7 +416,6 @@ class SoundPool(lucia.audio.SoundPool):
 		rotation=0,
 		looping=False,
 		persistent=False,
-		keep_pitch=False,
 	):
 		return self.play_extended_3d(
 			filename,
@@ -437,7 +438,6 @@ class SoundPool(lucia.audio.SoundPool):
 			0,
 			100,
 			persistent,
-			keep_pitch,
 		)
 
 	def play_extended_3d(
@@ -462,7 +462,6 @@ class SoundPool(lucia.audio.SoundPool):
 		start_volume,
 		start_pitch,
 		persistent,
-		keep_pitch,
 	):
 		self.clean_frequency -= 1
 		if self.clean_frequency <= 0:
