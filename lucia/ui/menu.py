@@ -187,7 +187,7 @@ class YesNoMenu(Menu):
 	args:
 	args (tuple): Set of arguments to pass to Menu.__init__
 	"""
-	def __init__(*args):
-		super().__init__(args)
+	def __init__(self, *args):
+		super(YesNoMenu, self).__init__(args)
 		self.add_item_tts("Yes", "yes")
 		self.add_item_tts("No", "No")
