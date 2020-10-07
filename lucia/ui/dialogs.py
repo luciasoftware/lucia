@@ -12,12 +12,25 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
-"""A module providing the ability to prompt the user for varying input
+"""A module providing the ability to prompt the user for varying input and for displaying any message
 """
 
 import lucia
 import string
 from lucia.utils import timer
+class message_dialog:
+	def __init__(self, message='message'):
+		self.message=message
+		self.running=False
+	def run(self):
+		lucia.output.output(self.message)
+		self.running=True
+		while self.running:
+			lucia.process_events()
+			if lucia.key_pressed(lucia.K_UP) or lucia.key_pressed(lucia.K_DOWN) or lucia.key_pressed(lucia.K_LEFT) or lucia.key_pressed(lucia.K_RIGHT):
+				lucia.output.output(self.message)
+			if lucia.key_pressed(lucia.K_RETURN) or lucia.key_pressed(lucia.K_ESCAPE):
+				self.running=False
 
 class virtualInput:
 	def __init__(self, initial_msg = "", password = False, password_msg = "*", repeat_chars = True, repeat_keys = False, enter = True, msg_length = -1, repeat_first_ms = 500, repeat_second_ms = 50):
