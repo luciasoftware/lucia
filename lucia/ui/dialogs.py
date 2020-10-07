@@ -19,10 +19,18 @@ import lucia
 import string
 from lucia.utils import timer
 class message_dialog:
+	"""this class is to show a message dialog to display an info to the user
+	"""
 	def __init__(self, message='message'):
+		"""initializes self
+		
+		args:
+		message: str. a message to display to the user
+		"""
 		self.message=message
 		self.running=False
 	def run(self):
+		"""presents the message to the user"""
 		lucia.output.output(self.message)
 		self.running=True
 		while self.running:
