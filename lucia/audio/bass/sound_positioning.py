@@ -1,5 +1,5 @@
 # Original code by Blastbay, created for the Blastbay gaming toolkit
-# Ported to python by Carter Temm, with small modifications by Amerikranian
+# Ported to python by Carter Temm
 # Used with permition
 
 import math
@@ -48,7 +48,6 @@ def position_sound_2d(
 	pan_step,
 	volume_step,
 	behind_pitch_decrease,
-	keep_pitch=False,
 ):
 	position_sound_custom_2d(
 		handle,
@@ -63,8 +62,7 @@ def position_sound_2d(
 		0.0,
 		0.0,
 		100.0,
-		keep_pitch,
-	)
+		)
 
 
 def position_sound_custom_2d(
@@ -80,7 +78,6 @@ def position_sound_custom_2d(
 	start_pan,
 	start_volume,
 	start_pitch,
-	keep_pitch,
 ):
 	delta_x = 0
 	delta_y = 0
@@ -134,9 +131,8 @@ def position_sound_custom_2d(
 		handle.pan = final_pan
 	if handle.volume != final_volume:
 		handle.volume = final_volume
-	if not keep_pitch:
-		if handle.pitch != final_pitch:
-			handle.pitch = final_pitch
+	if handle.pitch != final_pitch:
+		handle.pitch = final_pitch
 
 
 def position_sound_3d(
@@ -151,7 +147,6 @@ def position_sound_3d(
 	pan_step,
 	volume_step,
 	behind_pitch_decrease,
-	keep_pitch=False,
 ):
 	position_sound_custom_3d(
 		handle,
@@ -168,7 +163,6 @@ def position_sound_3d(
 		0.0,
 		0.0,
 		100.0,
-		keep_pitch,
 	)
 
 
@@ -187,7 +181,6 @@ def position_sound_custom_3d(
 	start_pan,
 	start_volume,
 	start_pitch,
-	keep_pitch,
 ):
 	delta_x = 0
 	delta_y = 0
@@ -249,6 +242,5 @@ def position_sound_custom_3d(
 		handle.pan = final_pan
 	if handle.volume != final_volume:
 		handle.volume = final_volume
-	if not keep_pitch:
-		if handle.pitch != final_pitch:
-			handle.pitch = final_pitch
+	if handle.pitch != final_pitch:
+		handle.pitch = final_pitch
