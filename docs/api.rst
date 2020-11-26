@@ -13,4 +13,3 @@ Exceptions
 
 .. automodule:: lucia.exceptions
     :members:
-

@@ -10,6 +10,7 @@ repos:
     - id: check-docstring-first
     - id: check-merge-conflict
     - id: check-toml
+    - id: check-yaml
     - id: debug-statements
     - id: end-of-file-fixer
 -   repo: https://github.com/pre-commit/pygrep-hooks
