@@ -8,9 +8,15 @@ Game
     :members:
 
 
+Output
+-------
+
+.. automodule:: lucia.output
+    :members:
+
+
 Exceptions
 -------
 
 .. automodule:: lucia.exceptions
     :members:
-
