@@ -1,0 +1,42 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.3.0
+    hooks:
+    -   id: check-added-large-files 
+    -   id: check-ast  # Is it valid Python?
+    - id: check-case-conflict
+    - id: check-docstring-first
+    - id: check-merge-conflict
+    - id: check-toml
+    - id: debug-statements
+    - id: end-of-file-fixer
+-   repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.7.0
+    hooks:
+    - id: python-no-eval
+    - id: python-no-log-warn
+-   repo: https://github.com/myint/autoflake
+    rev: v1.4
+    hooks:
+    - id: autoflake
+-   repo: https://github.com/asottile/reorder_python_imports
+    rev: v2.3.6
+    hooks:
+    - id: reorder-python-imports
+      args: ["--py36-plus"]
+-   repo: https://github.com/asottile/pyupgrade
+    rev: v2.7.4
+    hooks:
+    - id: pyupgrade
+      args: ["--py36-plus"]
+-   repo: https://github.com/PyCQA/bandit
+    rev: 1.6.2
+    hooks:
+    - id:    bandit
+      args: ['-ll', '-q']
+-   repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.1.9
+    hooks:
+    -   id: remove-tabs
