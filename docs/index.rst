@@ -16,6 +16,7 @@ Documentation Contents
 
    logging
    api
+   license
 
 
 If you still can't find what you're looking for, try in one of the following pages:

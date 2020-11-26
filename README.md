@@ -3,6 +3,13 @@ A cross platform audio game engine written in python 3
 
 # THIS IS THE 2.0 BRANCH OF LUCIA. THIS BRANCH IS VERY UNSTABLE.
 
+![Testing](https://github.com/luciasoftware/lucia/workflows/Testing/badge.svg?branch=next)
+[![Documentation Status](https://readthedocs.org/projects/lucia/badge/?version=next)](https://lucia.readthedocs.io/en/latest/?badge=next)
+
+
+[Link to current documentation](https://lucia.readthedocs.io/en/next)
+
+
 ### Contributing
 
 Thanks for your interest in improving lucia.
