@@ -351,6 +351,14 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
+name = "py-espeak-ng"
+version = "0.1.8"
+description = "Python interface for eSpeak NG"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "pycodestyle"
 version = "2.6.0"
 description = "Python style guide checker"
@@ -653,7 +661,7 @@ testing = ["pytest (>=3.5,<3.7.3 || >3.7.3)", "pytest-checkdocs (>=1.2.3)", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "<3.10,>=3.6.1"
-content-hash = "adff158bfdbaf24256ac63af5d0cf9bbddc57e1bd168b458ea3cd6307d20a45b"
+content-hash = "0a11d5fbbd1d70e02064ffc85a7d292e47ba9cee67e49fe9b2928474e32966ad"
 
 [metadata.files]
 alabaster = [
@@ -839,6 +847,10 @@ pre-commit = [
 py = [
     {file = "py-1.9.0-py2.py3-none-any.whl", hash = "sha256:366389d1db726cd2fcfc79732e75410e5fe4d31db13692115529d34069a043c2"},
     {file = "py-1.9.0.tar.gz", hash = "sha256:9ca6883ce56b4e8da7e79ac18787889fa5206c79dcc67fb065376cd2fe03f342"},
+]
+py-espeak-ng = [
+    {file = "py-espeak-ng-0.1.8.tar.gz", hash = "sha256:749f7c802caf2d314e0091552c689325da31ded738bfdfef4c1ae0cb5ecfbddd"},
+    {file = "py_espeak_ng-0.1.8-py2.py3-none-any.whl", hash = "sha256:f50bfdbfaf4f54a24019e7ef7d36bffe76d99e25875fc33d90912b394936c94b"},
 ]
 pycodestyle = [
     {file = "pycodestyle-2.6.0-py2.py3-none-any.whl", hash = "sha256:2295e7b2f6b5bd100585ebcb1f616591b652db8a741695b3d8f5d28bdc934367"},

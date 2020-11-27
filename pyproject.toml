@@ -27,6 +27,7 @@ classifiers = [
 python = "<3.10,>=3.6.1"
 pygame = "^2.0"
 cytolk = {version = "*", platform = "win32"}
+py-espeak-ng = {version = "^0.1.8", platform = "linux"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
