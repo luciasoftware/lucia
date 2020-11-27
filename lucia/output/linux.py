@@ -18,5 +18,6 @@ class LinuxOutputDriver(GenericOutputDriver):
     def speak(self, message, interrupt=True):
         if interrupt:
             self._speech_driver.say(message)
+            return True
         self._speech_driver.say(message, wait4prev=True)
         return True
