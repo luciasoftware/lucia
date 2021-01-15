@@ -10,7 +10,7 @@ dependencies =[
 'pygame',
 'pycryptodomex',
 'pysoundfile',
-'numpy',
+'numpy==1.19.3',
 'sound_lib',
 'python-openal',
 'accessible_output2',
