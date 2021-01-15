@@ -7,7 +7,7 @@ import sound_lib
 from sound_lib import stream
 import ctypes
 import lucia
-
+cashed={}
 
 class Sound(lucia.audio.Sound):
 	def __init__(self):
@@ -17,19 +17,22 @@ class Sound(lucia.audio.Sound):
 	def load(self, filename=""):
 		if self.is_active:
 			self.close()
-		if lucia.get_global_resource_file() is not None:
+		if not filename in cashed: #add bytes of sound to cashed variable if there's no entry for filename. if not skip this step.
+			if lucia.get_global_resource_file() is not None:
+				try:
+					f = lucia.get_global_resource_file().get(filename)
+					cashed[filename]=f
+				except KeyError:  # the file doesn't exist in the pack file.
+					if os.path.isfile(filename) == False:
+						return False
 			try:
-				filename = lucia.get_global_resource_file().get(filename)
-			except KeyError:  # the file doesn't exist in the pack file.
-				if os.path.isfile(filename) == False:
-					return False
-		try:
-			if isinstance(filename, str): # Asume path on disk.
-				self.handle = stream.FileStream(file=filename)
-			else: # binary data.
-				self.handle = stream.FileStream(mem=True, file=filename, length=len(filename))
-		except sound_lib.main.BassError:
-			return False
+				if isinstance(filename, str): # Asume path on disk.
+					f=open(filename, 'rb')
+					fn=f.read()
+					cashed[filename]=fn
+			except sound_lib.main.BassError:
+				return False
+		self.handle = stream.FileStream(mem=True, file=cashed[filename], length=len(cashed[filename])) #load the bytes in to the handle by cashed variable
 		self.freq = self.handle.get_frequency()
 		return self.is_active
 
