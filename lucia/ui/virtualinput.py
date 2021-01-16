@@ -17,7 +17,9 @@
 
 import lucia
 import string
+import random
 from lucia.utils import timer
+
 
 class VirtualInput:
 	def __init__(self, **kwargs):
@@ -33,24 +35,29 @@ class VirtualInput:
 				msg_length (int): Sets the maximum character limit one wishes to have in the string before returning
 				repeat_first_ms (int): Determines the first instance after which the user's keys will be automatically held. Best left at 500 so the user would have to trigger this event intentionally
 				repeat_second_ms (int): Time waited after the first event fires. I.e, assuming the first_ms = 500, the keys will first be repeated at 500, then 550, 600, etc.
+				typing_sounds (list): list of strings containing file names of typing sounds that you wan't to play when a character is inserted. default's to empty list.
+				delete_sound (str): filename of sound that should play when ever a character is deleted. defaults to empy string.
 		"""
-		self.current_string = kwargbs.get("initial_msg", "")
+		self.current_string = kwargs.get("initial_msg", "")
 		self._cursor = max(0, len(self.current_string) - 1)
-		self.hidden = kwargbs.get("password", False)
-		self.password_message = kwargbs.get("password_msg", "*")
-		self.repeating_characters = kwargbs.get("repeat_chars", True)
-		self.repeating_keys = kwargbs.get("repeat_keys", False)
-		self.can_exit = kwargbs.get("enter", True)
+		self.hidden = kwargs.get("password", False)
+		self.password_message = kwargs.get("password_msg", "*")
+		self.repeating_characters = kwargs.get("repeat_chars", True)
+		self.repeating_keys = kwargs.get("repeat_keys", False)
+		self.can_exit = kwargs.get("enter", True)
 		#Escape will return an empty string regardless of what the user chose
-		self.can_escape = kwargbs.get("escape", True)
+		self.can_escape = kwargs.get("escape", True)
 		#Toggle this to true within your input callback to break out of input
 		self.should_break = False
 		self.whitelisted_characters = [a for a in string.printable]
-		self.maximum_message_length = kwargbs.get("msg_length", -1)
+		self.maximum_message_length = kwargs.get("msg_length", -1)
 		self._key_times = {}
 		self.key_repeat_timer = timer.Timer()
-		self.initial_key_repeating_time = kwargbs.get("repeat_first_ms", 500)
-		self.repeating_increment = kwargbs.get("repeat_second_ms", 50)
+		self.initial_key_repeating_time = kwargs.get("repeat_first_ms", 500)
+		self.repeating_increment = kwargs.get("repeat_second_ms", 50)
+		self.typing_sounds=kwargs.get('typing_sounds', [])
+		self.delete_sound=kwargs.get('delete_sound', '')
+		self.pool=lucia.audio_backend.SoundPool()
 
   #Determines whether the run function should break out of it's loop
 	@property
@@ -100,12 +107,17 @@ class VirtualInput:
 		if len(character) == 0: return
 		self.current_string = self.current_string[:max(0, self._cursor)] + character + self.current_string[max(0, self._cursor):] if self._cursor < len(self.current_string) else self.current_string + character
 		self._cursor += len(character)
+		if self.typing_sounds != []:
+			s=random.choice(self.typing_sounds)
+			self.pool.play_stationary(s, False)
 		self.speak_character(character)
 
 	def remove_character(self):
 		"""Removes a character from the string based upon the cursor's position
 		"""
 		if self._cursor == 0: return
+		if self.delete_sound != '':
+			self.pool.play_stationary(self.delete_sound, False)
 		self.speak_character(self.current_string[self._cursor - 1])
 		if self._cursor == len(self.current_string):
 			self.current_string = self.current_string[:-1]
