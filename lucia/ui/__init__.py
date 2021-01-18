@@ -12,5 +12,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see https://github.com/LuciaSoftware/lucia/blob/master/LICENSE.
 
-from .menu import *
-from .virtualinput import *
+from menu import *
+from dialogs import *
+from menu2 import *

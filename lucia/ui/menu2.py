@@ -20,7 +20,7 @@ import sys
 import time
 
 import lucia
-from lucia.ui.virtualinput import *
+from lucia.ui.dialogs import *
 
 # Events
 CANCELEVENT = 0
