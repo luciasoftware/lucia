@@ -29,17 +29,17 @@ pygame = "^2.0"
 cytolk = {version = "*", platform = "win32"}
 pyobjc = {version = "^6.2.2", platform = "darwin"}
 espeakng = {version = "^1.0.2", platform = "linux"}
+Sphinx = {version = ">3", optional = true}
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 flake8 = "^3.8.4"
 black = "^20.8b1"
 mypy = "^0.790"
-Sphinx = {version = ">3", optional = true}
 pre-commit = { version = "^2.6", python = "^3.6.1" }
 
 [tool.poetry.extras]
-docs = [    "sphinx",]
+docs = ["sphinx"]
 
 [tool.poetry.scripts]
 lucia = 'lucia.cli:main'
