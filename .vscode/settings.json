@@ -10,7 +10,24 @@
     "python.linting.mypyEnabled": true,
     "python.testing.pytestEnabled": true,
     "cSpell.words": [
+        "LGP",
+        "Lv",
+        "OSI",
+        "appscript",
         "atexit",
-        "pygame"
+        "audiogame",
+        "bgt",
+        "bson",
+        "cmdclass",
+        "luciasoftware",
+        "openal",
+        "pbr",
+        "pycryptodomex",
+        "pygame",
+        "pypiwin",
+        "pysoundfile",
+        "pytest",
+        "pywin",
+        "versioneer"
     ]
 }
