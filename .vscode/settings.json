@@ -1,7 +1,6 @@
 {
     "python.linting.flake8Enabled": true,
     "python.linting.enabled": true,
-    "python.pythonPath": "C:\\Users\\nickl\\AppData\\Local\\pypoetry\\Cache\\virtualenvs\\lucia-9cOskZfG-py3.8\\Scripts\\python.exe",
     "python.venvPath": "~/AppData/Local/pypoetry/Cache/virtualenvs",
     "python.linting.flake8Args": [
         "--max-line-length=88"
@@ -9,5 +8,9 @@
     "editor.formatOnSave": true,
     "python.formatting.provider": "black",
     "python.linting.mypyEnabled": true,
-    "python.testing.pytestEnabled": true
+    "python.testing.pytestEnabled": true,
+    "cSpell.words": [
+        "atexit",
+        "pygame"
+    ]
 }
