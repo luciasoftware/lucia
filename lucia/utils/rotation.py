@@ -165,7 +165,7 @@ def get_1d_distance(x1, x2):
 
 def get_2d_distance(x1, y1, x2, y2):
 	"""returns the pythagorean distance between two points on an x-y plane."""
-	x = get_1d_distance(x1 - x2)
+	x = get_1d_distance(x1, x2)
 	y = get_1d_distance(y1, y2)
 	return sqrt(x * x + y * y)
 
